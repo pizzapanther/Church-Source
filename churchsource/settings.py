@@ -50,7 +50,7 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(SPATH, 'static'),
+MEDIA_ROOT = os.path.join(SPATH, 'static')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -60,10 +60,13 @@ MEDIA_URL = '/static/'
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/static/gmedia/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'please generate your own secret and put it in settings_local.py'
+
+GRAPPELLI_ADMIN_HEADLINE = 'Church Source Administration'
+GRAPPELLI_ADMIN_TITLE = 'Church Source Administration'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -90,13 +93,25 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.admindocs',
     'south',
-    'churchsource.configuration'
+    'churchsource.configuration',
+    'churchsource.people'
 )
 
 LOAD_FROM_D = True
+UPLOAD_DIR = 'uploads/'
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+  "django.contrib.auth.context_processors.auth",
+  "django.core.context_processors.debug",
+  "django.core.context_processors.i18n",
+  "django.core.context_processors.media",
+  "django.contrib.messages.context_processors.messages",
+  'grappelli.context_processors.admin_template_path'
+)
 
 try:
   from churchsource.settings_local import *

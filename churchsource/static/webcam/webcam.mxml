@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:wc="webcam.*" layout="vertical" creationComplete="initVars()">
+	<mx:paddingLeft>0</mx:paddingLeft>
+	<mx:paddingRight>0</mx:paddingRight>
+	<mx:paddingTop>0</mx:paddingTop>
+	<mx:paddingBottom>0</mx:paddingBottom>
+	<mx:backgroundColor>white</mx:backgroundColor>
+	<mx:backgroundGradientColors>white</mx:backgroundGradientColors>
+
+	<wc:Webcam id="pnlWebcam">
+		<wc:width>340</wc:width>
+		<wc:height>280</wc:height>
+		<wc:title>Webcam View</wc:title>
+		<wc:borderAlpha>1.0</wc:borderAlpha>
+		<wc:shadowDirection>right</wc:shadowDirection>
+		<wc:shadowDistance>3</wc:shadowDistance>
+	</wc:Webcam>
+
+	<mx:HBox>
+		<mx:Button id="take" label="Take Photo" click="pnlWebcam.takePhoto(); take.enabled=false; retake.enabled=true; upload.enabled=true;"/>
+		<mx:Button id="retake" label="Re-take Photo" click="pnlWebcam.retakePhoto(); retake.enabled=false; take.enabled=true; upload.enabled=false;" enabled="false"/>
+		<mx:Button id="upload" label="Finalize" click="savePhoto(); upload.enabled=false;" enabled="false"/>
+	</mx:HBox>
+
+	<mx:Script><![CDATA[   
+		import flash.external.ExternalInterface;
+
+		private var callback:String;
+		private function initVars():void{
+			callback = Application.application.parameters.callback;
+		}
+
+		private function savePhoto():void{
+			if( ExternalInterface.available ){
+				ExternalInterface.call( callback, pnlWebcam.getBase64() );
+			}
+		}
+		]]>
+	</mx:Script>
+
+</mx:Application>
