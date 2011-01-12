@@ -5,7 +5,10 @@ from django.utils.safestring import mark_safe
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.conf import settings
 
-class WebcamWidget(forms.FileInput):
+class WebcamWidget (forms.FileInput):
+	pass
+	
+class WebcamWidget2 (forms.FileInput):
 	'''
 	Use in place of FileInput widget to enable interactive snapping of pictures using
 	a webcam. The widget embeds a Flash application that interfaces with the native webcam.
