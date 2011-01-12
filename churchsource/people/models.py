@@ -63,6 +63,13 @@ class Household (models.Model):
   class Meta:
     ordering = ('name', )
     
+class TempImage (models.Model):
+  image = models.ImageField(upload_to=settings.UPLOAD_DIR + "people/tempimage/%Y-%m", blank=True, null=True)
+  ts = models.DateTimeField('Time Stamp', auto_now_add=True)
+  
+  class Meta:
+    ordering = ('-ts',)
+    
 class Person (models.Model):
   household = models.ForeignKey(Household)
   

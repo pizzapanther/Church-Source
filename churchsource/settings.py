@@ -97,12 +97,18 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'south',
+    'sorl.thumbnail',
     'churchsource.configuration',
     'churchsource.people'
 )
 
 LOAD_FROM_D = True
 UPLOAD_DIR = 'uploads/'
+
+THUMBNAIL_DUMMY = True
+THUMBNAIL_QUALITY = 95
+
+INTERNAL_IPS = ('127.0.0.1',)
 
 TEMPLATE_CONTEXT_PROCESSORS = (
   "django.contrib.auth.context_processors.auth",

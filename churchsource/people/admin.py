@@ -15,7 +15,7 @@ class PersonInline (admin.StackedInline):
   )
   readonly_fields = ('details',)
   
-  formfield_overrides = {models.ImageField: {'widget': widgets.WebcamWidget},}
+  formfield_overrides = {models.ImageField: {'widget': widgets.WebcamModal},}
   
 class AddressInline (admin.StackedInline):
   model = pmodels.Address
@@ -34,7 +34,7 @@ class HouseholdAdmin (admin.ModelAdmin):
   list_filter = ('active', 'status', 'first_visit')
   date_hierarchy  = 'anniversary'
   
-  formfield_overrides = {models.ImageField: {'widget': widgets.WebcamWidget},}
+  formfield_overrides = {models.ImageField: {'widget': widgets.WebcamModal},}
   
   inlines = (PersonInline, AddressInline)
   
@@ -49,13 +49,13 @@ class PersonAdmin (admin.ModelAdmin):
   date_hierarchy  = 'bdate'
   raw_id_fields = ('household',)
   
-  formfield_overrides = {models.ImageField: {'widget': widgets.WebcamWidget},}
+  formfield_overrides = {models.ImageField: {'widget': widgets.WebcamModal},}
   
   inlines = (PhoneInline, )
   
   fieldsets = (
     (None, {
-      'fields': (('fname', 'lname'), ('mname', 'email', 'alerts'), ('gender', 'role'), ('bdate', 'ddate'), 'allergies', 'image')
+      'fields': ('household', ('fname', 'lname'), ('mname', 'email', 'alerts'), ('gender', 'role'), ('bdate', 'ddate'), 'allergies', 'image')
     }),
   )
   
@@ -79,6 +79,10 @@ class PhoneAdmin (admin.ModelAdmin):
   search_fields = ('person__fname', 'person__lname', 'person__email', 'person__household__name', 'number')
   list_filter = ('alerts', 'type1', 'type2')
   
+class TIAdmin (admin.ModelAdmin):
+  list_display = ('image', 'ts')
+  
 admin.site.register(pmodels.Household, HouseholdAdmin)
 admin.site.register(pmodels.Person, PersonAdmin)
 admin.site.register(pmodels.Phone, PhoneAdmin)
+admin.site.register(pmodels.TempImage, TIAdmin)
