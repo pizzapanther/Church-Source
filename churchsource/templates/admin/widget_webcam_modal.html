@@ -1,0 +1,30 @@
+<div style="float: left; margin: 0px 15px 0px 0px;">{% load thumbnail %}
+  {% thumbnail img "250x250" as thumb %}<img src="{{ thumb.url }}" id="{{ name }}_img" class="personPhoto"/>
+  {% empty %}
+  <img src="{{ media }}img/no_image.png" id="{{ name }}_img" class="personPhoto"/>
+  {% endthumbnail %}
+</div>
+<div>
+  <script type="text/javascript">
+    function iframe_{{ name|cut:"-" }} () {
+      $.modal(
+        '<iframe src="../../tempimage/add/?_popup=1&id=id_{{ name }}_temp&img={{ name }}_img" height="460" width="640" scrolling="no" style="border:0; margin: 0px auto;">', 
+        {containerCss:{
+          backgroundColor:"#fff",
+          borderColor:"#fff",
+          height:480,
+          padding:0,
+          width:660
+        }}
+      );
+    }
+  </script>
+  <a href="javascript: void(0);" onclick="iframe_{{ name|cut:"-" }}()">Capture From Webcam</a> or&nbsp;&nbsp;  
+  <input id="id_{{ name }}" name="{{ name }}" type="file" />
+</div>
+<div style="clear:both"></div>
+<style type="text/css">
+  .image_temp {
+      display: block;
+  }
+</style>

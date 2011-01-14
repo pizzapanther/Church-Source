@@ -1,0 +1,75 @@
+<script type="text/javascript">{% load thumbnail %}
+  webcam.set_api_url('{% url cs_jpegcam %}');
+  webcam.set_quality(95);
+  webcam.set_shutter_sound(true, '{{ media }}jpegcam/shutter.mp3');
+  webcam.set_swf_url('{{ media }}jpegcam/webcam.swf');
+</script>
+{% if img %}
+<div>
+  {% thumbnail img "250x250" as thumb %}<img src="{{ thumb.url }}" id="{{ name }}_img" class="personPhoto"/>{% endthumbnail %}
+</div>
+{% else %}
+<div style="width: 320px; float: left;">
+  <div id="upload_results"></div>
+  <script type="text/javascript">
+		webcam.set_hook( 'onComplete', 'my_completion_handler' );
+		webcam.set_hook( 'onError', 'my_error_handler' );
+    
+		function upload () {
+		  document.getElementById('upload_results').innerHTML = '<strong>Uploading ... </strong>';
+		  webcam.upload();
+		}
+		
+		function my_error_handler (err) {
+      alert(err);
+    }
+    
+    function my_completion_handler (msg) {
+      try {
+	var temp = msg.split(":");
+	var image_id = temp[1];
+	var image_url = temp[2];
+	
+	var id = getParameterByName('id');
+	var img = getParameterByName('img');
+	
+	parent.document.getElementById(id).value = image_id;
+	parent.document.getElementById(img).src = image_url;
+	
+	parent.$.modal.close();
+      }
+      
+      catch (e) {
+	alert("Upload Error");
+      }
+      
+      document.getElementById('upload_results').innerHTML = '';
+    }
+    
+    function getParameterByName( name )
+    {
+      name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+      var regexS = "[\\?&]"+name+"=([^&#]*)";
+      var regex = new RegExp( regexS );
+      var results = regex.exec( window.location.href );
+      if( results == null )
+	return "";
+      else
+	return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+    
+    document.write( webcam.get_html({{ w }}, {{ h }}) );
+  </script>
+  <br/><br/>
+  <input type=button value="Configure..." onclick="webcam.configure()"> &nbsp;&nbsp; 
+  <input type=button value="Freeze" onclick="webcam.freeze()">  &nbsp;&nbsp; 
+  <input type=button value="Reset" onclick="webcam.reset()">  &nbsp;&nbsp; 
+  <input type=button value="Upload" onclick="upload()">
+</div>
+<div style="clear:both"></div>
+<style type="text/css">
+  .module.footer { 
+    display: none;
+  }
+</style>
+{% endif %}

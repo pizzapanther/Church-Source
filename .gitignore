@@ -2,3 +2,6 @@
 *.log
 *.pid
 churchsource/settings_local.py
+churchsource/static/uploads/
+churchsource/static/cache/
+

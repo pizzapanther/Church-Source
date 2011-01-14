@@ -1,6 +1,9 @@
+import time
+
 from django.db import models
 from django.conf import settings
 import django.contrib.localflavor.us.models as us
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 MSTATUSES = (
   ('ns', 'Not Specified'),
@@ -33,6 +36,21 @@ FAMILY_ROLES = (
   ('other', 'Other')
 )
 
+class TempImage (models.Model):
+  image = models.ImageField(upload_to=settings.UPLOAD_DIR + "people/tempimage/%Y-%m", blank=True, null=True)
+  ts = models.DateTimeField('Time Stamp', auto_now_add=True)
+  
+  def __unicode__ (self):
+    return self.image.name
+    
+  def view (self):
+    return '<img src="%s" alt="" width="100"/>' % self.image.url
+    
+  view.allow_tags = True
+  
+  class Meta:
+    ordering = ('-ts',)
+    
 class Household (models.Model):
   name = models.CharField('Household Name', max_length=150)
   status = models.CharField('Marital Status', choices=MSTATUSES, max_length=10, default='ns')
@@ -42,7 +60,18 @@ class Household (models.Model):
   notes = models.TextField('Notes', blank=True, null=True)
   first_visit = models.DateField('First Visit', blank=True, null=True)
   image = models.ImageField(upload_to=settings.UPLOAD_DIR + "people/family/%Y-%m", blank=True, null=True)
+  image_temp = models.ForeignKey(TempImage, blank=True, null=True)
   
+  def save (self):
+    super(Household, self).save()
+    if self.image_temp:
+      self.image = SimpleUploadedFile(time.strftime("%a%d%b%Y_%H%M%S.jpg"), self.image_temp.image.read(), 'image/jpeg')
+      tid = self.image_temp.id
+      self.image_temp = None
+      super(Household, self).save()
+      
+      TempImage.objects.get(id=str(tid)).delete()
+      
   def __unicode__ (self):
     return self.name
     
@@ -63,13 +92,6 @@ class Household (models.Model):
   class Meta:
     ordering = ('name', )
     
-class TempImage (models.Model):
-  image = models.ImageField(upload_to=settings.UPLOAD_DIR + "people/tempimage/%Y-%m", blank=True, null=True)
-  ts = models.DateTimeField('Time Stamp', auto_now_add=True)
-  
-  class Meta:
-    ordering = ('-ts',)
-    
 class Person (models.Model):
   household = models.ForeignKey(Household)
   
@@ -83,8 +105,19 @@ class Person (models.Model):
   bdate = models.DateField('Birth Date', blank=True, null=True)
   ddate = models.DateField('Deceased', blank=True, null=True)
   image = models.ImageField(upload_to=settings.UPLOAD_DIR + "people/person/%Y-%m", blank=True, null=True)
+  image_temp = models.ForeignKey('TempImage', blank=True, null=True)
   allergies = models.CharField('Allergies', max_length=255, blank=True, null=True)
   
+  def save (self):
+    super(Person, self).save()
+    if self.image_temp:
+      self.image = SimpleUploadedFile(time.strftime("%a%d%b%Y_%H%M%S.jpg"), self.image_temp.image.read(), 'image/jpeg')
+      tid = self.image_temp.id
+      self.image_temp = None
+      super(Person, self).save()
+      
+      TempImage.objects.get(id=str(tid)).delete()
+      
   def __unicode__ (self):
     return '%s %s' % (self.fname, self.lname)
     

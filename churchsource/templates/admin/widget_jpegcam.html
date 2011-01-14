@@ -1,8 +1,0 @@
-<div style="float: left; margin: 0px 15px 0px 0px;">{% load thumbnail %}
-  {% thumbnail img "250x250" as thumb %}<img src="{{ thumb.url }}" id="{{ name }}_img" class="personPhoto"/>{% endthumbnail %}
-</div>
-<div>
-  <a href="javascript: void(0);" onclick="$.modal('<p><b>HTML</b> elements</p>');">Capture From Webcam</a> or&nbsp;&nbsp;  
-  <input id="id_{{ name }}" name="{{ name }}" type="file" />
-</div>
-<div style="clear:both"></div>

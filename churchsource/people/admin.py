@@ -1,7 +1,10 @@
 from django.contrib import admin
 from django import http
 from django import forms
+import time
+
 from django.db import models
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 import churchsource.people.models as pmodels
 import churchsource.people.widgets as widgets
@@ -10,10 +13,11 @@ class PersonInline (admin.StackedInline):
   model = pmodels.Person
   fieldsets = (
     (None, {
-      'fields': (('fname', 'lname'), ('email', 'alerts'), ('gender', 'role'), ('bdate', 'ddate'), 'allergies', 'image', 'details')
+      'fields': (('fname', 'lname'), ('email', 'alerts'), ('gender', 'role'), ('bdate', 'ddate'), 'allergies', 'image', 'image_temp', 'details')
     }),
   )
   readonly_fields = ('details',)
+  raw_id_fields = ('image_temp', )
   
   formfield_overrides = {models.ImageField: {'widget': widgets.WebcamModal},}
   
@@ -33,6 +37,7 @@ class HouseholdAdmin (admin.ModelAdmin):
   search_fields = ('name', 'person__fname', 'person__lname', 'person__email')
   list_filter = ('active', 'status', 'first_visit')
   date_hierarchy  = 'anniversary'
+  raw_id_fields = ('image_temp', )
   
   formfield_overrides = {models.ImageField: {'widget': widgets.WebcamModal},}
   
@@ -47,7 +52,7 @@ class PersonAdmin (admin.ModelAdmin):
   search_fields = ('fname', 'lname', 'email', 'household__name')
   list_filter = ('gender', 'role')
   date_hierarchy  = 'bdate'
-  raw_id_fields = ('household',)
+  raw_id_fields = ('household', 'image_temp')
   
   formfield_overrides = {models.ImageField: {'widget': widgets.WebcamModal},}
   
@@ -55,7 +60,7 @@ class PersonAdmin (admin.ModelAdmin):
   
   fieldsets = (
     (None, {
-      'fields': ('household', ('fname', 'lname'), ('mname', 'email', 'alerts'), ('gender', 'role'), ('bdate', 'ddate'), 'allergies', 'image')
+      'fields': ('household', ('fname', 'lname'), ('mname', 'email', 'alerts'), ('gender', 'role'), ('bdate', 'ddate'), 'allergies', 'image', 'image_temp')
     }),
   )
   
@@ -80,7 +85,8 @@ class PhoneAdmin (admin.ModelAdmin):
   list_filter = ('alerts', 'type1', 'type2')
   
 class TIAdmin (admin.ModelAdmin):
-  list_display = ('image', 'ts')
+  list_display = ('image', 'view', 'ts')
+  formfield_overrides = {models.ImageField: {'widget': widgets.Webcam},}
   
 admin.site.register(pmodels.Household, HouseholdAdmin)
 admin.site.register(pmodels.Person, PersonAdmin)
