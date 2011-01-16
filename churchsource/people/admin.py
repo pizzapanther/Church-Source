@@ -11,9 +11,12 @@ import churchsource.people.widgets as widgets
 
 class PersonInline (admin.StackedInline):
   model = pmodels.Person
+  
+  filter_horizontal = ('groups',)
+  
   fieldsets = (
     (None, {
-      'fields': (('fname', 'lname'), ('email', 'alerts'), ('gender', 'role'), ('bdate', 'ddate'), 'allergies', 'image', 'image_temp', 'details')
+      'fields': (('fname', 'lname'), ('email', 'alerts'), ('gender', 'role'), ('bdate', 'ddate'), 'allergies', 'groups', 'image', 'image_temp', 'details')
     }),
   )
   readonly_fields = ('details',)
@@ -58,9 +61,11 @@ class PersonAdmin (admin.ModelAdmin):
   
   inlines = (PhoneInline, )
   
+  filter_horizontal = ('groups',)
+  
   fieldsets = (
     (None, {
-      'fields': ('household', ('fname', 'lname'), ('mname', 'email', 'alerts'), ('gender', 'role'), ('bdate', 'ddate'), 'allergies', 'image', 'image_temp')
+      'fields': ('household', ('fname', 'lname'), ('mname', 'alerts', 'email'), ('gender', 'role'), ('bdate', 'ddate'), 'extra_labels', 'allergies', 'groups', 'image', 'image_temp')
     }),
   )
   
@@ -88,7 +93,25 @@ class TIAdmin (admin.ModelAdmin):
   list_display = ('image', 'view', 'ts')
   formfield_overrides = {models.ImageField: {'widget': widgets.Webcam},}
   
+class GroupAdminInline (admin.TabularInline):
+  model = pmodels.GroupAdmin
+  raw_id_fields = ('person',)
+  
+class GroupMemberAdmin (admin.TabularInline):
+  model = pmodels.Person.groups.through
+  raw_id_fields = ('person', )
+  verbose_name = "Member"
+  verbose_name_plural = "Members"
+  
+class GroupAdmin (admin.ModelAdmin):
+  list_display = ('name', 'gtype')
+  list_filter = ('gtype',)
+  search_fields = ('name', 'person__fname', 'person__lname', 'person__email', 'person__household__name')
+  
+  inlines = (GroupAdminInline, GroupMemberAdmin)
+  
 admin.site.register(pmodels.Household, HouseholdAdmin)
 admin.site.register(pmodels.Person, PersonAdmin)
 admin.site.register(pmodels.Phone, PhoneAdmin)
 admin.site.register(pmodels.TempImage, TIAdmin)
+admin.site.register(pmodels.Group, GroupAdmin)

@@ -15,7 +15,6 @@ class WebcamModal (forms.FileInput):
 		except:
 			img = None
 			
-		print img
 		c = {'name':name, 'img': img, 'media': settings.MEDIA_URL, 'w': settings.WEBCAM_WIDTH, 'h': settings.WEBCAM_HEIGHT}
 		return mark_safe(render_to_string('admin/widget_webcam_modal.html', c))
 		

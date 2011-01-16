@@ -304,6 +304,11 @@ h2 + * + * + .module.table {
 .stacked .selector-available, .stacked .selector-chosen {
     width: 756px;
 }
+
+#household_form .stacked .selector-available, .stacked .selector-chosen {
+  width: 366px;
+}
+
 .selector h2, .inline-group .selector h2, 
 .inline-related fieldset .selector-available h2, .inline-related fieldset .selector-chosen h2 {
     padding: 7px 5px 6px 7px;
@@ -391,12 +396,30 @@ a.selector-remove:hover, a.selector-remove:active {
 .stacked a.selector-add:link, .stacked a.selector-add:visited {
     background-image: url('../img/icons/icon-selector_add-m2m_vertical.png');
 }
+
+#household_form .stacked a.selector-add:link, .stacked a.selector-add:visited {
+    background-image: url('../img/icons/icon-selector_add-m2m_horizontal.png');
+}
+
+#household_form .stacked a.selector-add:hover {
+    background-image: url('../img/icons/icon-selector_add-m2m_horizontal-hover.png');
+}
+
 .stacked a.selector-add:hover, .stacked a.selector-add:active {
     background-image: url('../img/icons/icon-selector_add-m2m_vertical-hover.png');
 }
 .stacked a.selector-remove:link, .stacked a.selector-remove:visited {
     background-image: url('../img/icons/icon-selector_remove-m2m_vertical.png');
 }
+
+#household_form .stacked a.selector-remove:link, .stacked a.selector-remove:visited {
+    background-image: url('../img/icons/icon-selector_remove-m2m_horizontal.png');
+}
+
+#household_form .stacked a.selector-remove:hover {
+    background-image: url('../img/icons/icon-selector_remove-m2m_horizontal-hover.png');
+}
+
 .stacked a.selector-remove:hover, .stacked a.selector-remove:active {
     background-image: url('../img/icons/icon-selector_remove-m2m_vertical-hover.png');
 }

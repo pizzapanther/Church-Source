@@ -107,6 +107,9 @@ class Person (models.Model):
   image = models.ImageField(upload_to=settings.UPLOAD_DIR + "people/person/%Y-%m", blank=True, null=True)
   image_temp = models.ForeignKey('TempImage', blank=True, null=True)
   allergies = models.CharField('Allergies', max_length=255, blank=True, null=True)
+  extra_labels = models.IntegerField('Extra Labels', default=0)
+  
+  groups = models.ManyToManyField('Group', blank=True, null=True)
   
   def save (self):
     super(Person, self).save()
@@ -119,7 +122,7 @@ class Person (models.Model):
       TempImage.objects.get(id=str(tid)).delete()
       
   def __unicode__ (self):
-    return '%s %s' % (self.fname, self.lname)
+    return '%s, %s' % (self.lname, self.fname)
     
   def birthday (self):
     return self.bdate.strftime('%m/%d/%Y')
@@ -204,4 +207,28 @@ class Phone (models.Model):
     
   class Meta:
     ordering = ('person__lname', 'person__fname', 'number')
+    
+GTYPES = (('general', 'General'), ('checkinc', 'Check In - Child'), ('checkina', 'Check In - Adult'))
+
+class Group (models.Model):
+  name = models.CharField('Name', max_length=255)
+  gtype = models.CharField('Type', max_length=10, choices=GTYPES, default="general")
+  desc = models.CharField('Description', max_length=255, blank=True, null=True)
+  
+  def __unicode__ (self):
+    return self.name
+    
+  class Meta:
+    ordering = ('name',)
+    
+class GroupAdmin (models.Model):
+  person = models.ForeignKey(Person)
+  group = models.ForeignKey(Group)
+  can_send = models.BooleanField('Can Send Broadcast Messages', default=True)
+  
+  def __unicode__ (self):
+    return '%s - %s' % (self.group.name, self.person.lname)
+    
+  class Meta:
+    ordering = ('group__name', 'person__lname', 'person__fname')
     
