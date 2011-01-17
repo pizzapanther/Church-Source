@@ -65,7 +65,7 @@ class PersonAdmin (admin.ModelAdmin):
   
   fieldsets = (
     (None, {
-      'fields': ('household', ('fname', 'lname'), ('mname', 'alerts', 'email'), ('gender', 'role'), ('bdate', 'ddate'), 'extra_labels', 'allergies', 'groups', 'image', 'image_temp')
+      'fields': ('household', ('fname', 'lname'), ('mname', 'alerts', 'email'), ('gender', 'role'), ('bdate', 'ddate'), 'allergies', 'groups', 'image', 'image_temp')
     }),
   )
   

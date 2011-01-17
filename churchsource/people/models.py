@@ -107,7 +107,6 @@ class Person (models.Model):
   image = models.ImageField(upload_to=settings.UPLOAD_DIR + "people/person/%Y-%m", blank=True, null=True)
   image_temp = models.ForeignKey('TempImage', blank=True, null=True)
   allergies = models.CharField('Allergies', max_length=255, blank=True, null=True)
-  extra_labels = models.IntegerField('Extra Labels', default=0)
   
   groups = models.ManyToManyField('Group', blank=True, null=True)
   

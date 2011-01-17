@@ -63,7 +63,7 @@ MEDIA_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/static/gmedia/'
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'please generate your own secret and put it in settings_local.py'
+SECRET_KEY = 'please generate your own secret and put it in settings_local.py: ./manage.py gensecret'
 
 GRAPPELLI_ADMIN_HEADLINE = 'Church Source Administration'
 GRAPPELLI_ADMIN_TITLE = 'Church Source Administration'
@@ -99,7 +99,8 @@ INSTALLED_APPS = (
     'south',
     'sorl.thumbnail',
     'churchsource.configuration',
-    'churchsource.people'
+    'churchsource.people',
+    'churchsource.check_in',
 )
 
 LOAD_FROM_D = True
