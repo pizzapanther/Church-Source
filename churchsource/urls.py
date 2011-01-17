@@ -18,6 +18,11 @@ urlpatterns += patterns('churchsource.people.views',
   url(r'^jpegcam/$', 'jpegcam_admin', name='cs_jpegcam'),
 )
 
+urlpatterns += patterns('churchsource.check_in.views',
+  url(r'^checkin/terminal/$', 'terminal', name='cs_terminal'),
+  url(r'^checkin/reports/$', 'reports', name='cs_reports'),
+)
+
 if settings.DEBUG:
   urlpatterns += patterns('',
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve',  {'document_root': os.path.join(settings.SPATH, 'static'), 'show_indexes': True}),

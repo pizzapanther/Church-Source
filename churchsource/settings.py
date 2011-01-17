@@ -85,7 +85,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'churchsource.urls'
 
-TEMPLATE_DIRS = (os.path.join(SPATH, 'templates'),)
+TEMPLATE_DIRS = (os.path.join(SPATH, 'templates'), os.path.join(SPATH, '..', 'dependencies', 'debug_toolbar', 'templates'))
 
 INSTALLED_APPS = (
     'django.contrib.auth',
