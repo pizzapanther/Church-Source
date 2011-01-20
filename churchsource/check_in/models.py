@@ -8,7 +8,7 @@ class Event (models.Model):
   end = models.DateTimeField('End', blank=True, null=True)
   
   def __unicode__ (self):
-    '%s - %d/%d/%d' % (self.name, self.start.month, self.start.day, self.start.year)
+    return '%s - %d/%d/%d' % (self.name, self.start.month, self.start.day, self.start.year)
     
   class Meta:
     ordering = ('-start', 'name')

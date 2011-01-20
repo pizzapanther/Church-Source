@@ -34,10 +34,10 @@
                    {% endfor %}
                    {% if app.name|lower == 'check_in' %}
                    <div class="row">
-                     <a href="/checkin/terminal/">Check In Terminal</a>
+                     <a href="{% url cs_terminal %}">Check In Terminal</a>
                    </div>
                    <div class="row">
-                     <a href="/checkin/reports/">Reports</a>
+                     <a href="{% url cs_reports %}">Reports</a>
                    </div>
                    {% endif %}
                </div>
