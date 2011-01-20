@@ -1,0 +1,103 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  font-size: 1.2em;
+  font-family: 'Droid Sans', arial, helvetica, sans-serif;
+}
+
+a {
+  color: #0776A0;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.font1 {
+  font-family: 'Droid Sans', arial, helvetica, sans-serif
+}
+
+.font2 {
+  font-family: 'Ubuntu', arial, serif;
+}
+
+hr {
+  margin: 1.0em 0px;
+  border: 0px;
+  border-bottom: 1px solid #757575;
+}
+
+h1 {
+  border-bottom: 4px double #757575;
+  font-family: 'Ubuntu', arial, serif;
+  padding: 0.3em 0px 0.1em 0px;
+  margin: 0px 0px 0.3em 0px;
+}
+
+h2, h3, h4, h5, h6 {
+  font-family: 'Ubuntu', arial, serif;
+  margin: 0px;
+  padding: 0.3em 0px;
+}
+
+#mainWrapper {
+  background: -webkit-gradient(linear, left top, left bottom, from(#63dc8f), to(#fff));
+  background: -moz-linear-gradient(top,  #63dc8f,  #fff);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#63dc8f', endColorstr='#ffffff');
+}
+
+#mainContent {
+  width: 960px;
+  margin: 0px auto;
+}
+
+#footer {
+  font-size: 0.7em;
+  text-align: center;
+  padding: 40px 0px 20px 0px;
+}
+
+.clear {
+  clear: both;
+}
+
+ul.eform {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+ul.eform li {
+  float: left;
+  margin: 5px 15px 5px 0px;
+}
+
+ul.eform li.num {
+  padding: 0.8em 0px 0px 0px;
+}
+
+ul.eform li label {
+  display: none;
+}
+
+ul.eform.first li label {
+  display: block;
+  font-weight: bold;
+}
+
+input[type="submit"] {
+  font-size: 1.6em;
+  padding: 0.1em 0.3em;
+}
+
+input[type="text"] {
+  font-size: 1.6em;
+  padding: 0.1em 0.3em;
+  width: 300px;
+}
+
+input.tpicker {
+  width: 145px;
+}
+
