@@ -1,4 +1,4 @@
-{% extends "master.html" %}
+{% extends "master.html" %}{% load cstags %}
 {% block title %}Check In{% endblock %}
 {% block content %}
 <h1>Check In</h1>
@@ -25,7 +25,7 @@
   {{ ci.code }}
   </div>
   {% endif %}
-  <div class="events">{% for e in ci.events.all %}{{ e.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+  <div class="groups">{% for g in ci|get_groups %}{{ g.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
 </div>
 {% endfor %}
 {% if code %}

@@ -77,6 +77,7 @@ def terminal_checkin (request, events=''):
   checkins = None
   code = None
   code_tags = []
+  real_code_tags = []
   
   if request.task == 'Search':
     search = request.POST.get('search', '')
@@ -146,7 +147,6 @@ def terminal_checkin (request, events=''):
       code_tags.append(mycode)
       
     code_tags = [elem for elem in code_tags if elem is None]
-    real_code_tags = []
     if code:
       for i in range(0, (len(code_tags) + 1)/2):
         real_code_tags.append(code)

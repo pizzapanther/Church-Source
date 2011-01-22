@@ -63,7 +63,7 @@ class Household (models.Model):
   image_temp = models.ForeignKey(TempImage, blank=True, null=True)
   
   def checkable (self):
-    return self.person_set.filter(groups__gtype__in=['checkinc', 'checkina'])
+    return self.person_set.filter(groups__gtype__in=['checkinc', 'checkina']).distinct()
     
   def save (self):
     super(Household, self).save()

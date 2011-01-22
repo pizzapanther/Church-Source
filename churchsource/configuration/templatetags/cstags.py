@@ -1,7 +1,23 @@
-from django         import template
+from django.db.models import Q
+from django import template
 
 register = template.Library()
 
+@register.filter
+def get_groups (ci):
+  ret = []
+  used = []
+  
+  for e in ci.events.all():
+    for eg in e.groups.all():
+      if eg.id not in used:
+        for pg in ci.person.groups.filter(Q(gtype='checkinc') | Q(gtype='checkina')):
+          if pg.id == eg.id:
+            ret.append(eg)
+            used.append(eg.id)
+            
+  return ret
+  
 @register.filter
 def truncateString (string, length, ellipsis='...'):
     if string:

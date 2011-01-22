@@ -14,6 +14,7 @@ class EventAdmin (admin.ModelAdmin):
   list_filter = ('start',)
   search_fields = ('name',)
   date_hierarchy  = 'start'
+  filter_horizontal = ('groups',)
   
 admin.site.register(cmodels.Event, EventAdmin)
 admin.site.register(cmodels.CheckIn, CheckInAdmin)

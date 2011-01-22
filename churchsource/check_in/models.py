@@ -1,6 +1,7 @@
 import random
 
 from django.db import models
+from django.db.models import Q
 
 import churchsource.people.models as pmodels
 
@@ -9,6 +10,8 @@ class Event (models.Model):
   start = models.DateTimeField('Start')
   end = models.DateTimeField('End', blank=True, null=True)
   code = models.BooleanField('Needs Check In Code', default=True)
+  
+  groups = models.ManyToManyField(pmodels.Group, blank=True, null=True, limit_choices_to=Q(gtype='checkinc') | Q(gtype='checkina'))
   
   def __unicode__ (self):
     return '%s - %d/%d/%d' % (self.name, self.start.month, self.start.day, self.start.year)
