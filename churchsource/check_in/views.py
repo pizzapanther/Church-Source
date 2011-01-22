@@ -146,7 +146,7 @@ def terminal_checkin (request, events=''):
       checkins.append(ci)
       code_tags.append(mycode)
       
-    code_tags = [elem for elem in code_tags if elem is None]
+    code_tags = [elem for elem in code_tags if elem is not None]
     if code:
       for i in range(0, (len(code_tags) + 1)/2):
         real_code_tags.append(code)
