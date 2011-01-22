@@ -1,0 +1,50 @@
+{% extends "master.html" %}
+{% block title %}Check In{% endblock %}
+{% block content %}
+<h1>Check In</h1>
+<form action="./" method="post" autocomplete="off">
+  {% csrf_token %}
+  {% if message %}<div class="message">{{ message }}</div>{% endif %}
+  <div class="checkin_search">
+    <input type="text" name="search" value=""/>
+    <input type="submit" name="task" value="Search"/>
+  </div>
+</form>
+{% endblock %}
+{% block print %}
+{% if checkins %}
+{% for ci in checkins %}
+{% if not forloop.first %}<div class="break"></div>{% endif %}
+<div class="citag{% if code %} code{% endif %}">
+  <div class="name">
+    {{ ci.person.fname }} {{ ci.person.lname }}
+  </div>
+  {% if code %}
+  <hr/>
+  <div class="clabel">
+  {{ code }}&nbsp;&nbsp;&nbsp; <span class="events">{% for e in ci.events.all %}{{ e.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+  </div>
+  {% endif %}
+</div>
+{% endfor %}
+{% if code %}
+{% for c in code_tags %}
+<div class="break"></div>
+<div class="codetag">
+  <table>
+    <tr>
+      <td class="c"><span>{{ c }}</span></td>
+      <td class="vr"><img src="{{ MEDIA_URL }}img/vr.png" alt=""/></td>
+      <td class="c"><span>{{ c }}</span></td>
+    </tr>
+  </table>
+</div>
+{% endfor %}
+{% endif %}
+<script type="text/javascript">
+  jQuery(document).ready(function () {
+    window.print();
+  });
+</script>
+{% endif %}
+{% endblock %}

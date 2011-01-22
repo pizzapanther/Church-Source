@@ -1,3 +1,4 @@
+import re
 import datetime
 
 from django import http
@@ -6,6 +7,7 @@ from django.core.urlresolvers import reverse
 
 import churchsource.check_in.models as cmodels
 import churchsource.check_in.forms as cforms
+import churchsource.people.models as pmodels
 
 def terminal (request):
   can_create = request.user.has_perm('check_in.add_event')
@@ -29,9 +31,15 @@ def terminal (request):
       if eforms.is_valid():
         for eform in eforms.forms:
           if len(eform.cleaned_data.keys()) > 0:
-            pass
-            #create event
-            #events_created.append(e.id)
+            today = datetime.date.today()
+            start = datetime.datetime(year=today.year, month=today.month, day=today.day, hour=eform.cleaned_data['start'].hour, minute=eform.cleaned_data['start'].minute)
+            end = None
+            if eform.cleaned_data['end']:
+              end = datetime.datetime(year=today.year, month=today.month, day=today.day, hour=eform.cleaned_data['end'].hour, minute=eform.cleaned_data['end'].minute)
+              
+            e = cmodels.Event(name=eform.cleaned_data['name'], start=start, end=end)
+            e.save()
+            events_created.append(e.id)
             
         if len(checked) + len(events_created) == 0:
           message = "Sorry there are no events to check in for right now."
@@ -65,7 +73,77 @@ def terminal (request):
   return request.render_to_response('checkin/terminal.html', c)
   
 def terminal_checkin (request, events=''):
-  return request.render_to_response('checkin/terminal_checkin.html', {})
+  message = ''
+  checkins = None
+  code = None
+  code_tags = []
+  
+  if request.task == 'Search':
+    search = request.POST.get('search', '')
+    if re.search('^\s*$', search):
+      message = 'Please fill in a search term.'
+      
+    else:
+      search_fields = ('name', 'barcode', 'person__fname', 'person__mname', 'person__lname')
+      q = None
+      for s in search_fields:
+        if s == 'barcode':
+          myq = Q(**{s + '__exact': search})
+          
+        else:
+          myq = Q(**{s + '__icontains': search})
+          
+        if q:
+          q = q | myq
+          
+        else:
+          q = myq
+          
+        households = pmodels.Household.objects.filter(q).filter(active=True, person__groups__gtype__in=['checkinc', 'checkina']).distinct()
+        if households.count() == 0:
+          message = 'Nothing Found'
+          
+        elif households.count() == 1:
+          return http.HttpResponseRedirect('./?task=household&h=%d' % households[0].id)
+          
+        else:
+          return request.render_to_response('checkin/terminal_choose.html', {'households': households})
+          
+  elif request.task == 'household':
+    h = request.REQUEST.get('h', '')
+    try:
+      h = pmodels.Household.objects.get(id=h)
+      
+    except:
+      return http.HttpResponseRedirect('./')
+      
+    else:
+      now = datetime.datetime.now()
+      events = cmodels.Event.objects.filter(id__in=events.split("-")).filter(Q(end__isnull=True) | Q(end__gte=now))
+      return request.render_to_response('checkin/terminal_checkin.html', {'h': h, 'events': events})
+      
+  elif request.task == 'Check In':
+    checkins = []
+    events = cmodels.Event.objects.filter(id__in=[elem for elem in request.POST.getlist('events') if elem != ""])
+    peeps = pmodels.Person.objects.filter(id__in=[elem for elem in request.POST.getlist('peeps') if elem != ""])
+    
+    for e in events:
+      if e.code:
+        code = cmodels.gencode()
+        break
+        
+    for p in peeps:
+      ci = cmodels.CheckIn(person=p, code=code)
+      ci.save()
+      for e in events:
+        ci.events.add(e)
+        
+      checkins.append(ci)
+      
+    for i in range(0, (len(checkins) + 1)/2):
+      code_tags.append(code)
+      
+  return request.render_to_response('checkin/terminal_search.html', {'message': message, 'checkins': checkins, 'code': code, 'code_tags': code_tags})
   
 def reports (request):
   pass

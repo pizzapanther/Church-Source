@@ -62,6 +62,9 @@ class Household (models.Model):
   image = models.ImageField(upload_to=settings.UPLOAD_DIR + "people/family/%Y-%m", blank=True, null=True)
   image_temp = models.ForeignKey(TempImage, blank=True, null=True)
   
+  def checkable (self):
+    return self.person_set.filter(groups__gtype__in=['checkinc', 'checkina'])
+    
   def save (self):
     super(Household, self).save()
     if self.image_temp:

@@ -41,6 +41,10 @@ h2, h3, h4, h5, h6 {
   padding: 0.3em 0px;
 }
 
+#print {
+  display: none;
+}
+
 #mainWrapper {
   background: -webkit-gradient(linear, left top, left bottom, from(#63dc8f), to(#fff));
   background: -moz-linear-gradient(top,  #63dc8f,  #fff);
@@ -95,7 +99,7 @@ ul.eform.first li label {
   font-weight: bold;
 }
 
-input[type="submit"] {
+input[type="submit"], input[type="button"] {
   font-size: 1.6em;
   padding: 0.1em 0.3em;
 }
@@ -126,4 +130,40 @@ div.message {
 
 .errorlist {
   display: none;
+}
+
+.checkin_search {
+  text-align: center;
+}
+
+
+ul.notype {
+  list-style-type: none;
+}
+
+.choose li a {
+  display: block;
+  margin: 0.5em 0.3em;
+  padding: 0.1em 0.3em;
+  font-size: 1.6em;
+  border: 1px solid #00782e;
+  background-color: #63dc8f;
+}
+
+.choose li a span {
+  display: block;
+  float: right;
+}
+
+.choose2 li {
+  margin: 15px 0px;
+}
+
+.choose2 li label {
+  text-align: left;
+  width: 50%;
+}
+
+.events_sel label {
+  margin-right: 15px;
 }
