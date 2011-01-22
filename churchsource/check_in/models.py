@@ -40,6 +40,7 @@ class CheckIn (models.Model):
      
   class Meta:
     ordering = ('-cin', 'person__lname', 'person__fname')
+    permissions = (("can_generate_reports", "Can generate check in reports"),)
     
 def gencode ():
   code = ''
