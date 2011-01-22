@@ -1,3 +1,7 @@
+body {
+  font-family: 'Ubuntu', arial, serif;
+}
+
 #print {
   display: block;
 }
@@ -28,7 +32,7 @@ hr {
 }
 
 .citag .clabel .events {
-  font-size: 0.8em;
+  font-size: 0.7em;
 }
 
 .codetag table {
@@ -42,7 +46,7 @@ hr {
   width: 48%;
   text-align: center;
   vertical-align: middle;
-  font-size: 1.8em;
+  font-size: 2.0em;
 }
 
 .codetag .c span {

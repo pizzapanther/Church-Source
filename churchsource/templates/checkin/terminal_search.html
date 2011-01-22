@@ -22,7 +22,8 @@
   {% if code %}
   <hr/>
   <div class="clabel">
-  {{ code }}&nbsp;&nbsp;&nbsp; <span class="events">{% for e in ci.events.all %}{{ e.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+  {{ code }}<br/>
+  <span class="events">{% for e in ci.events.all %}{{ e.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
   </div>
   {% endif %}
 </div>
