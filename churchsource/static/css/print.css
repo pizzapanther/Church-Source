@@ -31,8 +31,16 @@ hr {
   font-size: 1.6em;
 }
 
-.citag .groups {
+.citag .clabel span {
+  font-size: 0.8em;
+}
+
+.citag .groups, .citag .alg {
   font-size: 1.0em;
+}
+
+.citag .alg {
+  padding-top: 8px;
 }
 
 .codetag table {

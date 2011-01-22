@@ -5,6 +5,8 @@ from django.conf import settings
 import django.contrib.localflavor.us.models as us
 from django.core.files.uploadedfile import SimpleUploadedFile
 
+import churchsource.resources.models as rmodels
+
 MSTATUSES = (
   ('ns', 'Not Specified'),
   ('single', 'Single'),
@@ -222,6 +224,7 @@ GTYPES = (('general', 'General'), ('checkinc', 'Check In - Child'), ('checkina',
 class Group (models.Model):
   name = models.CharField('Name', max_length=255)
   gtype = models.CharField('Type', max_length=10, choices=GTYPES, default="general")
+  room = models.ForeignKey(rmodels.Room, blank=True, null=True)
   desc = models.CharField('Description', max_length=255, blank=True, null=True)
   
   def __unicode__ (self):

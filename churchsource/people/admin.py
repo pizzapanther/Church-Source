@@ -107,6 +107,7 @@ class GroupAdmin (admin.ModelAdmin):
   list_display = ('name', 'gtype')
   list_filter = ('gtype',)
   search_fields = ('name', 'person__fname', 'person__lname', 'person__email', 'person__household__name')
+  raw_id_fields = ('room',)
   
   inlines = (GroupAdminInline, GroupMemberAdmin)
   

@@ -102,6 +102,7 @@ INSTALLED_APPS = (
     'churchsource.configuration',
     'churchsource.people',
     'churchsource.check_in',
+    'churchsource.resources',
 )
 
 LOAD_FROM_D = True
