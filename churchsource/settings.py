@@ -114,6 +114,8 @@ WEBCAM_HEIGHT = 240
 
 INTERNAL_IPS = ('127.0.0.1',)
 
+TIME_INPUT_FORMATS = ('%I:%M %p', '%H:%M:%S', '%H:%M')
+
 TEMPLATE_CONTEXT_PROCESSORS = (
   "django.contrib.auth.context_processors.auth",
   "django.core.context_processors.debug",

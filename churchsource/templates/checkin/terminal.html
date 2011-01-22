@@ -4,6 +4,8 @@
 <h1>Select/Create Events for Check In</h1>
 <form action="./" method="post" autocomplete="off">
   {% csrf_token %}
+  {{ eforms.management_form }}
+  {% if message %}<div class="message">{{ message }}</div>{% endif %}
   {% if can_create %}
   <div class="ecreate">
     {% for eform in eforms.forms %}
@@ -19,9 +21,19 @@
   {% if events.count == 0 %}<h3>No events are scheduled for today. Please create one.</h3>{% else %}
   <div id="echecks">
     {% for event in events %}
+    {% if event.id in checked %}
+    <input type="checkbox" id="check_{{ forloop.counter }}" checked="checked"/>
+    <input type="hidden" name="event_check" id="check_{{ forloop.counter }}_hidden" value="{{ event.id }}"/>
+    <label onclick="toggle_check('check_{{ forloop.counter }}', '{{ event.id }}')" for="check_{{ forloop.counter }}" id="check_{{ forloop.counter }}_label">
+      <img src="{{ MEDIA_URL }}img/checked.png" alt=""/> {{ event.name }}: {{ event.start|date:"P" }}
+    </label>
+    {% else %}
     <input type="checkbox" id="check_{{ forloop.counter }}"/>
     <input type="hidden" name="event_check" id="check_{{ forloop.counter }}_hidden" value=""/>
-    <label onclick="toggle_check('check_{{ forloop.counter }}_hidden', '{{ event.id }}')" for="check_{{ forloop.counter }}">{{ event.name }}: {{ event.start|date:"P" }}</label>
+    <label onclick="toggle_check('check_{{ forloop.counter }}', '{{ event.id }}')" for="check_{{ forloop.counter }}" id="check_{{ forloop.counter }}_label">
+      <img src="{{ MEDIA_URL }}img/unchecked.png" alt=""/> {{ event.name }}: {{ event.start|date:"P" }}
+    </label>
+    {% endif %}
     {% endfor %}
   </div>
   {% endif %}
@@ -32,7 +44,10 @@
 {% block footer %}
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui/js/jquery-ui-timepicker-addon.js"></script>
 <script type="text/javascript">
-  $('.tpicker').timepicker({ampm: true});
-  $( "#echecks input" ).button();
+  jQuery(document).ready(function () {
+    jQuery('.tpicker').timepicker({ampm: true});
+    jQuery( "#echecks input" ).button();
+    display_errors('eform');
+  });
 </script>
 {% endblock %}

@@ -20,6 +20,7 @@ urlpatterns += patterns('churchsource.people.views',
 
 urlpatterns += patterns('churchsource.check_in.views',
   url(r'^checkin/terminal/$', 'terminal', name='cs_terminal'),
+  url(r'^checkin/terminal/events-(?P<events>.*)/$', 'terminal_checkin', name='cs_terminal_checkin'),
   url(r'^checkin/reports/$', 'reports', name='cs_reports'),
 )
 

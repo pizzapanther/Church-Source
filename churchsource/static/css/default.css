@@ -58,6 +58,10 @@ h2, h3, h4, h5, h6 {
   padding: 40px 0px 20px 0px;
 }
 
+#footer p {
+  margin: 0.5em 0px;
+}
+
 .clear {
   clear: both;
 }
@@ -81,6 +85,11 @@ ul.eform li label {
   display: none;
 }
 
+label img {
+  vertical-align: middle;
+  margin: -4px 0px 0px 0px;
+}
+
 ul.eform.first li label {
   display: block;
   font-weight: bold;
@@ -101,3 +110,20 @@ input.tpicker {
   width: 145px;
 }
 
+div.message {
+  padding: 0.5em 0px;
+  text-align: center;
+  color: #d9005b;
+  font-weight: bold;
+  font-family: 'Ubuntu', arial, serif;
+}
+
+.error {
+  color: #d9005b;
+  font-size: 0.8em;
+  margin: 3px 0px;
+}
+
+.errorlist {
+  display: none;
+}

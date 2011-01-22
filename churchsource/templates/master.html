@@ -9,6 +9,9 @@
   <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui/js/jquery-1.4.4.min.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui/js/jquery-ui-1.8.8.custom.min.js"></script>
   <link rel="stylesheet" type='text/css' href="{{ MEDIA_URL }}js/jquery-ui/css/smoothness/jquery-ui-1.8.8.custom.css" />
+  <script type="text/javascript">
+    var MEDIA_URL = '{{ MEDIA_URL }}';
+  </script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/default.js"></script>
   {% block header %}{% endblock %}
 </head>
@@ -17,11 +20,11 @@
     <div id="mainContent">
       {% block content %}{% endblock %}
       <div id="footer">
-        Church Source: Open Source Church Management Software&nbsp; -&nbsp; 
-        <a href="http://churchsource.viviti.com/">Website</a>&nbsp; -&nbsp; 
-        <a href="https://github.com/pizzapanther/Church-Source">Source Code</a>&nbsp; -&nbsp; 
-        Created by <a href="http://www.google.com/profiles/Paul.M.Bailey">Paul Bailey</a>&nbsp; -&nbsp; 
-        <a href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">License: GPL v3</a>
+        <p>Church Source: Open Source Church Management Software</p>
+        <p>churchsource.viviti.com&nbsp; -&nbsp; 
+        Source Code: github.com/pizzapanther/Church-Source&nbsp; -&nbsp; 
+        Author: Paul Bailey&nbsp; -&nbsp; 
+        License: GPL v3</p>
       </div>
     </div>
   </div>

@@ -22,6 +22,7 @@ class Shortcuts:
   def process_request (self, request):
     request.render_to_response = Command(render_to_response, request)
     request.task = request.REQUEST.get('task', '')
+    request.ERROR_MESSAGE = 'There are errors in your request.'
     
     return None
     
