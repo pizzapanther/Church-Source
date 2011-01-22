@@ -19,13 +19,13 @@
   <div class="name">
     {{ ci.person.fname }} {{ ci.person.lname }}
   </div>
-  {% if code %}
   <hr/>
+  {% if ci.code %}
   <div class="clabel">
-  {{ code }}<br/>
-  <span class="events">{% for e in ci.events.all %}{{ e.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+  {{ ci.code }}
   </div>
   {% endif %}
+  <div class="events">{% for e in ci.events.all %}{{ e.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
 </div>
 {% endfor %}
 {% if code %}

@@ -113,6 +113,13 @@ class Person (models.Model):
   
   groups = models.ManyToManyField('Group', blank=True, null=True)
   
+  def is_adult (self):
+    if self.groups.filter(gtype='checkinc').count() == 0:
+      return True
+      
+    else:
+      return False
+      
   def save (self):
     super(Person, self).save()
     if self.image_temp:

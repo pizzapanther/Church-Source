@@ -133,17 +133,25 @@ def terminal_checkin (request, events=''):
         break
         
     for p in peeps:
-      ci = cmodels.CheckIn(person=p, code=code)
+      mycode = code
+      if p.is_adult():
+        mycode = None
+        
+      ci = cmodels.CheckIn(person=p, code=mycode)
       ci.save()
       for e in events:
         ci.events.add(e)
         
       checkins.append(ci)
+      code_tags.append(mycode)
       
-    for i in range(0, (len(checkins) + 1)/2):
-      code_tags.append(code)
-      
-  return request.render_to_response('checkin/terminal_search.html', {'message': message, 'checkins': checkins, 'code': code, 'code_tags': code_tags})
+    code_tags = [elem for elem in code_tags if elem is None]
+    real_code_tags = []
+    if code:
+      for i in range(0, (len(code_tags) + 1)/2):
+        real_code_tags.append(code)
+        
+  return request.render_to_response('checkin/terminal_search.html', {'message': message, 'checkins': checkins, 'code': code, 'code_tags': real_code_tags})
   
 def reports (request):
   pass
