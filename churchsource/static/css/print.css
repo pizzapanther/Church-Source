@@ -6,6 +6,11 @@
   display: none;
 }
 
+hr {
+  border: 0px;
+  border-bottom: 1px solid #000;
+}
+
 .break {
   page-break-before: always;
 }
