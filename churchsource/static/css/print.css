@@ -32,14 +32,15 @@ hr {
 }
 
 .citag .clabel span {
-  font-size: 0.8em;
+  font-size: 0.5em;
 }
 
-.citag .groups, .citag .alg {
+.citag .groups {
   font-size: 1.0em;
 }
 
 .citag .alg {
+  font-size: 0.8em;
   padding-top: 8px;
 }
 
