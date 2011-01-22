@@ -1,0 +1,44 @@
+{% extends "master_print.html" %}{% load cstags %}
+{% block title %}Check In Reports{% endblock %}
+{% block content %}
+{% for e in events %}
+{% if not forloop.first %}<div class="break"></div>{% endif %}
+{% for g in e.groups.all %}
+{% if not forloop.first %}<div class="break"></div>{% endif %}
+<h3>
+  {{ e.name }} - {{ e.start|date:"D, M dS h:i A" }}<br/>
+  {{ g.name }}
+</h3>
+<table>
+  <tr>
+    <td><strong>Name</strong></td>
+    <td class="tr"><strong>Code</strong></td>
+    <td class="tr"><strong>Checked In</strong></td>
+    <td class="tr nopad"><strong>Checked Out</strong></td>
+  </tr>
+  {% with e|get_checkins:g as checkins %}
+  {% for ci in checkins %}
+  <tr>
+    <td class="name">{{ ci.person.lname }}, {{ ci.person.fname }}</td>
+    <td class="tr">{{ ci.code }}</td>
+    <td class="tr">{{ ci.cin|date:"h:i A" }}</td>
+    <td class="tr nopad">{% if ci.cout %}{{ ci.cout|date:"h:i A" }}{% else %}<img src="{{ MEDIA_URL }}img/unchecked.png" alt=""/>{% endif %}</td>
+  </tr>
+  <tr>
+    <td colspan="4" class="nopad"><hr/></td>
+  </tr>
+  {% endfor %}
+  <tr>
+    <td colspan="4" class="tr nopad">Total: {{ checkins|length }}</td>
+  </tr>
+  {% endwith %}
+</table>
+{% endfor %}
+{% endfor %}
+<div class="break"></div>
+<h2>
+  Events:<br/>
+  {% for e in events %}{{ e.name }} - {{ e.start|date:"m/d/Y h:i A" }}<br/>{% endfor %}<br/>
+  Total Attendance: {{ total }}
+</h2>
+{% endblock %}

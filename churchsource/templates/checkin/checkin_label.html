@@ -1,0 +1,12 @@
+<div class="citag{% if code %} code{% endif %}">{% load cstags %}
+  <div class="name">
+    {{ ci.person.fname }} {{ ci.person.lname }}
+  </div>
+  <hr/>
+  {% if ci.code %}
+  <div class="clabel">
+  {{ ci.code }}
+  </div>
+  {% endif %}
+  <div class="groups">{% for g in ci|get_groups %}{{ g.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+</div>

@@ -1,6 +1,8 @@
 from django.db.models import Q
 from django import template
 
+import churchsource.check_in.models as cmodels
+
 register = template.Library()
 
 @register.filter
@@ -16,6 +18,17 @@ def get_groups (ci):
             ret.append(eg)
             used.append(eg.id)
             
+  return ret
+  
+@register.filter
+def get_checkins (event, group):
+  ret = []
+  used = []
+  for c in cmodels.CheckIn.objects.filter(events=event, events__groups=group, person__groups=group).order_by('person__lname', 'person__fname'):
+    if c.person.id not in used:
+      ret.append(c)
+      used.append(c.person.id)
+      
   return ret
   
 @register.filter

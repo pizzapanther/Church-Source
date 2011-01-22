@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{% block title %}{% endblock %} | Church Source</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type='text/css' href="{{ MEDIA_URL }}css/reports.css"/>
+  <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css'>
+  <script type="text/javascript">
+    var MEDIA_URL = '{{ MEDIA_URL }}';
+  </script>
+  {% block header %}{% endblock %}
+</head>
+<body>
+  <div id="mainWrapper">
+    <div id="mainContent">
+      {% block content %}{% endblock %}
+      <div id="footer">
+        <p>Church Source: Open Source Church Management Software&nbsp; -&nbsp; License: GPL v3</p>
+        <p>churchsource.viviti.com&nbsp; -&nbsp; 
+          Source: github.com/pizzapanther/Church-Source&nbsp; -&nbsp; 
+          Author: Paul Bailey, paul.m.bailey@gmail.com
+        </p>
+      </div>
+    </div>
+  </div>
+  {% block footer %}{% endblock %}
+</body>
+</html>

@@ -7,5 +7,6 @@
   <li><a href="./?task=household&h={{ h.id }}">{{ h.name }}: {{ h.members|truncateString:40 }}<span> &raquo;</span></a></li>
   {% endfor %}
 </ul>
+<hr/>
 <input type="button" name="task" value="Cancel/Go Back" onclick="location.href='./'"/>
 {% endblock %}

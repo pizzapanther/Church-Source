@@ -2,6 +2,7 @@ import random
 
 from django.db import models
 from django.db.models import Q
+from django.core.urlresolvers import reverse
 
 import churchsource.people.models as pmodels
 
@@ -16,6 +17,11 @@ class Event (models.Model):
   def __unicode__ (self):
     return '%s - %d/%d/%d' % (self.name, self.start.month, self.start.day, self.start.year)
     
+  def attendance (self):
+    return '<a href="%s?event=%d" target="_blank">Print Report</a>, Spreadsheet' % (reverse('cs_reports'), self.id)
+    
+  attendance.allow_tags = True
+  
   class Meta:
     ordering = ('-start', 'name')
     

@@ -1,23 +1,11 @@
 {% extends "master.html" %}
 {% block title %}Check In{% endblock %}
 {% block content %}
-<h1>Select/Create Events for Check In</h1>
+<h1>Select Events for Check In</h1>
 <form action="./" method="post" autocomplete="off">
   {% csrf_token %}
   {{ eforms.management_form }}
   {% if message %}<div class="message">{{ message }}</div>{% endif %}
-  {% if can_create %}
-  <div class="ecreate">
-    {% for eform in eforms.forms %}
-    <ul class="eform{% if forloop.first %} first{% endif %}">
-      <li class="num">{% if forloop.first %}<br/>{% endif %}Event #{{ forloop.counter }}:</li>
-      {{ eform.as_ul }}
-    </ul>
-    <div class="clear"></div>
-    {% endfor %}
-  </div>
-  <hr/>
-  {% endif %}
   {% if events.count == 0 %}<h3>No events are scheduled for today. Please create one.</h3>{% else %}
   <div id="echecks">
     {% for event in events %}
@@ -45,9 +33,7 @@
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui/js/jquery-ui-timepicker-addon.js"></script>
 <script type="text/javascript">
   jQuery(document).ready(function () {
-    jQuery('.tpicker').timepicker({ampm: true});
     jQuery( "#echecks input" ).button();
-    display_errors('eform');
   });
 </script>
 {% endblock %}

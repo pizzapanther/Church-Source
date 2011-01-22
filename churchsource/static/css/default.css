@@ -99,7 +99,7 @@ ul.eform.first li label {
   font-weight: bold;
 }
 
-input[type="submit"], input[type="button"] {
+input[type="submit"], input[type="button"], select {
   font-size: 1.6em;
   padding: 0.1em 0.3em;
 }
@@ -108,6 +108,10 @@ input[type="text"] {
   font-size: 1.6em;
   padding: 0.1em 0.3em;
   width: 300px;
+}
+
+.large {
+  font-size: 1.6em;
 }
 
 input.tpicker {

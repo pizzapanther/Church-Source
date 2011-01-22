@@ -4,6 +4,7 @@ import datetime
 from django import http
 from django.db.models import Q
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import permission_required
 
 import churchsource.check_in.models as cmodels
 import churchsource.check_in.forms as cforms
@@ -26,50 +27,22 @@ def terminal (request):
       except:
         pass
         
-    if can_create:
-      eforms = cforms.EventFormSet(request.POST)
-      if eforms.is_valid():
-        for eform in eforms.forms:
-          if len(eform.cleaned_data.keys()) > 0:
-            today = datetime.date.today()
-            start = datetime.datetime(year=today.year, month=today.month, day=today.day, hour=eform.cleaned_data['start'].hour, minute=eform.cleaned_data['start'].minute)
-            end = None
-            if eform.cleaned_data['end']:
-              end = datetime.datetime(year=today.year, month=today.month, day=today.day, hour=eform.cleaned_data['end'].hour, minute=eform.cleaned_data['end'].minute)
-              
-            e = cmodels.Event(name=eform.cleaned_data['name'], start=start, end=end)
-            e.save()
-            events_created.append(e.id)
-            
-        if len(checked) + len(events_created) == 0:
-          message = "Sorry there are no events to check in for right now."
-          
-      else:
-        message = request.ERROR_MESSAGE
-        
-    else:
-      if len(checked) == 0:
-        message = "Sorry there are no events to check in for right now."
-        
+    if len(checked) == 0:
+      message = "Sorry there are no events to check in for right now."
+      
     if message == '':
       estr = ''
       for c in checked:
-        estr += '%d-' % c
-        
-      for c in events_created:
         estr += '%d-' % c
         
       estr = estr[:-1]
       return http.HttpResponseRedirect(reverse('cs_terminal_checkin', kwargs={'events': estr}))
       
   else:
-    if can_create:
-      eforms = cforms.EventFormSet()
-      
     for e in events:
       checked.append(e.id)
       
-  c = {'can_create': can_create, 'eforms': eforms, 'events': events, 'checked': checked, 'message': message}
+  c = {'events': events, 'checked': checked, 'message': message}
   return request.render_to_response('checkin/terminal.html', c)
   
 def terminal_checkin (request, events=''):
@@ -140,9 +113,13 @@ def terminal_checkin (request, events=''):
         
       ci = cmodels.CheckIn(person=p, code=mycode)
       ci.save()
+      
       for e in events:
-        ci.events.add(e)
-        
+        if e.groups.filter(id__in=p.groups.all().values_list('id', flat=True)).count() > 0:
+          ci.events.add(e)
+          
+      ci.extra_labels = range(0, int(request.POST.get('%d_extra_labels' % p.id, '0')))
+      
       checkins.append(ci)
       code_tags.append(mycode)
       
@@ -153,6 +130,13 @@ def terminal_checkin (request, events=''):
         
   return request.render_to_response('checkin/terminal_search.html', {'message': message, 'checkins': checkins, 'code': code, 'code_tags': real_code_tags})
   
+@permission_required('check_in.can_generate_reports')
 def reports (request):
-  pass
+  eids = request.REQUEST.getlist('event')
+  format = request.REQUEST.get('format', 'print')
+  
+  events = cmodels.Event.objects.filter(id__in=eids)
+  total = pmodels.Person.objects.filter(checkin__events=events).distinct().order_by('id').count()
+  
+  return request.render_to_response('checkin/reports.html', {'events': events, 'total': total})
   

@@ -27,7 +27,14 @@
       <input type="hidden" name="peeps" id="check_{{ forloop.counter }}_hidden" value="{{ p.id }}"/>
       <label onclick="toggle_check('check_{{ forloop.counter }}', '{{ p.id }}')" for="check_{{ forloop.counter }}" id="check_{{ forloop.counter }}_label">
         <img src="{{ MEDIA_URL }}img/checked.png" alt=""/> {{ p.fname }} {{ p.lname }}
-      </label>
+      </label><span class="large">&nbsp;&nbsp;&nbsp;&nbsp; 
+      Extra Labels: </span><select name="{{ p.id }}_extra_labels">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
     </li>
     {% endfor %}
   </ul>

@@ -1,0 +1,64 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Droid Sans', arial, helvetica, sans-serif;
+}
+
+.font1 {
+  font-family: 'Droid Sans', arial, helvetica, sans-serif
+}
+
+.font2 {
+  font-family: 'Ubuntu', arial, serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Ubuntu', arial, serif;
+}
+
+#mainContent {
+  width: 100%;
+  margin: 0px auto;
+}
+
+#footer {
+  font-size: 0.7em;
+  text-align: center;
+  padding: 40px 0px 20px 0px;
+}
+
+#footer p {
+  margin: 0.5em 0px;
+}
+
+.break {
+  page-break-before: always;
+}
+
+.tr {
+  text-align: right;
+}
+
+hr {
+  border: 0px;
+  border-bottom: 1px dashed #ccc;
+  margin: 0.2em auto;
+}
+
+table {
+  width: 100%;
+  border: 0px;
+  border-collapse: collapse;
+}
+
+table td {
+  padding-right: 0.7em;
+}
+
+table td.nopad {
+  padding-right: 0px;
+}
+
+table td.name {
+  width: 435px;
+}

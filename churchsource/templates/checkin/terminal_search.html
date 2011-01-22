@@ -15,18 +15,11 @@
 {% if checkins %}
 {% for ci in checkins %}
 {% if not forloop.first %}<div class="break"></div>{% endif %}
-<div class="citag{% if code %} code{% endif %}">
-  <div class="name">
-    {{ ci.person.fname }} {{ ci.person.lname }}
-  </div>
-  <hr/>
-  {% if ci.code %}
-  <div class="clabel">
-  {{ ci.code }}
-  </div>
-  {% endif %}
-  <div class="groups">{% for g in ci|get_groups %}{{ g.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-</div>
+{% include "checkin/checkin_label.html" %}
+{% for temp in ci.extra_labels %}
+<div class="break"></div>
+{% include "checkin/checkin_label.html" %}
+{% endfor %}
 {% endfor %}
 {% if code %}
 {% for c in code_tags %}
