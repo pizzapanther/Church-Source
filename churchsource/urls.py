@@ -8,7 +8,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     ('^favicon.ico$', 'django.views.generic.simple.redirect_to', {'url': '%sfavicon.ico' % settings.MEDIA_URL}),
-    
+    (r'^accounts/login/$', 'django.contrib.auth.views.login'),
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'^grappelli/', include('grappelli.urls')),

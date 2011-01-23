@@ -10,6 +10,7 @@ import churchsource.check_in.models as cmodels
 import churchsource.check_in.forms as cforms
 import churchsource.people.models as pmodels
 
+@permission_required('check_in.add_checkin')
 def terminal (request):
   can_create = request.user.has_perm('check_in.add_event')
   eforms = None

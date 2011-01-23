@@ -126,6 +126,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
   'grappelli.context_processors.admin_template_path'
 )
 
+SESSION_COOKIE_AGE = 18 * 60 * 60 #18 hours
+
 try:
   from churchsource.settings_local import *
   
