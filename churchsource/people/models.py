@@ -177,7 +177,7 @@ class Address (models.Model):
   address1 = models.CharField('Address 1', max_length=255)
   address2 = models.CharField('Address 2', max_length=255, blank=True, null=True)
   city = models.CharField('City', max_length=255)
-  state = us.USStateField()
+  state = models.CharField('State', max_length=150)
   zipcode = models.CharField('Zip Code', max_length=25)
   atype = models.CharField('Type', max_length=10, choices=ATYPES, default='ns')
   notes = models.CharField('Notes', max_length=255, blank=True, null=True, help_text="If the address is for one particular family member, list their names here.")
