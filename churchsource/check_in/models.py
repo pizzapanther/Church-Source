@@ -36,6 +36,9 @@ class EventGroup (models.Model):
     else:
       return self.group.name
       
+  class Meta:
+    ordering = ('group', 'room')
+    
 class CheckIn (models.Model):
   person = models.ForeignKey(pmodels.Person)
   
