@@ -11,20 +11,21 @@ def get_groups (ci):
   used = []
   
   for e in ci.events.all():
-    for eg in e.groups.all():
+    for evg in e.eventgroup_set.all():
+      eg = evg.group
       if eg.id not in used:
         for pg in ci.person.groups.filter(Q(gtype='checkinc') | Q(gtype='checkina')):
           if pg.id == eg.id:
-            ret.append(eg)
+            ret.append(evg)
             used.append(eg.id)
             
   return ret
   
 @register.filter
-def get_checkins (event, group):
+def get_checkins (event, evgroup):
   ret = []
   used = []
-  for c in cmodels.CheckIn.objects.filter(events=event, events__groups=group, person__groups=group).order_by('person__lname', 'person__fname'):
+  for c in cmodels.CheckIn.objects.filter(events=event, events__eventgroup=evgroup, person__groups=evgroup.group).order_by('person__lname', 'person__fname'):
     if c.person.id not in used:
       ret.append(c)
       used.append(c.person.id)

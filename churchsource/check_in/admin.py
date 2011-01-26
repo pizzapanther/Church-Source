@@ -25,13 +25,17 @@ def gen_report2 (modeladmin, request, queryset):
   
 gen_report2.short_description = "Generate Spreadsheet Report"
 
+class EventGroupInline (admin.TabularInline):
+  model = cmodels.EventGroup
+  raw_id_fields = ('group', 'room')
+  
 class EventAdmin (admin.ModelAdmin):
   list_display = ('name', 'start', 'end', 'code', 'attendance')
   list_filter = ('start',)
   search_fields = ('name',)
   date_hierarchy  = 'start'
-  filter_horizontal = ('groups',)
   
+  inlines = [EventGroupInline,]
   actions = [gen_report, gen_report2]
   
 admin.site.register(cmodels.Event, EventAdmin)

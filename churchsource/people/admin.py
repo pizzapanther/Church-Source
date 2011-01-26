@@ -104,10 +104,9 @@ class GroupMemberAdmin (admin.TabularInline):
   verbose_name_plural = "Members"
   
 class GroupAdmin (admin.ModelAdmin):
-  list_display = ('name', 'gtype', 'room')
+  list_display = ('name', 'gtype')
   list_filter = ('gtype',)
   search_fields = ('name',)
-  raw_id_fields = ('room',)
   
   inlines = (GroupAdminInline, GroupMemberAdmin)
   

@@ -5,14 +5,13 @@ from django.db.models import Q
 from django.core.urlresolvers import reverse
 
 import churchsource.people.models as pmodels
+import churchsource.resources.models as rmodels
 
 class Event (models.Model):
   name = models.CharField('Name', max_length=150)
   start = models.DateTimeField('Start')
   end = models.DateTimeField('End', blank=True, null=True)
   code = models.BooleanField('Needs Check In Code', default=True)
-  
-  groups = models.ManyToManyField(pmodels.Group, blank=True, null=True, limit_choices_to=Q(gtype='checkinc') | Q(gtype='checkina'))
   
   def __unicode__ (self):
     return '%s - %d/%d/%d' % (self.name, self.start.month, self.start.day, self.start.year)
@@ -24,6 +23,14 @@ class Event (models.Model):
   
   class Meta:
     ordering = ('-start', 'name')
+    
+class EventGroup (models.Model):
+  event = models.ForeignKey(Event)
+  group = models.ForeignKey(pmodels.Group, limit_choices_to=Q(gtype='checkinc') | Q(gtype='checkina'))
+  room = models.ForeignKey(rmodels.Room)
+  
+  def __unicode__ (self):
+    return "%s - %s" % (self.group.name, self.room.name)
     
 class CheckIn (models.Model):
   person = models.ForeignKey(pmodels.Person)

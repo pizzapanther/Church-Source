@@ -8,7 +8,7 @@
   {{ ci.code }}{% if ci.person.bdate %}<span>&nbsp; -&nbsp; Birthday: {{ ci.person.bdate|date:"m/d/Y" }}</span>{% endif %}
   </div>
   {% endif %}
-  <div class="groups">{% for g in ci|get_groups %}{{ g.name }}{% if g.room %}: {{ g.room.name }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+  <div class="groups">{% for evg in ci|get_groups %}{{ evg.group.name }}{% if evg.room %}: {{ evg.room.name }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
   {% if ci.person.allergies %}
   <div class="alg">
     Allergies: {{ ci.person.allergies }}

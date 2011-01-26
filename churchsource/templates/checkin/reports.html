@@ -3,11 +3,11 @@
 {% block content %}
 {% for e in events %}
 {% if not forloop.first %}<div class="break"></div>{% endif %}
-{% for g in e.groups.all %}
+{% for evg in e.eventgroup_set.all %}
 {% if not forloop.first %}<div class="break"></div>{% endif %}
 <h3>
   {{ e.name }} - {{ e.start|date:"D, M dS h:i A" }}<br/>
-  {{ g.name }}
+  {{ evg.group.name }}
 </h3>
 <table>
   <tr>
@@ -16,7 +16,7 @@
     <td class="tr"><strong>Checked In</strong></td>
     <td class="tr nopad"><strong>Checked Out</strong></td>
   </tr>
-  {% with e|get_checkins:g as checkins %}
+  {% with e|get_checkins:evg as checkins %}
   {% for ci in checkins %}
   <tr>
     <td class="name">{{ ci.person.lname }}, {{ ci.person.fname }}</td>
