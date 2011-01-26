@@ -30,8 +30,12 @@ class EventGroup (models.Model):
   room = models.ForeignKey(rmodels.Room, blank=True, null=True)
   
   def __unicode__ (self):
-    return "%s - %s" % (self.group.name, self.room.name)
-    
+    if self.room:
+      return "%s - %s" % (self.group.name, self.room.name)
+      
+    else:
+      return self.group.name
+      
 class CheckIn (models.Model):
   person = models.ForeignKey(pmodels.Person)
   
