@@ -116,9 +116,9 @@ def terminal_checkin (request, events=''):
       ci.save()
       
       for e in events:
-        if e.eventgroup_set.filter(group__id__in=p.groups.all().values_list('id', flat=True)).count() > 0:
-          ci.events.add(e)
-          
+        #if e.eventgroup_set.filter(group__id__in=p.groups.all().values_list('id', flat=True)).count() > 0:
+        ci.events.add(e)
+        
       ci.extra_labels = range(0, int(request.POST.get('%d_extra_labels' % p.id, '0')))
       
       checkins.append(ci)
