@@ -137,7 +137,7 @@ def reports (request):
   format = request.REQUEST.get('format', 'print')
   
   events = cmodels.Event.objects.filter(id__in=eids)
-  total = pmodels.Person.objects.filter(checkin__events=events).distinct().order_by('id').count()
+  total = pmodels.Person.objects.filter(checkin__events__id__in=eids).distinct().order_by('id').count()
   
   return request.render_to_response('checkin/reports.html', {'events': events, 'total': total})
   
