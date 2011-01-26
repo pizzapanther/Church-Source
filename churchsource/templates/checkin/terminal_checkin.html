@@ -19,6 +19,9 @@
   {% else %}
   <input type="hidden" name="events" value="{{ events.0.id }}"/>
   {% endif %}
+  <h2>Pager:</h2>
+  <input type="text" name="pager" id="pager" value=""/>
+  <hr/>
   <h2>Who are you checking in?</h2>
   <ul class="choose2 notype">
     {% for p in h.checkable %}
@@ -48,6 +51,7 @@
   jQuery(document).ready(function () {
     jQuery( ".choose2 input" ).button();
     jQuery( ".events_sel input" ).button();
+    jQuery("#pager").focus();
   });
 </script>
 {% endblock %}

@@ -101,6 +101,7 @@ def terminal_checkin (request, events=''):
     checkins = []
     events = cmodels.Event.objects.filter(id__in=[elem for elem in request.POST.getlist('events') if elem != ""])
     peeps = pmodels.Person.objects.filter(id__in=[elem for elem in request.POST.getlist('peeps') if elem != ""])
+    pager = request.POST.get('pager', '')
     
     for e in events:
       if e.code:
@@ -112,7 +113,7 @@ def terminal_checkin (request, events=''):
       if p.is_adult():
         mycode = None
         
-      ci = cmodels.CheckIn(person=p, code=mycode)
+      ci = cmodels.CheckIn(person=p, code=mycode, pager=pager)
       ci.save()
       
       for e in events:

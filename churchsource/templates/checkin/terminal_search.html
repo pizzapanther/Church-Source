@@ -6,7 +6,7 @@
   {% csrf_token %}
   {% if message %}<div class="message">{{ message }}</div>{% endif %}
   <div class="checkin_search">
-    <input type="text" name="search" value=""/>
+    <input type="text" name="search" id="search" value=""/>
     <input type="submit" name="task" value="Search"/>
   </div>
 </form>
@@ -38,6 +38,7 @@
 <script type="text/javascript">
   jQuery(document).ready(function () {
     window.print();
+    jQuery("#search").focus();
   });
 </script>
 {% endif %}
