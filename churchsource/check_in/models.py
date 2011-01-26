@@ -27,7 +27,7 @@ class Event (models.Model):
 class EventGroup (models.Model):
   event = models.ForeignKey(Event)
   group = models.ForeignKey(pmodels.Group, limit_choices_to=Q(gtype='checkinc') | Q(gtype='checkina'))
-  room = models.ForeignKey(rmodels.Room)
+  room = models.ForeignKey(rmodels.Room, blank=True, null=True)
   
   def __unicode__ (self):
     return "%s - %s" % (self.group.name, self.room.name)
