@@ -217,7 +217,7 @@ class Phone (models.Model):
   class Meta:
     ordering = ('person__lname', 'person__fname', 'number')
     
-GTYPES = (('general', 'General'), ('checkinc', 'Check In - Child'), ('checkina', 'Check In - Adult'))
+GTYPES = (('general', 'General'), ('checkinc', 'Check In w/ Tag and Code'), ('checkina', 'Check In w/ Tag'))
 
 class Group (models.Model):
   name = models.CharField('Name', max_length=255)
