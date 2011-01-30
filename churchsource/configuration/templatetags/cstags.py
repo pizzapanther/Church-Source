@@ -10,14 +10,16 @@ def get_groups (ci):
   ret = []
   used = []
   
-  for e in ci.events.all():
+  for e in ci.events.all().order_by('start'):
     for evg in e.eventgroup_set.all():
       eg = evg.group
-      if eg.id not in used:
+      tid = '%d-%d' % (e.id, eg.id)
+      
+      if tid not in used:
         for pg in ci.person.groups.filter(Q(gtype='checkinc') | Q(gtype='checkina')):
           if pg.id == eg.id:
             ret.append(evg)
-            used.append(eg.id)
+            used.append(tid)
             
   return ret
   
