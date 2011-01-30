@@ -137,7 +137,8 @@ def terminal_checkin (request, events='', touch=None):
       for i in range(0, (len(code_tags) + 1)/2):
         real_code_tags.append(code)
         
-  return request.render_to_response('checkin/terminal_search.html', {'message': message, 'checkins': checkins, 'code': code, 'code_tags': real_code_tags, 'touch': touch})
+  c = {'message': message, 'checkins': checkins, 'code': code, 'code_tags': real_code_tags, 'touch': touch, 'submit_on_accept': True}
+  return request.render_to_response('checkin/terminal_search.html', c)
   
 @permission_required('check_in.can_generate_reports')
 def reports (request):

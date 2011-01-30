@@ -2,7 +2,7 @@
 {% block title %}Check In{% endblock %}
 {% block content %}
 <h1>Check In</h1>
-<form action="./" method="GET" autocomplete="off">
+<form action="./" id="submit_on_accept" method="GET" autocomplete="off">
   {% if message %}<div class="message">{{ message|safe }}</div>{% endif %}
   <div class="checkin_search">
     <input type="text" name="search" id="search" value="Click to Search" autocomplete="off"/>
