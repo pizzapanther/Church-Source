@@ -171,3 +171,9 @@ ul.notype {
 .events_sel label {
   margin-right: 15px;
 }
+
+form .small {
+  font-size: 0.8em;
+  font-style: italic;
+}
+

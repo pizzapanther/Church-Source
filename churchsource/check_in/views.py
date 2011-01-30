@@ -1,5 +1,6 @@
 import re
 import datetime
+import urllib
 
 from django import http
 from django.db.models import Q
@@ -19,6 +20,7 @@ def terminal (request):
   checked = []
   events_created = []
   message = ""
+  touch = request.REQUEST.get('touch', '1')
   
   if request.task != '':
     for c in request.POST.getlist('event_check'):
@@ -37,16 +39,19 @@ def terminal (request):
         estr += '%d-' % c
         
       estr = estr[:-1]
+      if touch:
+        estr += '-touch'
+        
       return http.HttpResponseRedirect(reverse('cs_terminal_checkin', kwargs={'events': estr}))
       
   else:
     for e in events:
       checked.append(e.id)
       
-  c = {'events': events, 'checked': checked, 'message': message}
+  c = {'events': events, 'checked': checked, 'message': message, 'touch': touch}
   return request.render_to_response('checkin/terminal.html', c)
   
-def terminal_checkin (request, events=''):
+def terminal_checkin (request, events='', touch=None):
   message = ''
   checkins = None
   code = None
@@ -54,7 +59,7 @@ def terminal_checkin (request, events=''):
   real_code_tags = []
   
   if request.task == 'Search':
-    search = request.POST.get('search', '')
+    search = request.REQUEST.get('search', '')
     if re.search('^\s*$', search):
       message = 'Please fill in a search term.'
       
@@ -77,12 +82,14 @@ def terminal_checkin (request, events=''):
         households = pmodels.Household.objects.filter(q).filter(active=True, person__groups__gtype__in=['checkinc', 'checkina']).distinct()
         if households.count() == 0:
           message = 'Nothing Found'
-          
+          if request.user.has_perm('people.add_household') and request.user.is_staff:
+            message = 'Nothing Found &nbsp;-&nbsp; <a href="/admin/people/household/add/?goback=%s">Add A Household</a>' % urllib.quote(request.build_absolute_uri())
+            
         elif households.count() == 1:
           return http.HttpResponseRedirect('./?task=household&h=%d' % households[0].id)
           
         else:
-          return request.render_to_response('checkin/terminal_choose.html', {'households': households})
+          return request.render_to_response('checkin/terminal_choose.html', {'households': households, 'touch': touch})
           
   elif request.task == 'household':
     h = request.REQUEST.get('h', '')
@@ -95,7 +102,7 @@ def terminal_checkin (request, events=''):
     else:
       now = datetime.datetime.now()
       events = cmodels.Event.objects.filter(id__in=events.split("-")).filter(Q(end__isnull=True) | Q(end__gte=now))
-      return request.render_to_response('checkin/terminal_checkin.html', {'h': h, 'events': events})
+      return request.render_to_response('checkin/terminal_checkin.html', {'h': h, 'events': events, 'touch': touch})
       
   elif request.task == 'Check In':
     checkins = []
@@ -130,15 +137,16 @@ def terminal_checkin (request, events=''):
       for i in range(0, (len(code_tags) + 1)/2):
         real_code_tags.append(code)
         
-  return request.render_to_response('checkin/terminal_search.html', {'message': message, 'checkins': checkins, 'code': code, 'code_tags': real_code_tags})
+  return request.render_to_response('checkin/terminal_search.html', {'message': message, 'checkins': checkins, 'code': code, 'code_tags': real_code_tags, 'touch': touch})
   
 @permission_required('check_in.can_generate_reports')
 def reports (request):
   eids = request.REQUEST.getlist('event')
   format = request.REQUEST.get('format', 'print')
+  with_adults = request.REQUEST.get('with_adults', '')
   
   events = cmodels.Event.objects.filter(id__in=eids)
   total = pmodels.Person.objects.filter(checkin__events__id__in=eids).distinct().order_by('id').count()
   
-  return request.render_to_response('checkin/reports.html', {'events': events, 'total': total})
+  return request.render_to_response('checkin/reports.html', {'events': events, 'total': total, 'with_adults': with_adults})
   

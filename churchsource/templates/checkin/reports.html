@@ -4,6 +4,7 @@
 {% for e in events %}
 {% if not forloop.first %}<div class="break"></div>{% endif %}
 {% for evg in e.eventgroup_set.all %}
+{% if evg.group.gtype == 'checkinc' or with_adults %}
 {% if not forloop.first %}<div class="break"></div>{% endif %}
 <h3>
   {{ e.name }} - {{ e.start|date:"D, M dS h:i A" }}<br/>
@@ -33,6 +34,7 @@
   </tr>
   {% endwith %}
 </table>
+{% endif %}
 {% endfor %}
 {% endfor %}
 <div class="break"></div>

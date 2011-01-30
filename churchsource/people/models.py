@@ -1,4 +1,5 @@
 import time
+import datetime
 
 from django.db import models
 from django.conf import settings
@@ -113,6 +114,14 @@ class Person (models.Model):
   
   groups = models.ManyToManyField('Group', blank=True, null=True)
   
+  def is_minor (self):
+    if self.bdate:
+      year18 = datetime.timedelta(days=365*18)
+      if year18 > datetime.date.today() - self.bdate:
+        return True
+        
+    return False
+    
   def is_adult (self):
     if self.groups.filter(gtype='checkinc').count() == 0:
       return True

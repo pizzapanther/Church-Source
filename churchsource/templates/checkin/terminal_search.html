@@ -2,12 +2,12 @@
 {% block title %}Check In{% endblock %}
 {% block content %}
 <h1>Check In</h1>
-<form action="./" method="post" autocomplete="off">
-  {% csrf_token %}
-  {% if message %}<div class="message">{{ message }}</div>{% endif %}
+<form action="./" method="GET" autocomplete="off">
+  {% if message %}<div class="message">{{ message|safe }}</div>{% endif %}
   <div class="checkin_search">
-    <input type="text" name="search" id="search" value=""/>
-    <input type="submit" name="task" value="Search"/>
+    <input type="text" name="search" id="search" value="Click to Search" autocomplete="off"/>
+    <input type="submit" name="task" value="Search"/><br/>
+    <div class="small">Enter your first name or last name</div>
   </div>
 </form>
 {% endblock %}
@@ -41,9 +41,4 @@
   });
 </script>
 {% endif %}
-<script type="text/javascript">
-  jQuery(document).ready(function () {
-    jQuery("#search").focus();
-  });
-</script>
 {% endblock %}

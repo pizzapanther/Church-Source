@@ -5,7 +5,7 @@
   <hr/>
   {% if ci.code %}
   <div class="clabel">
-  {{ ci.code }}{% if ci.person.bdate %}<span>&nbsp; -&nbsp; Birthday: {{ ci.person.bdate|date:"m/d/Y" }}</span>{% endif %}
+  {{ ci.code }}{% if ci.person.bdate and ci.person.is_minor %}<span>&nbsp; -&nbsp; Birthday: {{ ci.person.bdate|date:"m/d/Y" }}</span>{% endif %}
   </div>
   {% endif %}
   <div class="groups">{% for evg in ci|get_groups %}{{ evg.group.name }}{% if evg.room %}: {{ evg.room.name }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}</div>

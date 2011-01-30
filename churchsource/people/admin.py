@@ -46,6 +46,18 @@ class HouseholdAdmin (admin.ModelAdmin):
   
   inlines = (PersonInline, AddressInline)
   
+  def render_change_form (self, request, context, add=False, change=False, form_url='', obj=None):
+    context['goback'] = request.REQUEST.get('goback', '')
+    return super(HouseholdAdmin, self).render_change_form(request, context, add=False, change=False, form_url='', obj=None)
+    
+  def response_add (self, request, obj, post_url_continue='../%s/'):
+    ret = super(HouseholdAdmin, self).response_add(request, obj, post_url_continue=post_url_continue)
+    goback = request.REQUEST.get('goback', '')
+    if goback:
+      return http.HttpResponseRedirect(goback)
+      
+    return ret
+    
 class PhoneInline (admin.TabularInline):
   model = pmodels.Phone
   
