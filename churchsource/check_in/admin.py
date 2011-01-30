@@ -61,7 +61,12 @@ class EventAdmin (admin.ModelAdmin):
   actions = [gen_report, gen_report2]
   
   def save_formset(self, request, form, formset, change):
-    formset.save()
+    instances = formset.save(commit=False)
+    for instance in instances:
+      instance.save()
+      obj = instance.event
+      
+    formset.save_m2m()
     
     if change:
       found = re.search('/(\d+)/$', request.path)
