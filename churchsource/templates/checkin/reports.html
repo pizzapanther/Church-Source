@@ -8,7 +8,7 @@
 {% if not forloop.first %}<div class="break"></div>{% endif %}
 <h3>
   {{ e.name }} - {{ e.start|date:"D, M dS h:i A" }}<br/>
-  {{ evg.group.name }}
+  {{ evg.group.name }}{% if evg.room %}: {{ evg.room.name }}{% endif %}
 </h3>
 <table>
   <tr>
