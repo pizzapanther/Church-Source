@@ -12,6 +12,7 @@ class Event (models.Model):
   start = models.DateTimeField('Start')
   end = models.DateTimeField('End', blank=True, null=True)
   code = models.BooleanField('Needs Check In Code', default=True)
+  link = models.ForeignKey('self', blank=True, null=True)
   
   def __unicode__ (self):
     return '%s - %d/%d/%d' % (self.name, self.start.month, self.start.day, self.start.year)
