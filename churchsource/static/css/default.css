@@ -177,3 +177,6 @@ form .small {
   font-style: italic;
 }
 
+#mainWrapper.touch {
+  overflow: auto;
+}

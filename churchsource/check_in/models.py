@@ -1,4 +1,5 @@
 import random
+import datetime
 
 from django.db import models
 from django.db.models import Q
@@ -67,9 +68,14 @@ class CheckIn (models.Model):
     permissions = (("can_generate_reports", "Can generate check in reports"),)
     
 def gencode ():
-  code = ''
-  for i in range(0,4):
-    code += random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789')
-    
+  today = datetime.date.today()
+  while 1:
+    code = ''
+    for i in range(0,4):
+      code += random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789')
+      
+    if CheckIn.objects.filter(code=code, cin__year=today.year, cin__month=today.month, cin__day=today.day).count() == 0:
+      break
+      
   return code
   

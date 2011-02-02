@@ -1,7 +1,8 @@
+import time
+
 from django.contrib import admin
 from django import http
 from django import forms
-import time
 
 from django.db import models
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -115,12 +116,29 @@ class GroupMemberAdmin (admin.TabularInline):
   verbose_name = "Member"
   verbose_name_plural = "Members"
   
+def merge_groups (modeladmin, request, queryset):
+  g = pmodels.Group(name=time.strftime("Merged Group %a, %d %b %Y %H:%M"))
+  g.save()
+  
+  for q in queryset:
+    for ga in q.groupadmin_set.all():
+      ganew = pmodels.GroupAdmin(group=g, person=ga.person, can_send=ga.can_send)
+      ganew.save()
+      
+    for p in q.person_set.all():
+      p.groups.add(g)
+      
+  return http.HttpResponseRedirect('/admin/people/group/%d/' % g.id)
+  
+merge_groups.short_description = "Merge groups"
+
 class GroupAdmin (admin.ModelAdmin):
   list_display = ('name', 'gtype')
   list_filter = ('gtype',)
   search_fields = ('name',)
   
   inlines = (GroupAdminInline, GroupMemberAdmin)
+  actions = (merge_groups,)
   
 admin.site.register(pmodels.Household, HouseholdAdmin)
 admin.site.register(pmodels.Person, PersonAdmin)
