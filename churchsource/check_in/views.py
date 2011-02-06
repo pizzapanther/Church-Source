@@ -6,6 +6,7 @@ from django import http
 from django.db.models import Q
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import permission_required
+from django.shortcuts import get_object_or_404
 
 import churchsource.check_in.models as cmodels
 import churchsource.check_in.forms as cforms
@@ -51,6 +52,7 @@ def terminal (request):
   c = {'events': events, 'checked': checked, 'message': message, 'touch': touch}
   return request.render_to_response('checkin/terminal.html', c)
   
+@permission_required('check_in.add_checkin')
 def terminal_checkin (request, events='', touch=None):
   message = ''
   checkins = None
@@ -150,4 +152,41 @@ def reports (request):
   total = pmodels.Person.objects.filter(checkin__events__id__in=eids).distinct().order_by('id').count()
   
   return request.render_to_response('checkin/reports.html', {'events': events, 'total': total, 'with_adults': with_adults})
+  
+@permission_required('people.add_person')
+def add_person (request, hhold=None):
+  h = get_object_or_404(pmodels.Household, id=hhold)
+  goback = request.REQUEST.get('goback', '')
+  form = cforms.PersonForm(initial={'alerts': True})
+  touch = False
+  groups = request.REQUEST.getlist('groupid')
+  groups = [elem for elem in groups if elem != ""]
+  gmessage = None
+  
+  if re.search('-touch', goback):
+    touch = True
+    
+  now = datetime.datetime.now()
+  #tgroups = pmodels.Group.objects.filter(eventgroup__event__start__year=now.year, eventgroup__event__start__month=now.month, eventgroup__event__start__day=now.day).distinct()
+  tgroups = pmodels.Group.objects.filter(gtype='checkinc')
+  if request.task == 'Submit':
+    form = cforms.PersonForm(request.POST, {'groups': groups})
+    if len(groups) == 0:
+      gmessage = 'Select at least one group.'
+      
+    if form.is_valid() and len(groups) > 0:
+      p = form.save(commit=False)
+      p.household = h
+      p.save()
+      for g in groups:
+        p.groups.add(pmodels.Group.objects.get(id=g))
+        
+      return http.HttpResponseRedirect(goback)
+      
+  c = {'touch': touch, 'goback': goback, 'h': h, 'form': form, 'tgroups': tgroups, 'groups': groups, 'gmessage': gmessage}
+  return request.render_to_response('checkin/add_person.html', c)
+  
+@permission_required('people.add_tempimage')
+def temp_image (request):
+  return request.render_to_response('checkin/temp_image.html', {})
   

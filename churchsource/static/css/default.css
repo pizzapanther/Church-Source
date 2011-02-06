@@ -41,6 +41,14 @@ h2, h3, h4, h5, h6 {
   padding: 0.3em 0px;
 }
 
+.floatL {
+  float: left;
+}
+
+.floatR {
+  float: right;
+}
+
 #print {
   display: none;
 }
@@ -179,4 +187,38 @@ form .small {
 
 #mainWrapper.touch {
   overflow: auto;
+}
+
+#addperson {
+  margin-top: 30px;
+}
+
+table.form {
+  border-collapse:collapse;
+  border: 0px;
+  width: 95%;
+  margin: 0px auto;
+}
+
+table.form td {
+  padding: 0px 0px 20px 0px;
+}
+
+table.form input {
+  margin: 0px 30px 0px 0px;
+}
+
+table.form h3 {
+  padding: 0px;
+}
+
+table.form #id_allergies {
+  width: 600px;
+}
+
+table.form .group label {
+  float: left;
+  margin: 0px 30px 20px 0px;
+  text-align: left;
+  width: 350px;
 }

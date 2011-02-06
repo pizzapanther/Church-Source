@@ -23,17 +23,13 @@ GENDERS = (
 FAMILY_ROLES = (
   ('ns', 'Not Specified'),
   ('single', 'Single'),
-  ('wife', 'Wife'),
-  ('husband', 'Husband'),
-  ('daughter', 'Daughter'),
-  ('son', 'Son'),
+  ('hw', 'Husband/Wife'),
+  ('ds', 'Daughter/Son'),
   ('gparent', 'Grand Parent'),
   ('bs', 'Brother/Sister'),
   ('nn', 'Niece/Nephew'),
   ('au', 'Aunt/Uncle'),
   ('friend', 'Friend'),
-  ('otherr', 'Other Relation'),
-  ('pet', 'Pet'),
   ('other', 'Other')
 )
 

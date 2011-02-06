@@ -19,17 +19,23 @@
   {% else %}
   <input type="hidden" name="events" value="{{ events.0.id }}"/>
   {% endif %}
-  <h2>Pager:</h2>
-  <input type="text" name="pager" id="pager" value=""/>
+  <div class="floatL">
+    <h2>Pager:</h2>
+    <input type="text" name="pager" id="pager" value=""/>
+  </div>
+  <div class="floatR">
+    <input type="button" name="addperson" id="addperson" value="Add A Person" onclick="location.href = '{% url cs_add_person h.id %}?goback={{ request.build_absolute_uri|urlencode }}'"/>
+  </div>
+  <div class="clear"></div>
   <hr/>
   <h2>Who are you checking in?</h2>
   <ul class="choose2 notype">
     {% for p in h.checkable %}
     <li>
-      <input type="checkbox" id="check_{{ forloop.counter }}" checked="checked"/>
-      <input type="hidden" name="peeps" id="check_{{ forloop.counter }}_hidden" value="{{ p.id }}"/>
+      <input type="checkbox" id="check_{{ forloop.counter }}"/>
+      <input type="hidden" name="peeps" id="check_{{ forloop.counter }}_hidden" value=""/>
       <label onclick="toggle_check('check_{{ forloop.counter }}', '{{ p.id }}')" for="check_{{ forloop.counter }}" id="check_{{ forloop.counter }}_label">
-        <img src="{{ MEDIA_URL }}img/checked.png" alt=""/> {{ p.fname }} {{ p.lname }}
+        <img src="{{ MEDIA_URL }}img/unchecked.png" alt=""/> {{ p.fname }} {{ p.lname }}
       </label><span class="large">&nbsp;&nbsp;&nbsp;&nbsp; 
       Extra Labels: </span><select name="{{ p.id }}_extra_labels">
         <option value="0">0</option>
