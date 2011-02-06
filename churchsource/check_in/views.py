@@ -140,7 +140,7 @@ def terminal_checkin (request, events='', touch=None):
       for i in range(0, (len(code_tags) + 1)/2):
         real_code_tags.append(code)
         
-  c = {'message': message, 'checkins': checkins, 'code': code, 'code_tags': real_code_tags, 'touch': touch, 'submit_on_accept': True}
+  c = {'message': message, 'checkins': checkins, 'code': code, 'code_tags': real_code_tags, 'touch': touch, 'submit_on_accept': True, 'scroll_off': True}
   return request.render_to_response('checkin/terminal_search.html', c)
   
 @permission_required('check_in.can_generate_reports')
