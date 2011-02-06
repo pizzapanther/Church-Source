@@ -1,10 +1,10 @@
 {% extends "master.html" %}{% load cstags %}
-{% block title %}Add Person{% endblock %}
+{% block title %}Edit Person{% endblock %}
 {% block header %}
 <link rel="stylesheet" href="{{ MEDIA_URL }}js/modal/css/basic.css" type="text/css" />
 <script type="text/javascript" src="{{ MEDIA_URL }}js/modal/js/jquery.simplemodal.js"></script>
 {% endblock %}
 {% block content %}
-<h1>Add Person - {{ h.name }} Household</h1>
+<h1>Edit Person - {{ p.fname }} {{ p.lname }}</h1>
 {% include "checkin/person_form.html" %}
 {% endblock %}

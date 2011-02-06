@@ -64,9 +64,9 @@ class PhoneInline (admin.TabularInline):
   
 class PersonAdmin (admin.ModelAdmin):
   list_select_related = True
-  list_display = ('lname', 'fname', 'email', 'birthday', 'gender', 'role', 'active', 'edit_household')
+  list_display = ('lname', 'fname', 'email', 'bdate', 'gender', 'role', 'active', 'edit_household')
   search_fields = ('fname', 'lname', 'email', 'household__name')
-  list_filter = ('gender', 'role')
+  list_filter = ('gender', 'role', 'groups')
   date_hierarchy  = 'bdate'
   raw_id_fields = ('household', 'image_temp')
   
@@ -133,7 +133,7 @@ def merge_groups (modeladmin, request, queryset):
 merge_groups.short_description = "Merge groups"
 
 class GroupAdmin (admin.ModelAdmin):
-  list_display = ('name', 'gtype')
+  list_display = ('name', 'gtype', 'auth')
   list_filter = ('gtype',)
   search_fields = ('name',)
   

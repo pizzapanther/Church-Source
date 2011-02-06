@@ -50,7 +50,7 @@ def terminal (request):
     for e in events:
       checked.append(e.id)
       
-  c = {'events': events, 'checked': checked, 'message': message, 'touch': touch}
+  c = {'events': events, 'checked': checked, 'message': message, 'touch': False, 'touchon': touch}
   return request.render_to_response('checkin/terminal.html', c)
   
 @permission_required('check_in.add_checkin')
@@ -82,7 +82,9 @@ def terminal_checkin (request, events='', touch=None):
         else:
           q = myq
           
-        households = pmodels.Household.objects.filter(q).filter(active=True, person__groups__gtype__in=['checkinc', 'checkina']).distinct()
+        #households = pmodels.Household.objects.filter(q).filter(active=True, person__groups__gtype__in=['checkinc', 'checkina']).distinct()
+        households = pmodels.Household.objects.filter(q).filter(active=True)
+        
         if households.count() == 0:
           message = 'Nothing Found'
           if request.user.has_perm('people.add_household') and request.user.is_staff:
@@ -162,7 +164,6 @@ def add_person (request, hhold=None):
   touch = False
   groups = request.REQUEST.getlist('groupid')
   groups = [elem for elem in groups if elem != ""]
-  gmessage = None
   
   if re.search('-touch', goback):
     touch = True
@@ -172,10 +173,8 @@ def add_person (request, hhold=None):
   tgroups = pmodels.Group.objects.filter(gtype='checkinc')
   if request.task == 'Submit':
     form = cforms.PersonForm(request.POST, {'groups': groups})
-    if len(groups) == 0:
-      gmessage = 'Select at least one group.'
-      
-    if form.is_valid() and len(groups) > 0:
+    
+    if form.is_valid():
       p = form.save(commit=False)
       p.household = h
       p.save()
@@ -184,12 +183,44 @@ def add_person (request, hhold=None):
         
       return http.HttpResponseRedirect(goback)
       
-  c = {'touch': touch, 'goback': goback, 'h': h, 'form': form, 'tgroups': tgroups, 'groups': groups, 'gmessage': gmessage}
+  c = {'touch': touch, 'goback': goback, 'h': h, 'form': form, 'tgroups': tgroups, 'groups': groups}
   return request.render_to_response('checkin/add_person.html', c)
   
 @permission_required('people.add_tempimage')
 def temp_image (request):
   return request.render_to_response('checkin/temp_image.html', {})
+  
+@permission_required('people.add_person')
+def edit_person (request, person=None):
+  touch = False
+  goback = request.REQUEST.get('goback', '')
+  
+  if re.search('-touch', goback):
+    touch = True
+    
+  p = get_object_or_404(pmodels.Person, id=person)
+  form = cforms.PersonForm(instance=p)
+  groups = []
+  for g in p.groups.all():
+    groups.append(str(g.id))
+    
+  tgroups = pmodels.Group.objects.filter(gtype='checkinc')
+  if request.task == 'Submit':
+    form = cforms.PersonForm(request.POST, instance=p)
+    groups = request.REQUEST.getlist('groupid')
+    groups = [elem for elem in groups if elem != ""]
+    if form.is_valid():
+      p = form.save(commit=False)
+      p.save()
+      p.groups.clear()
+      
+      for g in groups:
+        p.groups.add(pmodels.Group.objects.get(id=g))
+        
+      return http.HttpResponseRedirect(goback)
+      
+  c = {'touch': touch, 'goback': goback, 'p': p, 'form': form, 'tgroups': tgroups, 'groups': groups}
+  return request.render_to_response('checkin/edit_person.html', c)
   
 @permission_required('people.add_household')
 def add_household (request):
@@ -204,6 +235,9 @@ def add_household (request):
     if form.is_valid():
       p = form.save(commit=False)
       h = pmodels.Household(name=p.lname, first_visit=datetime.date.today())
+      if form.cleaned_data['barcode']:
+        h.barcode = form.cleaned_data['barcode']
+        
       h.save()
       
       p.household = h

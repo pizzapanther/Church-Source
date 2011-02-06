@@ -10,9 +10,11 @@ class PersonForm (forms.ModelForm):
   class Meta:
     model = pmodels.Person
     fields = ('fname', 'lname', 'gender', 'role', 'bdate', 'allergies', 'image_temp', 'groups')
-    widgets = {'image_temp': forms.HiddenInput}
+    widgets = {'image_temp': forms.HiddenInput, 'bdate': forms.DateInput(format='%m/%d/%Y')}
     
 class HouseholdForm (forms.ModelForm):
+  barcode = forms.CharField(max_length=255, required=False)
+  
   class Meta:
     model = model = pmodels.Person
     fields = ('fname', 'lname', 'email', 'alerts', 'image_temp')

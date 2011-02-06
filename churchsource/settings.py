@@ -42,7 +42,7 @@ SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
-USE_I18N = True
+USE_I18N = False
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale
@@ -81,7 +81,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'churchsource.middleware.Shortcuts'
+    'churchsource.middleware.Shortcuts',
+    'churchsource.middleware.AdminQuery',
 )
 
 ROOT_URLCONF = 'churchsource.urls'
@@ -128,6 +129,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 SESSION_COOKIE_AGE = 18 * 60 * 60 #18 hours
+
+ADMIN_REMEMBER_QUERIES = True
 
 try:
   from churchsource.settings_local import *

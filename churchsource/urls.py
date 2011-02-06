@@ -25,6 +25,7 @@ urlpatterns += patterns('churchsource.check_in.views',
   url(r'^checkin/reports/$', 'reports', name='cs_reports'),
   url(r'^checkin/add_household/$', 'add_household', name='cs_add_hhold'),
   url(r'^checkin/add_person/(?P<hhold>\d+)/$', 'add_person', name='cs_add_person'),
+  url(r'^checkin/edit_person/(?P<person>\d+)/$', 'edit_person', name='cs_edit_person'),
   url(r'^checkin/temp_image/$', 'temp_image', name='cs_temp_image'),
 )
 

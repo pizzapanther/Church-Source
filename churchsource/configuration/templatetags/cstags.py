@@ -18,8 +18,12 @@ def get_groups (ci):
   for e in ci.events.all().order_by('start'):
     for evg in e.eventgroup_set.all():
       eg = evg.group
-      tid = '%d-%d' % (e.id, eg.id)
-      
+      if evg.room:
+        tid = '%d-%d' % (evg.room.id, eg.id)
+        
+      else:
+        tid = '%d' % eg.id
+        
       if tid not in used:
         for pg in ci.person.groups.filter(Q(gtype='checkinc') | Q(gtype='checkina')):
           if pg.id == eg.id:

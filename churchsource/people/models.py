@@ -62,6 +62,9 @@ class Household (models.Model):
   def checkable (self):
     return self.person_set.filter(groups__gtype__in=['checkinc', 'checkina']).distinct()
     
+  def uncheckable (self):
+    return self.person_set.exclude(groups__gtype__in=['checkinc', 'checkina']).distinct().order_by('id')
+    
   def save (self):
     super(Household, self).save()
     if self.image_temp:
@@ -228,6 +231,7 @@ class Group (models.Model):
   name = models.CharField('Name', max_length=255)
   gtype = models.CharField('Type', max_length=10, choices=GTYPES, default="general")
   desc = models.CharField('Description', max_length=255, blank=True, null=True)
+  auth = models.BooleanField('Authorized Volunteer/Staff Group', default=True)
   
   def __unicode__ (self):
     return self.name

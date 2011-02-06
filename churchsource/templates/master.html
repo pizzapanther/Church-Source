@@ -9,7 +9,15 @@
   <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css'>
   {% if touch and not scroll_off %}
   <style type="text/css">
-    html {  overflow: auto;  }
+    html { overflow: auto;  }
+  </style>
+  {% endif %}
+  {% if touch %}
+  <style type="text/css">
+    html, a, body .ui-button, body .ui-keyboard-button, input  {
+      cursor: url({{ MEDIA_URL }}img/trans_pointer.png), pointer;
+    }
+    
   </style>
   {% endif %}
   <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui/js/jquery-1.4.4.min.js"></script>

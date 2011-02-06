@@ -56,6 +56,14 @@ class CheckIn (models.Model):
   def __unicode__ (self):
     return self.cin.strftime('%m/%d/%Y %I:%M %p') + ': %s, %s' % (self.person.lname, self.person.fname)
     
+  def is_authorized (self):
+    for e in self.events.all():
+      for evg in e.eventgroup_set.all():
+        if evg.group.auth:
+          return True
+          
+    return False
+    
   def _Events (self):
     ret = ''
     for e in self.events.all():

@@ -7,6 +7,12 @@
   <div class="clabel">
   {{ ci.code }}{% if ci.person.bdate and ci.person.is_minor %}<span>&nbsp; -&nbsp; Birthday: {{ ci.person.bdate|date:"m/d/Y" }}</span>{% endif %}
   </div>
+  {% else %}
+  {% if ci.is_authorized %}
+  <div class="clabel">
+    Authorized Personnel
+  </div>
+  {% endif %}
   {% endif %}
   <div class="groups">{% for evg in ci|get_groups %}{{ evg.group.name }}{% if evg.room %}: {{ evg.room.name }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
   {% if ci.person.allergies %}

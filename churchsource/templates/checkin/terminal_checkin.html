@@ -43,7 +43,13 @@
         <option value="2">2</option>
         <option value="3">3</option>
         <option value="4">4</option>
-      </select>
+      </select> 
+      <a href="{% url cs_edit_person p.id %}?goback={{ request.build_absolute_uri|urlencode }}">Edit</a>
+    </li>
+    {% endfor %}
+    {% for p in h.uncheckable %}
+    <li>
+      <h3>{{ p.fname }} {{ p.lname }} - <a href="{% url cs_edit_person p.id %}?goback={{ request.build_absolute_uri|urlencode }}">Edit</a></h3>
     </li>
     {% endfor %}
   </ul>

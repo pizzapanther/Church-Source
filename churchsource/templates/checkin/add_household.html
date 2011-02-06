@@ -32,6 +32,13 @@
     </tr>
     <tr>
       <td colspan="2">
+        <h3>Barcode</h3>
+        {{ form.barcode }}
+        {% if form.barcode.errors %}<br/><span class="error">{{ form.barcode.errors.0 }}</span>{% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
         <hr/>
         <input type="button" name="pic" value="Take Picture" onclick="iframe_pic()"/>
         <script type="text/javascript">

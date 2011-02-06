@@ -1,6 +1,16 @@
+import re
+
+from django.conf import settings
 from django import shortcuts
 from django.template import RequestContext
+from django import http
 
+try:
+  ADMIN_REMEMBER_QUERIES = settings.ADMIN_REMEMBER_QUERIES
+  
+except:
+  ADMIN_REMEMBER_QUERIES = False
+  
 class Command:
   def __init__(self, func, *args, **kw):
     self.func = func
@@ -24,5 +34,39 @@ class Shortcuts:
     request.task = request.REQUEST.get('task', '')
     request.ERROR_MESSAGE = 'There are errors in your request.'
     
+    return None
+    
+class AdminQuery:
+  def process_request (self, request):
+    if ADMIN_REMEMBER_QUERIES:
+      if request.method == 'GET':
+        found = re.search("^/admin/(\S+)/(\S+)/$", request.path)
+        clear = request.REQUEST.get('__clearqs', '')
+        
+        if found:
+          key = 'aquery-%s-%s' % (found.group(1), found.group(2))
+          
+          if clear == '1':
+            try:
+              del request.session[key]
+              
+            except:
+              pass
+              
+            return http.HttpResponseRedirect(request.path)
+            
+          if request.META['QUERY_STRING']:
+            request.session[key] = request.META['QUERY_STRING']
+            
+          else:
+            try:
+              qs = request.session[key]
+              
+            except:
+              pass
+              
+            else:
+              return http.HttpResponseRedirect('%s?%s' % (request.path, qs))
+              
     return None
     
