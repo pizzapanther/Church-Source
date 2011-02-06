@@ -1,9 +1,14 @@
+import re
+
 from django.db.models import Q
 from django import template
 
 import churchsource.check_in.models as cmodels
 
 register = template.Library()
+
+tag_end_re = re.compile(r'(\w+)[^>]*>')
+entity_end_re = re.compile(r'(\w+;)')
 
 @register.filter
 def get_groups (ci):
