@@ -55,7 +55,7 @@
           <input type="checkbox" id="check_{{ forloop.counter }}"{% if g.id|stringformat:"d" in groups %} checked="checked"{% endif %} class="groups"/>
           <input type="hidden" name="groupid" id="check_{{ forloop.counter }}_hidden" value="{% if g.id|stringformat:"d" in groups %}{{ g.id }}{% endif %}"/>
           <label onclick="toggle_check('check_{{ forloop.counter }}', '{{ g.id }}')" for="check_{{ forloop.counter }}" id="check_{{ forloop.counter }}_label">
-            <img src="{{ MEDIA_URL }}img/{% if g.id|stringformat:"d" in groups %}checked.png{% else %}unchecked.png{% endif %}" alt=""/> {{ g.name|truncateString:45 }}
+            <img src="{{ MEDIA_URL }}img/{% if g.id|stringformat:"d" in groups %}checked.png{% else %}unchecked.png{% endif %}" alt=""/> {{ g.name|truncateString:20 }}
           </label>
         </div>
         {% endfor %}
