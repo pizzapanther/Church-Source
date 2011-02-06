@@ -1,0 +1,62 @@
+{% extends "master.html" %}
+{% block title %}Add Person{% endblock %}
+{% block header %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}js/modal/css/basic.css" type="text/css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}js/modal/js/jquery.simplemodal.js"></script>
+{% endblock %}
+{% block content %}
+<h1>Add Household</h1>
+<form action="./" method="post" autocomplete="off">
+  {% csrf_token %}
+  <input type="hidden" name="goback" value="{{ goback }}"/>
+  {{ form.image_temp }}
+  <table class="form">
+    <tr>
+      <td>
+        <h3>First Name</h3>
+        {{ form.fname }}
+        {% if form.fname.errors %}<br/><span class="error">{{ form.fname.errors.0 }}</span>{% endif %}
+      </td>
+      <td>
+        <h3>Last Name</h3>
+        {{ form.lname }}
+        {% if form.lname.errors %}<br/><span class="error">{{ form.lname.errors.0 }}</span>{% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <h3>E-Mail</h3>
+        {{ form.email }}{{ form.alerts }}
+        {% if form.email.errors %}<br/><span class="error">{{ form.email.errors.0 }}</span>{% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <hr/>
+        <input type="button" name="pic" value="Take Picture" onclick="iframe_pic()"/>
+        <script type="text/javascript">
+          function iframe_pic () {
+            $.modal(
+              '<iframe src="{% url cs_temp_image %}" height="460" width="640" scrolling="no" style="border:0; margin: 0px auto;"></iframe>', 
+              {containerCss:{
+                backgroundColor:"#fff",
+                borderColor:"#fff",
+                height:480,
+                padding:0,
+                width:660
+              }}
+            );
+          }
+        </script>
+        <hr/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="submit" value="Next" name="task"/>
+        <input type="button" value="Cancel" name="task" onclick="location.href='{{ goback }}'"/>
+      </td>
+    </tr>
+  </table>
+</form>
+{% endblock %}

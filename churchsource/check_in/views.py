@@ -1,6 +1,7 @@
 import re
 import datetime
 import urllib
+import urlparse
 
 from django import http
 from django.db.models import Q
@@ -85,7 +86,7 @@ def terminal_checkin (request, events='', touch=None):
         if households.count() == 0:
           message = 'Nothing Found'
           if request.user.has_perm('people.add_household') and request.user.is_staff:
-            message = 'Nothing Found &nbsp;-&nbsp; <a href="/admin/people/household/add/?goback=%s">Add A Household</a>' % urllib.quote(request.build_absolute_uri())
+            message = 'Nothing Found'
             
         elif households.count() == 1:
           return http.HttpResponseRedirect('./?task=household&h=%d' % households[0].id)
@@ -157,7 +158,7 @@ def reports (request):
 def add_person (request, hhold=None):
   h = get_object_or_404(pmodels.Household, id=hhold)
   goback = request.REQUEST.get('goback', '')
-  form = cforms.PersonForm(initial={'alerts': True})
+  form = cforms.PersonForm()
   touch = False
   groups = request.REQUEST.getlist('groupid')
   groups = [elem for elem in groups if elem != ""]
@@ -189,4 +190,29 @@ def add_person (request, hhold=None):
 @permission_required('people.add_tempimage')
 def temp_image (request):
   return request.render_to_response('checkin/temp_image.html', {})
+  
+@permission_required('people.add_household')
+def add_household (request):
+  goback = request.REQUEST.get('goback', '')
+  form = cforms.HouseholdForm(initial={'alerts': True})
+  touch = False
+  if re.search('-touch', goback):
+    touch = True
+    
+  if request.task == 'Next':
+    form = cforms.HouseholdForm(request.POST)
+    if form.is_valid():
+      p = form.save(commit=False)
+      h = pmodels.Household(name=p.lname, first_visit=datetime.date.today())
+      h.save()
+      
+      p.household = h
+      p.save()
+      
+      url = urlparse.urlparse(goback)
+      gourl = url.path + '?task=household&h=%d' % h.id
+      return http.HttpResponseRedirect(gourl)
+      
+  c = {'form': form, 'goback': goback, 'touch': touch}
+  return request.render_to_response('checkin/add_household.html', c)
   

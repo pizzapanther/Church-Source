@@ -23,6 +23,7 @@ urlpatterns += patterns('churchsource.check_in.views',
   url(r'^checkin/terminal/events-(?P<events>.*)-(?P<touch>touch)/$', 'terminal_checkin', name='cs_terminal_checkin_touch'),
   url(r'^checkin/terminal/events-(?P<events>.*)/$', 'terminal_checkin', name='cs_terminal_checkin'),
   url(r'^checkin/reports/$', 'reports', name='cs_reports'),
+  url(r'^checkin/add_household/$', 'add_household', name='cs_add_hhold'),
   url(r'^checkin/add_person/(?P<hhold>\d+)/$', 'add_person', name='cs_add_person'),
   url(r'^checkin/temp_image/$', 'temp_image', name='cs_temp_image'),
 )

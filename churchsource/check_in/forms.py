@@ -10,7 +10,14 @@ class PersonForm (forms.ModelForm):
   class Meta:
     model = pmodels.Person
     fields = ('fname', 'lname', 'gender', 'role', 'bdate', 'allergies', 'image_temp', 'groups')
+    widgets = {'image_temp': forms.HiddenInput}
+    
+class HouseholdForm (forms.ModelForm):
+  class Meta:
+    model = model = pmodels.Person
+    fields = ('fname', 'lname', 'email', 'alerts', 'image_temp')
     widgets = {
       'alerts': cwidgets.TouchBox(attrs={'tvalue': 'ON', 'label': 'Receive E-Mail Alerts'}),
       'image_temp': forms.HiddenInput,
     }
+    

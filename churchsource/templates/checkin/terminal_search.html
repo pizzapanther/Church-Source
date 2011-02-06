@@ -8,6 +8,7 @@
     <input type="text" name="search" id="search" value="Click to Search" autocomplete="off"/>
     <input type="submit" name="task" value="Search"/><br/>
     <div class="small">Enter your first name or last name</div>
+    <div class="new"><h2><a href="{% url cs_add_hhold %}?goback={{ request.build_absolute_uri|urlencode }}">I'm New!</a></h2></div>
   </div>
 </form>
 {% endblock %}
