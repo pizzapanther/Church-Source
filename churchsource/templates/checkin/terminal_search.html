@@ -5,7 +5,7 @@
 <form action="./" id="submit_on_accept" method="GET" autocomplete="off">
   {% if message %}<div class="message">{{ message|safe }}</div>{% endif %}
   <div class="checkin_search">
-    <input type="text" name="search" id="search" value="Click to Search" autocomplete="off"/>
+    <input type="text" name="search" id="search" value="{% if touch %}Touch{% else %}Click{% endif %} to Search" autocomplete="off"/>
     <input type="submit" name="task" value="Search"/><br/>
     <div class="small">Enter your first name or last name</div>
     <div class="new"><h2><a href="{% url cs_add_hhold %}?goback={{ request.build_absolute_uri|urlencode }}">I'm New!</a></h2></div>

@@ -45,7 +45,7 @@
       {% if touch %}
       $('input[type=text], input[type=password], textarea').keyboard({
         layout: 'qwerty',
-        visible: function (e, el) { if (el.value == 'Click to Search') { $('.ui-keyboard-input').val(''); } }
+        visible: function (e, el) { if (el.value == 'Touch to Search') { $('.ui-keyboard-input').val(''); } }
         {% if submit_on_accept %}, accepted: function (e, el) { location=href = './?search=' + encodeURIComponent(el.value) + '&task=Search'; }{% endif %}
       });
       
