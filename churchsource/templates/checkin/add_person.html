@@ -1,0 +1,97 @@
+{% extends "master.html" %}
+{% block title %}Add Person{% endblock %}
+{% block header %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}js/modal/css/basic.css" type="text/css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}js/modal/js/jquery.simplemodal.js"></script>
+{% endblock %}
+{% block content %}
+<h1>Add Person - {{ h.name }} Household</h1>
+<form action="./" method="post" autocomplete="off">
+  {% csrf_token %}
+  <input type="hidden" name="goback" value="{{ goback }}"/>
+  {{ form.image_temp }}
+  <table class="form">
+    <tr>
+      <td>
+        <h3>First Name</h3>
+        {{ form.fname }}
+        {% if form.fname.errors %}<br/><span class="error">{{ form.fname.errors.0 }}</span>{% endif %}
+      </td>
+      <td>
+        <h3>Last Name</h3>
+        {{ form.lname }}
+        {% if form.lname.errors %}<br/><span class="error">{{ form.lname.errors.0 }}</span>{% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h3>Gender</h3>
+        {{ form.gender }}
+      </td>
+      <td>
+        <h3>Relationship</h3>
+        {{ form.role }}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <h3>Birthday</h3>
+        {{ form.bdate }}<em>Example: 11/15/1978</em>
+        {% if form.bdate.errors %}<br/><span class="error">{{ form.bdate.errors.0 }}</span>{% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <h3>Allergies</h3>
+        {{ form.allergies }}
+        {% if form.allergies.errors %}<br/><span class="error">{{ form.allergies.errors.0 }}</span>{% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <h3>Select Groups</h3>{% if gmessage %}<br/><span class="error">{{ gmessage }}</span>{% endif %}
+        {% for g in tgroups %}
+        <div class="group">
+          <input type="checkbox" id="check_{{ forloop.counter }}"{% if g.id|stringformat:"d" in groups %} checked="checked"{% endif %} class="groups"/>
+          <input type="hidden" name="groupid" id="check_{{ forloop.counter }}_hidden" value="{% if g.id|stringformat:"d" in groups %}{{ g.id }}{% endif %}"/>
+          <label onclick="toggle_check('check_{{ forloop.counter }}', '{{ g.id }}')" for="check_{{ forloop.counter }}" id="check_{{ forloop.counter }}_label">
+            <img src="{{ MEDIA_URL }}img/{% if g.id|stringformat:"d" in groups %}checked.png{% else %}unchecked.png{% endif %}" alt=""/> {{ g.name }}
+          </label>
+        </div>
+        {% endfor %}
+        <script type="text/javascript">
+          $(document).ready(function () { $( '.groups' ).button(); });
+        </script>
+        <div class="clear"></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <hr/>
+        <input type="button" name="pic" value="Take Picture" onclick="iframe_pic()"/>
+        <script type="text/javascript">
+          function iframe_pic () {
+            $.modal(
+              '<iframe src="{% url cs_temp_image %}" height="460" width="640" scrolling="no" style="border:0; margin: 0px auto;"></iframe>', 
+              {containerCss:{
+                backgroundColor:"#fff",
+                borderColor:"#fff",
+                height:480,
+                padding:0,
+                width:660
+              }}
+            );
+          }
+        </script>
+        <hr/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="submit" value="Submit" name="task"/>
+        <input type="button" value="Cancel" name="task" onclick="location.href='{{ goback }}'"/>
+      </td>
+    </tr>
+  </table>
+</form>
+{% endblock %}

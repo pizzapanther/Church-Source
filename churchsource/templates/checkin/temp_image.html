@@ -1,0 +1,54 @@
+{% extends "master_iframe.html" %}
+{% block header %}
+<script type="text/javascript" src="{{ MEDIA_URL }}jpegcam/webcam.js"></script>
+<script type="text/javascript">
+  webcam.set_api_url('{% url cs_jpegcam %}');
+  webcam.set_quality(95);
+  webcam.set_shutter_sound(true, '{{ MEDIA_URL }}jpegcam/shutter.mp3');
+  webcam.set_swf_url('{{ MEDIA_URL }}jpegcam/webcam.swf');
+</script>
+{% endblock %}
+{% block content %}
+<h2>Say Cheese!</h2>
+<div>
+  <div id="upload_results"></div>
+  <script type="text/javascript">
+		webcam.set_hook( 'onComplete', 'my_completion_handler' );
+		webcam.set_hook( 'onError', 'my_error_handler' );
+    
+		function upload () {
+		  document.getElementById('upload_results').innerHTML = '<strong>Uploading ... </strong>';
+		  webcam.upload();
+		}
+		
+		function my_error_handler (err) {
+      alert(err);
+    }
+    
+    function my_completion_handler (msg) {
+      try {
+        var temp = msg.split(":");
+        var image_id = temp[1];
+        var image_url = temp[2];
+        
+        parent.document.getElementById('id_image_temp').value = image_id;
+        //parent.document.getElementById(img).src = image_url;
+        
+        parent.$.modal.close();
+      }
+      
+      catch (e) {
+        alert("Upload Error");
+      }
+      
+      document.getElementById('upload_results').innerHTML = '';
+    }
+    
+    document.write( webcam.get_html(320, 240) );
+  </script>
+  <br/><br/>
+  <input type=button value="Freeze" onclick="webcam.freeze()">  &nbsp;&nbsp; 
+  <input type=button value="Reset" onclick="webcam.reset()">  &nbsp;&nbsp; 
+  <input type=button value="Upload" onclick="upload()">
+</div>
+{% endblock %}
