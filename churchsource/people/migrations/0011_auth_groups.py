@@ -21,6 +21,7 @@ NEW_GROUPS = {
 }
 class Migration(DataMigration):
     depends_on = (
+        ("check_in", "0008_auto__add_field_event_link"),
         ("resources", "0001_initial"),
     )
     
