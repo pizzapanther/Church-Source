@@ -20,7 +20,10 @@ NEW_GROUPS = {
   ]
 }
 class Migration(DataMigration):
-
+    depends_on = (
+        ("resources", "0001_initial"),
+    )
+    
     def forwards(self, orm):
         for key in NEW_GROUPS.keys():
           g = amodels.Group(name=key)
