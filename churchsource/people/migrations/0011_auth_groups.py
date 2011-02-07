@@ -20,7 +20,18 @@ NEW_GROUPS = {
   ]
 }
 class Migration(DataMigration):
+    depends_on = (
+        ("check_in", "0008_auto__add_field_event_link"),
+        ("resources", "0001_initial"),
+    )
+    
     def forwards(self, orm):
+        try:
+          ct = ContentType.objects.get(app_label='check_in', model='checkin')
+          
+        except:
+          raise Exception, "Re-Run migration again, content type hooks not executed."
+          
         for key in NEW_GROUPS.keys():
           g = amodels.Group(name=key)
           g.save()
