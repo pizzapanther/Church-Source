@@ -1,3 +1,5 @@
+import sys
+
 # encoding: utf-8
 import datetime
 from south.db import db
@@ -30,7 +32,8 @@ class Migration(DataMigration):
           ct = ContentType.objects.get(app_label='check_in', model='checkin')
           
         except:
-          raise Exception, "Re-Run migration again, content type hooks not executed."
+          print "Re-Run migration again, content type hooks not executed."
+          sys.exit(1)
           
         for key in NEW_GROUPS.keys():
           g = amodels.Group(name=key)
