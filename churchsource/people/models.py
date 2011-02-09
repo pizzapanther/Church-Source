@@ -231,7 +231,7 @@ class Group (models.Model):
   name = models.CharField('Name', max_length=255)
   gtype = models.CharField('Type', max_length=10, choices=GTYPES, default="general")
   desc = models.CharField('Description', max_length=255, blank=True, null=True)
-  auth = models.BooleanField('Authorized Volunteer/Staff Group', default=True)
+  auth = models.BooleanField('Authorized Volunteer/Staff Group', default=False)
   
   def __unicode__ (self):
     return self.name
