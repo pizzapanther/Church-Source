@@ -57,6 +57,8 @@
         {% if submit_on_accept %}, accepted: function (e, el) { location=href = './?search=' + encodeURIComponent(el.value) + '&task=Search'; }{% endif %}
       });
       
+      $('body').keypress(function(event) { if (event.which == '104') { $('html, a, body .ui-button, body .ui-keyboard-button, input').css('cursor', 'auto'); } });
+      
       {% else %}
       $('input[type=text], input[type=password], textarea').click(function () {
         if (this.value == 'Click to Search') { this.value = ''; }
