@@ -83,7 +83,7 @@ def terminal_checkin (request, events='', touch=None):
           q = myq
           
         #households = pmodels.Household.objects.filter(q).filter(active=True, person__groups__gtype__in=['checkinc', 'checkina']).distinct()
-        households = pmodels.Household.objects.filter(q).filter(active=True)
+        households = pmodels.Household.objects.filter(q).filter(active=True).distinct()
         
         if households.count() == 0:
           message = 'Nothing Found'
