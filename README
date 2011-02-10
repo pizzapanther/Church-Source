@@ -1,0 +1,26 @@
+Church Source is an open source church management web application.  The 
+application is in heavy development right now and just focusing on a 
+child check in/out system.  However, eventually I hope to add other 
+features to give churches a free, open source alternative to expensive, 
+propriety church management applications.
+
+Future possible features:
+
+* Volunteer Management
+* Donation/Financial Tracking
+* Mailing Management
+
+Church Source is written using the Django framework and can be installed
+on your own server using standard technologies such as MySQL, Postgres, 
+Apache, etc.
+
+If you would like to get involved in the project see the following:
+
+Git Hub: report issues, review source code
+https://github.com/pizzapanther/Church-Source
+
+Google Moderator: submit and discuss future ideas
+http://www.google.com/moderator/#16/e=4cdcf
+
+Wiki: Installation and other useful info
+https://github.com/pizzapanther/Church-Source/wiki
