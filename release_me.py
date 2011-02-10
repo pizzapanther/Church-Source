@@ -13,6 +13,7 @@ def generate_release ():
   v = raw_input("Enter Version Number: ")
   
   for c in commands:
+    print c % {'version': v}
     p = subprocess.Popen(c % {'version': v}, shell=True)
     sts = os.waitpid(p.pid, 0)[1]
     
