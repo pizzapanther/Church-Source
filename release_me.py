@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import os
 import subprocess
 
 def generate_release ():
