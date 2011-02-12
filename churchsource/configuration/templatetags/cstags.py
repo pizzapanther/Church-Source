@@ -4,6 +4,7 @@ from django.db.models import Q
 from django import template
 
 import churchsource.check_in.models as cmodels
+import churchsource.configuration.models as cfmodels
 
 register = template.Library()
 
@@ -42,6 +43,10 @@ def get_checkins (event, evgroup):
       used.append(c.person.id)
       
   return ret
+  
+@register.filter
+def get_config (skey):
+  return cfmodels.get_key(skey)
   
 @register.filter
 def truncateString (string, length, ellipsis='...'):

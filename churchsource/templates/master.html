@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml">{% load cstags %}
 <head>
 	<title>{% block title %}{% endblock %} | Church Source</title>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
@@ -12,7 +12,7 @@
     html { overflow: auto;  }
   </style>
   {% endif %}
-  {% if touch %}
+  {% if touch and 'TOUCH_CURSOR_HIDDEN'|get_config %}
   <style type="text/css">
     html, a, body .ui-button, body .ui-keyboard-button, input  {
       cursor: url({{ MEDIA_URL }}img/trans_pointer.png), pointer;
@@ -57,7 +57,9 @@
         {% if submit_on_accept %}, accepted: function (e, el) { location=href = './?search=' + encodeURIComponent(el.value) + '&task=Search'; }{% endif %}
       });
       
+      {% if 'TOUCH_CURSOR_HIDDEN'|get_config %}
       $(document).keypress(function(event) { if (event.which == '104') { $('html, a, body .ui-button, body .ui-keyboard-button, input').css('cursor', 'auto'); } });
+      {% endif %}
       
       {% else %}
       $('input[type=text], input[type=password], textarea').click(function () {
