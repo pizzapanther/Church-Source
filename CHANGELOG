@@ -1,0 +1,14 @@
+Version 0.2
+
+Features:
+* deaff6fcba3b82b82783
+  Added TOUCH_CURSOR_HIDDEN configuration hide/show mouse cursor on
+  touch screen.
+
+Fixes:
+* 8314a02536947329ff02
+  Fixed admin querying so it doesn't save pop query strings
+
+Version 0.1
+
+* Initial Revision
