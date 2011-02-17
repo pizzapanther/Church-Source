@@ -32,6 +32,9 @@
     var MEDIA_URL = '{{ MEDIA_URL }}';
   </script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/default.js"></script>
+  <script type="text/javascript">
+    setTimeout(function () { location.href = '{% url cs_terminal %}'; }, 72000000);
+  </script>
   {% block header %}{% endblock %}
 </head>
 <body>
