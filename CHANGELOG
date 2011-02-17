@@ -4,6 +4,8 @@ Features:
 * deaff6fcba3b82b82783
   Added TOUCH_CURSOR_HIDDEN configuration hide/show mouse cursor on
   touch screen.
+* Issue #2: c2b011b0be668070d987
+  Checkin Terminal timeouts after 20 hours to /checkin/terminal/.
 
 Fixes:
 * 8314a02536947329ff02
