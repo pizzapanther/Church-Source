@@ -8,6 +8,12 @@ Features:
   Checkin Terminal timeouts after 20 hours to /checkin/terminal/.
 
 Fixes:
+* 3f7cc0baf960985e9562
+  Fixed authorized personnel bug
+  
+* 21f5e1e5030fef76db1b, cc3c1aa0ceaafae4adcc
+  fixed linked event time changes
+  
 * 8314a02536947329ff02
   Fixed admin querying so it doesn't save pop query strings
 
