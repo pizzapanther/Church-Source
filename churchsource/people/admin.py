@@ -134,7 +134,7 @@ merge_groups.short_description = "Merge groups"
 
 class GroupAdmin (admin.ModelAdmin):
   list_display = ('name', 'gtype', 'auth')
-  list_filter = ('gtype',)
+  list_filter = ('gtype', 'auth')
   search_fields = ('name',)
   
   inlines = (GroupAdminInline, GroupMemberAdmin)
