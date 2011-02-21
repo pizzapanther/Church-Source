@@ -78,8 +78,11 @@ class EventAdmin (admin.ModelAdmin):
             e.code = obj.code
             e.start = datetime.datetime(year=e.start.year, month=e.start.month, day=e.start.day, hour=obj.start.hour, minute=obj.start.minute)
             
-            if obj.end:
+            if obj.end and e.end:
               e.end = datetime.datetime(year=e.end.year, month=e.end.month, day=e.end.day, hour=obj.end.hour, minute=obj.end.minute)
+              
+            elif obj.end:
+              e.end = datetime.datetime(year=e.start.year, month=e.start.month, day=e.start.day, hour=obj.end.hour, minute=obj.end.minute)
               
             else:
               e.end = obj.end
