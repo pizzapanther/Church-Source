@@ -59,9 +59,11 @@ class CheckIn (models.Model):
   def is_authorized (self):
     for e in self.events.all():
       for evg in e.eventgroup_set.all():
-        if evg.group.auth:
-          return True
-          
+        for g in self.person.groups.all():
+          if g.id == evg.group.id:
+            if evg.group.auth:
+              return True
+              
     return False
     
   def _Events (self):
