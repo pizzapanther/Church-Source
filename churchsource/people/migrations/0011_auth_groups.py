@@ -9,18 +9,6 @@ from django.db import models
 import django.contrib.auth.models as amodels
 from django.contrib.contenttypes.models import ContentType
 
-NEW_GROUPS = {
-  'UnManned Check In': [
-    "check_in.add_checkin", "check_in.change_checkin", "people.add_address", "people.add_household",
-    "people.add_person", "people.add_phone", "people.add_tempimage", "people.delete_tempimage"
-  ],
-  'Manned Check In': [
-    "check_in.add_checkin", "check_in.change_checkin", "check_in.can_generate_reports", "check_in.add_event",
-    "people.add_address", "people.change_address", "people.delete_address", "people.add_household",
-    "people.change_household", "people.add_person", "people.change_person", "people.add_phone",
-    "people.change_phone", "people.delete_phone", "people.add_tempimage", "people.delete_tempimage"
-  ]
-}
 class Migration(DataMigration):
     depends_on = (
         ("check_in", "0008_auto__add_field_event_link"),
@@ -28,32 +16,11 @@ class Migration(DataMigration):
     )
     
     def forwards(self, orm):
-        try:
-          ct = ContentType.objects.get(app_label='check_in', model='checkin')
-          
-        except:
-          print "Re-Run migration again, content type hooks not executed."
-          sys.exit(1)
-          
-        for key in NEW_GROUPS.keys():
-          g = amodels.Group(name=key)
-          g.save()
-          for p in NEW_GROUPS[key]:
-            temp = p.split('.')
-            
-            if temp[1] == 'can_generate_reports':
-              ct = ContentType.objects.get(app_label=temp[0], model='checkin')
-              
-            else:
-              temp2 = temp[1].split("_")
-              ct = ContentType.objects.get(app_label=temp[0], model=temp2[1])
-              
-            g.permissions.add(amodels.Permission.objects.get(codename=temp[1], content_type=ct))
-            
+        pass
+        
     def backwards(self, orm):
-        for key in NEW_GROUPS.keys():
-          amodels.Group.objects.get(name=key).delete()
-          
+        pass
+        
     models = {
         'people.address': {
             'Meta': {'ordering': "('address1',)", 'object_name': 'Address'},

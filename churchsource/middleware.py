@@ -40,11 +40,12 @@ class AdminQuery:
   def process_request (self, request):
     if ADMIN_REMEMBER_QUERIES:
       if request.method == 'GET':
-        found = re.search("^/admin/(\S+)/(\S+)/$", request.path)
+        other = re.search("^/admin/(\S+?)/(\S+?)/\S+$", request.path)
+        found = re.search("^/admin/(\S+?)/(\S+?)/$", request.path)
         clear = request.REQUEST.get('__clearqs', '')
         pop = request.REQUEST.get('pop', '')
         
-        if found and pop != '1':
+        if not other and found and pop != '1':
           key = 'aquery-%s-%s' % (found.group(1), found.group(2))
           
           if clear == '1':
