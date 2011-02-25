@@ -170,7 +170,7 @@ def add_person (request, hhold=None):
     
   now = datetime.datetime.now()
   #tgroups = pmodels.Group.objects.filter(eventgroup__event__start__year=now.year, eventgroup__event__start__month=now.month, eventgroup__event__start__day=now.day).distinct()
-  tgroups = pmodels.Group.objects.filter(gtype='checkinc')
+  tgroups = pmodels.Group.objects.filter(Q(gtype='checkinc') | Q(gtype='checkina')).exclude(auth=True)
   if request.task == 'Submit':
     form = cforms.PersonForm(request.POST, {'groups': groups})
     

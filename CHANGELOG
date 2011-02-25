@@ -8,6 +8,9 @@ Features:
   Checkin Terminal timeouts after 20 hours to /checkin/terminal/.
 
 Fixes:
+* 6d4623419e65ad0d0854
+  made installation easier, fixed admin queries
+  
 * 3f7cc0baf960985e9562
   Fixed authorized personnel bug
   
