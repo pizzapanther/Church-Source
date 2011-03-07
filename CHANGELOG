@@ -1,6 +1,9 @@
 Version 0.2
 
 Features:
+* 83dc7c088c9342c05d9e
+  Added group reports
+  
 * deaff6fcba3b82b82783
   Added TOUCH_CURSOR_HIDDEN configuration hide/show mouse cursor on
   touch screen.
