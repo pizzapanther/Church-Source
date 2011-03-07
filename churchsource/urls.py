@@ -16,6 +16,7 @@ urlpatterns = patterns('',
 
 urlpatterns += patterns('churchsource.people.views',
   url(r'^jpegcam/$', 'jpegcam_admin', name='cs_jpegcam'),
+  url(r'^checkin/reports/group/$', 'reports', name='cs_group_report')
 )
 
 urlpatterns += patterns('churchsource.check_in.views',

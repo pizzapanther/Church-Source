@@ -5,6 +5,7 @@ from django.db import models
 from django.conf import settings
 import django.contrib.localflavor.us.models as us
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.urlresolvers import reverse
 
 MSTATUSES = (
   ('ns', 'Not Specified'),
@@ -232,6 +233,11 @@ class Group (models.Model):
   gtype = models.CharField('Type', max_length=10, choices=GTYPES, default="general")
   desc = models.CharField('Description', max_length=255, blank=True, null=True)
   auth = models.BooleanField('Authorized Volunteer/Staff Group', default=False)
+  
+  def report (self):
+    return '<a href="%s?group=%d" target="_blank">Print Report</a>' % (reverse('cs_group_report'), self.id)
+    
+  report.allow_tags = True
   
   def __unicode__ (self):
     return self.name

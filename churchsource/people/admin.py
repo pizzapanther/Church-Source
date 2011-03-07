@@ -6,6 +6,7 @@ from django import forms
 
 from django.db import models
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.urlresolvers import reverse
 
 import churchsource.people.models as pmodels
 import churchsource.people.widgets as widgets
@@ -132,13 +133,22 @@ def merge_groups (modeladmin, request, queryset):
   
 merge_groups.short_description = "Merge groups"
 
+def gen_report (modeladmin, request, queryset, format='print'):
+  qs = ''
+  for e in queryset:
+    qs += '&group=%d' % e.id
+    
+  return http.HttpResponseRedirect('%s?format=%s%s' % (reverse('cs_group_report'), format, qs))
+  
+gen_report.short_description = "Generate Print Report"
+
 class GroupAdmin (admin.ModelAdmin):
-  list_display = ('name', 'gtype', 'auth')
+  list_display = ('name', 'gtype', 'auth', 'report')
   list_filter = ('gtype', 'auth')
   search_fields = ('name',)
   
   inlines = (GroupAdminInline, GroupMemberAdmin)
-  actions = (merge_groups,)
+  actions = (merge_groups, gen_report)
   
 admin.site.register(pmodels.Household, HouseholdAdmin)
 admin.site.register(pmodels.Person, PersonAdmin)

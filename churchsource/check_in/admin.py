@@ -58,7 +58,7 @@ class EventAdmin (admin.ModelAdmin):
   fieldsets = ((None, {'fields': ['name', 'code', 'start', 'end', ('repeat', 'repeat_times')]}),)
     
   inlines = [EventGroupInline,]
-  actions = [gen_report, gen_report2]
+  actions = [gen_report]
   
   def save_formset(self, request, form, formset, change):
     instances = formset.save(commit=False)

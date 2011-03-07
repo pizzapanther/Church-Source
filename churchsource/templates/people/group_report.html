@@ -1,0 +1,51 @@
+{% extends "master_print.html" %}{% load cstags %}
+{% block title %}Group Report{% endblock %}
+{% block content %}
+{% for g in groups %}
+{% if not forloop.first %}<div class="break"></div>{% endif %}
+<table>
+  <tr>
+    <td colspan="3" class="nopad">
+      <h1>{{ g.name }} Members</h1>
+    </td>
+    <td class="tr nopad">{% now "F jS, Y h:i A" %}</td>
+  </tr>
+  <tr>
+    <td><strong>Last Name</strong></td>
+    <td><strong>First Name</strong></td>
+    <td><strong>Gender</strong></td>
+    <td class="tr nopad"><strong>Birthday</strong></td>
+  </tr>
+  {% for p in g.person_set.all %}
+  <tr>
+    <td>{{ p.lname }}</td>
+    <td>{{ p.fname }}</td>
+    <td>{{ p.get_gender_display }}</td>
+    <td class="tr nopad">{{ p.bdate|date:"m/d/Y" }}</td>
+  </tr>
+  <tr>
+    <td colspan="4" class="nopad"><hr/></td>
+  </tr>
+  {% endfor %}
+  <tr>
+    <td colspan="4" class="tr nopad">Total: {{ g.person_set.all.count }}</td>
+  </tr>
+  <tr>
+    <td colspan="4" class="nopad"><hr/></td>
+  </tr>
+  <tr>
+    <td colspan="4" class="nopad"><h2>Group Admins</h2></td>
+  </tr>
+  {% for ga in g.groupadmin_set.all %}
+  <tr>
+    <td>{{ ga.person.lname }}</td>
+    <td>{{ ga.person.fname }}</td>
+    <td colspan="2" class="tr nopad">{% if ga.can_send %}Can send broadcast messages{% endif %}</td>
+  </tr>
+  <tr>
+    <td colspan="4" class="nopad"><hr/></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endfor %}
+{% endblock %}

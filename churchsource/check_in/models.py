@@ -19,8 +19,8 @@ class Event (models.Model):
     return '%s - %d/%d/%d' % (self.name, self.start.month, self.start.day, self.start.year)
     
   def attendance (self):
-    ret = '<strong>Child Groups:</strong> <a href="%s?event=%d" target="_blank">Report</a>, Spreadsheet' % (reverse('cs_reports'), self.id)
-    ret += '<div style="padding-top: 3px;"><strong>Child and Adult:</strong> <a href="%s?event=%d&with_adults=1" target="_blank">Report</a>, Spreadsheet</div>' % (reverse('cs_reports'), self.id)
+    ret = '<strong>Child Groups:</strong> <a href="%s?event=%d" target="_blank">Print Report</a>' % (reverse('cs_reports'), self.id)
+    ret += '<div style="padding-top: 3px;"><strong>Child and Adult:</strong> <a href="%s?event=%d&with_adults=1" target="_blank">Print Report</a></div>' % (reverse('cs_reports'), self.id)
     return ret
     
   attendance.allow_tags = True
