@@ -100,6 +100,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'south',
     'sorl.thumbnail',
+    'ajax_select',
     'churchsource.configuration',
     'churchsource.people',
     'churchsource.check_in',
@@ -117,6 +118,10 @@ WEBCAM_HEIGHT = 240
 INTERNAL_IPS = ('127.0.0.1',)
 
 TIME_INPUT_FORMATS = ('%I:%M %p', '%H:%M:%S', '%H:%M')
+
+AJAX_LOOKUP_CHANNELS = {
+  'person' : ('people.ajax', 'PersonChannel'),
+}
 
 TEMPLATE_CONTEXT_PROCESSORS = (
   "django.core.context_processors.request",

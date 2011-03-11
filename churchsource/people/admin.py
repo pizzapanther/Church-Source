@@ -11,6 +11,9 @@ from django.core.urlresolvers import reverse
 import churchsource.people.models as pmodels
 import churchsource.people.widgets as widgets
 
+from ajax_select import make_ajax_form
+from ajax_select.fields import AutoCompleteSelectField
+
 class PersonInline (admin.StackedInline):
   model = pmodels.Person
   
@@ -108,10 +111,19 @@ class TIAdmin (admin.ModelAdmin):
   formfield_overrides = {models.ImageField: {'widget': widgets.Webcam},}
   
 class GroupAdminInline (admin.TabularInline):
+  form = make_ajax_form(pmodels.GroupAdmin, {'person': 'person'})
   model = pmodels.GroupAdmin
   raw_id_fields = ('person',)
   
+class GroupMemberForm (forms.ModelForm):
+  person = AutoCompleteSelectField('person', required=True)
+  
+  class Meta:
+    model = pmodels.Person.groups.through
+    
 class GroupMemberAdmin (admin.TabularInline):
+  form = GroupMemberForm
+  
   model = pmodels.Person.groups.through
   raw_id_fields = ('person', )
   verbose_name = "Member"
@@ -150,6 +162,12 @@ class GroupAdmin (admin.ModelAdmin):
   inlines = (GroupAdminInline, GroupMemberAdmin)
   actions = (merge_groups, gen_report)
   
+  class Media:
+    css = {
+        "all": ("js/autocomplete/jquery.autocomplete.css", "css/iconic.css")
+    }
+    js = ("js/jquery-1.4.4.min.js", "js/autocomplete/jquery.autocomplete.min.js", "js/ajax_select.js")
+    
 admin.site.register(pmodels.Household, HouseholdAdmin)
 admin.site.register(pmodels.Person, PersonAdmin)
 admin.site.register(pmodels.Phone, PhoneAdmin)

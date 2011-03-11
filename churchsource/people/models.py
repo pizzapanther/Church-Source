@@ -140,8 +140,12 @@ class Person (models.Model):
       TempImage.objects.get(id=str(tid)).delete()
       
   def __unicode__ (self):
-    return '%s, %s' % (self.lname, self.fname)
-    
+    if self.mname:
+      return '%s, %s %s' % (self.lname, self.fname, self.mname)
+      
+    else:
+      return '%s, %s' % (self.lname, self.fname)
+      
   def birthday (self):
     return self.bdate.strftime('%m/%d/%Y')
     

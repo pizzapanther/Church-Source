@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'^grappelli/', include('grappelli.urls')),
+    (r'^ajax_select/', include('ajax_select.urls')),
 )
 
 urlpatterns += patterns('churchsource.people.views',
