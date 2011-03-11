@@ -1,6 +1,9 @@
 Version 0.2
 
 Features:
+* d397ec3c488a09a37aa0
+  Added phone numbers to household members display
+  
 * 07217a7349f6ff4cac23
   Added mechanism for promoting people in a group.
   
