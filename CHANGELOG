@@ -18,7 +18,7 @@ Features:
   Checkin Terminal timeouts after 20 hours to /checkin/terminal/.
 
 Fixes:
-* f4ddf07566d6b94961ee
+* 688ebce8348cf8c1e858
   Fixed clear filter "All".
   
 * 86f7772baeb55409797c
