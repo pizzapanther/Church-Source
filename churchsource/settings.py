@@ -121,6 +121,7 @@ TIME_INPUT_FORMATS = ('%I:%M %p', '%H:%M:%S', '%H:%M')
 
 AJAX_LOOKUP_CHANNELS = {
   'person' : ('people.ajax', 'PersonChannel'),
+  'personbd' : ('people.ajax', 'PersonChannelBdate'),
 }
 
 TEMPLATE_CONTEXT_PROCESSORS = (

@@ -49,3 +49,7 @@ class PersonChannel (object):
   def get_objects(self, ids):
     return Person.objects.filter(pk__in=ids)
     
+class PersonChannelBdate (PersonChannel):
+  def format_item(self, obj):
+    return unicode(obj) + ' - ' + obj.birthday()
+    

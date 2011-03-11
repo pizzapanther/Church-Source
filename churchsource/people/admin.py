@@ -1,6 +1,7 @@
 import time
 
 from django.contrib import admin
+from django.contrib.admin.widgets import ForeignKeyRawIdWidget
 from django import http
 from django import forms
 
@@ -117,7 +118,8 @@ class GroupAdminInline (admin.TabularInline):
   raw_id_fields = ('person',)
   
 class GroupMemberForm (forms.ModelForm):
-  person = AutoCompleteSelectField('person', required=True)
+  person = AutoCompleteSelectField('personbd', required=True)
+  promote = forms.ModelChoiceField(queryset=pmodels.Group.objects.all(), required=False, label="Promote To", widget=ForeignKeyRawIdWidget(pmodels.Person._meta.get_field('groups').rel))
   
   class Meta:
     model = pmodels.Person.groups.through
@@ -126,7 +128,7 @@ class GroupMemberAdmin (admin.TabularInline):
   form = GroupMemberForm
   
   model = pmodels.Person.groups.through
-  raw_id_fields = ('person', )
+  raw_id_fields = ('person',)
   verbose_name = "Member"
   verbose_name_plural = "Members"
   
@@ -168,6 +170,17 @@ class GroupAdmin (admin.ModelAdmin):
   inlines = (GroupAdminInline, GroupMemberAdmin)
   actions = (merge_groups, gen_report, gen_csv)
   
+  def save_formset (self, request, form, formset, change):
+    formset.save()
+    for f in range(0, formset.total_form_count()):
+      myform = formset.forms[f]
+      if myform.cleaned_data.has_key('promote'):
+        if myform.cleaned_data['promote']:
+          person = myform.cleaned_data['person']
+          
+          person.groups.remove(myform.cleaned_data['group'])
+          person.groups.add(myform.cleaned_data['promote'])
+          
   class Media:
     css = {
         "all": ("js/autocomplete/jquery.autocomplete.css", "css/iconic.css")
