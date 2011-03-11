@@ -1,6 +1,9 @@
 Version 0.2
 
 Features:
+* 07217a7349f6ff4cac23
+  Added mechanism for promoting people in a group.
+  
 * bc80b915da07bbfba23a
   Added spreadsheet report for groups.
   
