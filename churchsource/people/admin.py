@@ -22,10 +22,10 @@ class PersonInline (admin.StackedInline):
   
   fieldsets = (
     (None, {
-      'fields': (('fname', 'lname'), ('email', 'alerts'), ('gender', 'role'), ('bdate', 'ddate'), 'allergies', 'groups', 'image', 'image_temp', 'details')
+      'fields': (('fname', 'lname'), ('email', 'alerts'), ('gender', 'role'), ('bdate', 'ddate'), 'allergies', 'groups', 'image', 'image_temp', 'phones', 'details')
     }),
   )
-  readonly_fields = ('details',)
+  readonly_fields = ('details', 'phones')
   raw_id_fields = ('image_temp', )
   
   formfield_overrides = {models.ImageField: {'widget': widgets.WebcamModal},}

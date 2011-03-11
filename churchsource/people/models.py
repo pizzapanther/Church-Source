@@ -178,6 +178,18 @@ class Person (models.Model):
     
   edit_household.allow_tags = True
   
+  def phones (self):
+    ret = '<table>'
+    if self.id:
+      ret += '<tr><td><strong>Description</strong></td><td><strong>Number</strong></td><td><strong>SMS Alerts On</strong></td></tr>'
+      for phone in self.phone_set.all():
+        ret += '<tr><td>%s</td><td>%s</td><td style="text-align: center; font-size: 160%%;">%s</td></tr>' % (phone.description(), phone.number, phone.sms_alerts())
+        
+    ret += '</table>'
+    return ret
+    
+  phones.allow_tags = True
+  
   def details (self):
     if self.id:
       return '<a href="../../person/%d/">Edit Details</a>' % self.id
@@ -232,6 +244,12 @@ class Phone (models.Model):
       return self.number
       
     return ret
+    
+  def sms_alerts (self):
+    if self.alerts:
+      return '&#10003;'
+      
+    return '-'
     
   def description (self):
     ret = ''

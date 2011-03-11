@@ -51,5 +51,8 @@ class PersonChannel (object):
     
 class PersonChannelBdate (PersonChannel):
   def format_item(self, obj):
-    return unicode(obj) + ' - ' + obj.birthday()
-    
+    if obj.bdate:
+      return unicode(obj) + ' - ' + obj.birthday()
+      
+    return unicode(obj)
+      
