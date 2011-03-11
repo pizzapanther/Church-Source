@@ -2,10 +2,10 @@ Version 0.2
 
 Features:
 * bc80b915da07bbfba23a
-  Added spreadsheet report for groups
+  Added spreadsheet report for groups.
   
 * dc382e76eaed35dc67b2
-  Added ajax select for people in groups
+  Added ajax select for people in groups.
   
 * 83dc7c088c9342c05d9e
   Added group reports
@@ -18,17 +18,20 @@ Features:
   Checkin Terminal timeouts after 20 hours to /checkin/terminal/.
 
 Fixes:
+* f4ddf07566d6b94961ee
+  Fixed clear filter "All".
+  
 * 86f7772baeb55409797c
-  add adult tag groups to "Add Person" view
+  Add adult tag groups to "Add Person" view.
   
 * 6d4623419e65ad0d0854
-  made installation easier, fixed admin queries
+  Made installation easier, fixed admin queries.
   
 * 3f7cc0baf960985e9562
-  Fixed authorized personnel bug
+  Fixed authorized personnel bug.
   
 * 21f5e1e5030fef76db1b, cc3c1aa0ceaafae4adcc
-  fixed linked event time changes
+  Fixed linked event time changes.
   
 * 8314a02536947329ff02
   Fixed admin querying so it doesn't save pop query strings

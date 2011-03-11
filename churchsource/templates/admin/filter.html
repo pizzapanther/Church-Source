@@ -1,0 +1,7 @@
+{% load i18n %}
+<div class="filter">
+    <label>{% blocktrans with title as filter_title %}{{ filter_title }}{% endblocktrans %}</label>
+    <select class="filter_choice">
+        {% for choice in choices %}<option value="{% if choice.query_string|iriencode == '?' %}?__clearqs=1{% else %}{{ choice.query_string|iriencode }}{% endif %}"{% if choice.selected %} selected='selected'{% endif %}>{{ choice.display|safe }}</option>{% endfor %}
+    </select>
+</div>
