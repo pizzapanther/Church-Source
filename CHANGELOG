@@ -1,6 +1,9 @@
 Version 0.2
 
 Features:
+* bc80b915da07bbfba23a
+  Added spreadsheet report for groups
+  
 * dc382e76eaed35dc67b2
   Added ajax select for people in groups
   
