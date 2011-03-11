@@ -105,6 +105,7 @@ class PhoneAdmin (admin.ModelAdmin):
   list_display = ('person', 'description', 'number', 'alerts')
   search_fields = ('person__fname', 'person__lname', 'person__email', 'person__household__name', 'number')
   list_filter = ('alerts', 'type1', 'type2')
+  raw_id_fields = ('person',)
   
 class TIAdmin (admin.ModelAdmin):
   list_display = ('image', 'view', 'ts')
@@ -154,13 +155,18 @@ def gen_report (modeladmin, request, queryset, format='print'):
   
 gen_report.short_description = "Generate Print Report"
 
+def gen_csv (modeladmin, request, queryset):
+  return gen_report(modeladmin, request, queryset, format='csv')
+  
+gen_csv.short_description = "Generate Spreadsheet Report"
+
 class GroupAdmin (admin.ModelAdmin):
   list_display = ('name', 'gtype', 'auth', 'report')
   list_filter = ('gtype', 'auth')
   search_fields = ('name',)
   
   inlines = (GroupAdminInline, GroupMemberAdmin)
-  actions = (merge_groups, gen_report)
+  actions = (merge_groups, gen_report, gen_csv)
   
   class Media:
     css = {

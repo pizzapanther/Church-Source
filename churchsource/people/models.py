@@ -114,6 +114,19 @@ class Person (models.Model):
   
   groups = models.ManyToManyField('Group', blank=True, null=True)
   
+  def phone_string (self):
+    ret = u''
+    for phone in self.phone_set.all():
+      if phone.description():
+        ret += phone.description() + ': '
+        
+      ret += phone.number + ', '
+      
+    if len(ret) > 0:
+      ret = ret[:-2]
+      
+    return ret
+    
   def is_minor (self):
     if self.bdate:
       year18 = datetime.timedelta(days=365*18)
@@ -147,7 +160,10 @@ class Person (models.Model):
       return '%s, %s' % (self.lname, self.fname)
       
   def birthday (self):
-    return self.bdate.strftime('%m/%d/%Y')
+    if self.bdate:
+      return self.bdate.strftime('%m/%d/%Y')
+      
+    return ''
     
   def active (self):
     if self.household.active:
@@ -239,7 +255,7 @@ class Group (models.Model):
   auth = models.BooleanField('Authorized Volunteer/Staff Group', default=False)
   
   def report (self):
-    return '<a href="%s?group=%d" target="_blank">Print Report</a>' % (reverse('cs_group_report'), self.id)
+    return 'Report:&nbsp; <a href="%(url)s?group=%(id)d" target="_blank">Print</a> &nbsp;-&nbsp; <a href="%(url)s?group=%(id)d&format=csv">Spreadsheet</a>' % {'url': reverse('cs_group_report'), 'id': self.id}
     
   report.allow_tags = True
   

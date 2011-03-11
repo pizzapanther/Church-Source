@@ -5,7 +5,7 @@
 {% if not forloop.first %}<div class="break"></div>{% endif %}
 <table>
   <tr>
-    <td colspan="3" class="nopad">
+    <td colspan="4" class="nopad">
       <h1>{{ g.name }} Members</h1>
     </td>
     <td class="tr nopad">{% now "F jS, Y h:i A" %}</td>
@@ -13,6 +13,7 @@
   <tr>
     <td><strong>Last Name</strong></td>
     <td><strong>First Name</strong></td>
+    <td><strong>E-Mail</strong></td>
     <td><strong>Gender</strong></td>
     <td class="tr nopad"><strong>Birthday</strong></td>
   </tr>
@@ -20,30 +21,32 @@
   <tr>
     <td>{{ p.lname }}</td>
     <td>{{ p.fname }}</td>
-    <td>{{ p.get_gender_display }}</td>
+    <td>{{ p.email }}</td>
+    <td>{% if p.gender != 'ns' %}{{ p.get_gender_display }}{% endif %}</td>
     <td class="tr nopad">{{ p.bdate|date:"m/d/Y" }}</td>
   </tr>
   <tr>
-    <td colspan="4" class="nopad"><hr/></td>
+    <td colspan="5" class="nopad"><hr/></td>
   </tr>
   {% endfor %}
   <tr>
-    <td colspan="4" class="tr nopad">Total: {{ g.person_set.all.count }}</td>
+    <td colspan="5" class="tr nopad">Total: {{ g.person_set.all.count }}</td>
   </tr>
   <tr>
-    <td colspan="4" class="nopad"><hr/></td>
+    <td colspan="5" class="nopad"><hr/></td>
   </tr>
   <tr>
-    <td colspan="4" class="nopad"><h2>Group Admins</h2></td>
+    <td colspan="5" class="nopad"><h2>Group Admins</h2></td>
   </tr>
   {% for ga in g.groupadmin_set.all %}
   <tr>
     <td>{{ ga.person.lname }}</td>
     <td>{{ ga.person.fname }}</td>
+    <td>{{ ga.person.email }}</td>
     <td colspan="2" class="tr nopad">{% if ga.can_send %}Can send broadcast messages{% endif %}</td>
   </tr>
   <tr>
-    <td colspan="4" class="nopad"><hr/></td>
+    <td colspan="5" class="nopad"><hr/></td>
   </tr>
   {% endfor %}
 </table>
