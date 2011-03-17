@@ -138,6 +138,9 @@ SESSION_COOKIE_AGE = 18 * 60 * 60 #18 hours
 
 ADMIN_REMEMBER_QUERIES = True
 
+FACE_COM_KEY = ''
+FACE_COM_SECRET = ''
+
 try:
   from churchsource.settings_local import *
   
