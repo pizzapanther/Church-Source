@@ -42,9 +42,9 @@ class AddressInline (admin.StackedInline):
 
 def relearn (modeladmin, request, queryset):
   for h in queryset:
-    h.remove_faces()
-    h.face_detect()
-    
+    for p in h.person_set.all():
+      p.face_detect()
+      
   messages.success(request, 'Household(s) facial recognition successful.')
   return http.HttpResponseRedirect('/admin/people/household/')
   

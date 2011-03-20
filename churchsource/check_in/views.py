@@ -246,6 +246,7 @@ def picnik (request, name=None):
     ti.image.save(fname, fh, save=True)
     ti.save()
     fh.close()
+    os.remove(fp)
     
   return request.render_to_response('admin/people/tempimage/picnik.html', {'ti': ti, 'name': name})
   

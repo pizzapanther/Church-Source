@@ -145,7 +145,7 @@ class Person (models.Model):
     else:
       return False
       
-  def remove_faces (self):
+  def remove_face (self):
     #not implemented, API does not support
     pass
     
@@ -155,14 +155,20 @@ class Person (models.Model):
           
     if self.image:
       response = client.faces_detect(settings.FACE_COM_HTTP + self.image.url)
-      tids = [photo['tags'][0]['tid'] for photo in response['photos']]
-      uid = 'p%d@%s' % (self.id, settings.FACE_COM_NAMESPACE)
-      name = str(self)
-      #print tids
-      client.tags_get(uid)
-      client.tags_save(tids=',' . join(tids), uid=uid, label=name)
-      client.faces_train(uid)
-      
+      try:
+        tids = [photo['tags'][0]['tid'] for photo in response['photos']]
+        
+      except:
+        pass
+        
+      else:
+        uid = 'p%d@%s' % (self.id, settings.FACE_COM_NAMESPACE)
+        name = str(self)
+        #print tids
+        client.tags_get(uid)
+        client.tags_save(tids=',' . join(tids), uid=uid, label=name)
+        client.faces_train(uid)
+        
   def save (self):
     super(Person, self).save()
     if self.image_temp:
