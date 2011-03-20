@@ -7,6 +7,9 @@ import django.contrib.localflavor.us.models as us
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
 
+from face_client import face_client
+import churchsource.configuration.models as cfmodels
+
 MSTATUSES = (
   ('ns', 'Not Specified'),
   ('single', 'Single'),
@@ -75,7 +78,7 @@ class Household (models.Model):
       super(Household, self).save()
       
       TempImage.objects.get(id=str(tid)).delete()
-      
+            
   def __unicode__ (self):
     return self.name
     
@@ -142,6 +145,24 @@ class Person (models.Model):
     else:
       return False
       
+  def remove_faces (self):
+    #not implemented, API does not support
+    pass
+    
+  def face_detect (self):
+    #print "Detecting Faces"
+    client = face_client.FaceClient(settings.FACE_COM_KEY, settings.FACE_COM_SECRET)
+          
+    if self.image:
+      response = client.faces_detect(settings.FACE_COM_HTTP + self.image.url)
+      tids = [photo['tags'][0]['tid'] for photo in response['photos']]
+      uid = 'p%d@%s' % (self.id, settings.FACE_COM_NAMESPACE)
+      name = str(self)
+      #print tids
+      client.tags_get(uid)
+      client.tags_save(tids=',' . join(tids), uid=uid, label=name)
+      client.faces_train(uid)
+      
   def save (self):
     super(Person, self).save()
     if self.image_temp:
@@ -151,6 +172,9 @@ class Person (models.Model):
       super(Person, self).save()
       
       TempImage.objects.get(id=str(tid)).delete()
+      
+    if cfmodels.get_key('FACE_SEARCH_ENABLE'):
+      self.face_detect()
       
   def __unicode__ (self):
     if self.mname:

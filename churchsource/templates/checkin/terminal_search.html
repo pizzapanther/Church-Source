@@ -1,5 +1,23 @@
 {% extends "master.html" %}{% load cstags %}
 {% block title %}Check In{% endblock %}
+{% block header %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}js/modal/css/basic.css" type="text/css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}js/modal/js/jquery.simplemodal.js"></script>
+<script type="text/javascript">
+  function face_check () {
+    $.modal(
+      '<iframe src="{% url cs_face_check %}" height="460" width="640" scrolling="no" style="border:0; margin: 0px auto;"></iframe>', 
+      {containerCss:{
+        backgroundColor:"#fff",
+        borderColor:"#fff",
+        height:480,
+        padding:0,
+        width:660
+      }}
+    );
+  }
+</script>
+{% endblock %}
 {% block content %}
 <h1>Check In</h1>
 <form action="./" id="submit_on_accept" method="GET" autocomplete="off">
@@ -8,8 +26,13 @@
     <input type="text" name="search" id="search" value="{% if touch %}Touch{% else %}Click{% endif %} to Search" autocomplete="off"/>
     <input type="submit" name="task" value="Search"/><br/>
     <div class="small">Enter your first name or last name</div>
+    {% if 'FACE_SEARCH_ENABLE'|get_config %}<div class="new"><input type="button" name="task" value="Face Search" onclick="face_check()"/></div>{% endif %}
     <div class="new"><h2><a href="{% url cs_add_hhold %}?goback={{ request.build_absolute_uri|urlencode }}">I'm New!</a></h2></div>
   </div>
+</form>
+<form action="./" id="pic_search" method="GET" autocomplete="off">
+  <input type="hidden" name="pic" id="id_pic" value=""/>
+  <input type="hidden" name="task" value="PicSearch"/>
 </form>
 {% endblock %}
 {% block print %}

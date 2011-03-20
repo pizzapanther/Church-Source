@@ -8,6 +8,7 @@ from django import forms
 from django.db import models
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
+from django.contrib import messages
 
 import churchsource.people.models as pmodels
 import churchsource.people.widgets as widgets
@@ -39,6 +40,16 @@ class AddressInline (admin.StackedInline):
     }),
   )
 
+def relearn (modeladmin, request, queryset):
+  for h in queryset:
+    h.remove_faces()
+    h.face_detect()
+    
+  messages.success(request, 'Household(s) facial recognition successful.')
+  return http.HttpResponseRedirect('/admin/people/household/')
+  
+relearn.short_description = "Re-learn faces"
+
 class HouseholdAdmin (admin.ModelAdmin):
   save_on_top = True
   
@@ -51,6 +62,7 @@ class HouseholdAdmin (admin.ModelAdmin):
   formfield_overrides = {models.ImageField: {'widget': widgets.WebcamModal},}
   
   inlines = (PersonInline, AddressInline)
+  actions = (relearn,)
   
   def render_change_form (self, request, context, add=False, change=False, form_url='', obj=None):
     context['goback'] = request.REQUEST.get('goback', '')

@@ -140,6 +140,10 @@ ADMIN_REMEMBER_QUERIES = True
 
 FACE_COM_KEY = ''
 FACE_COM_SECRET = ''
+FACE_COM_NAMESPACE = ''
+HTTP_BASE = FACE_COM_HTTP = ''
+
+PICNIK_KEY = ''
 
 try:
   from churchsource.settings_local import *

@@ -1,18 +1,26 @@
+import os
 import re
 import datetime
 import urllib
 import urlparse
 
 from django import http
+from django.conf import settings
 from django.db.models import Q
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import get_object_or_404
+from django.core.files import File
 
 import churchsource.check_in.models as cmodels
 import churchsource.check_in.forms as cforms
 import churchsource.people.models as pmodels
+import churchsource.utils.face as face
 
+@permission_required('check_in.add_checkin')
+def face_check (request):
+  return request.render_to_response('checkin/face_check.html', {})
+  
 @permission_required('check_in.add_checkin')
 def terminal (request):
   can_create = request.user.has_perm('check_in.add_event')
@@ -96,6 +104,27 @@ def terminal_checkin (request, events='', touch=None):
         else:
           return request.render_to_response('checkin/terminal_choose.html', {'households': households, 'touch': touch})
           
+  elif request.task == 'PicSearch':
+    pic = request.REQUEST.get('pic', '')
+    try:
+      timg = pmodels.TempImage.objects.get(id=pic)
+      
+    except:
+      message = 'Invalid Image.'
+      
+    else:
+      households = face.find_households(settings.FACE_COM_HTTP + timg.image.url)
+      timg.delete()
+      if households:
+        if len(households) == 1:
+          return http.HttpResponseRedirect('./?task=household&h=%d' % households[0].id)
+          
+        else:
+          return request.render_to_response('checkin/terminal_choose.html', {'households': households, 'touch': touch})
+          
+      else:
+        message = 'Nothing Found'
+        
   elif request.task == 'household':
     h = request.REQUEST.get('h', '')
     try:
@@ -189,6 +218,36 @@ def add_person (request, hhold=None):
 @permission_required('people.add_tempimage')
 def temp_image (request):
   return request.render_to_response('checkin/temp_image.html', {})
+  
+@permission_required('people.add_tempimage')
+def picnik (request, name=None):
+  furl = request.REQUEST.get('file', '')
+  ti = None
+  if re.search("http://www.picnik", furl):
+    f = urllib.urlopen(furl)
+    
+    fname = datetime.datetime.now().strftime("%a%d%b%Y%H%M%S%f.jpg")
+    fp = os.path.join('/tmp', fname)
+    fh = open(fp, 'wb')
+    ti = pmodels.TempImage()
+    while 1:
+      data = f.read(64 * 2 ** 10)
+      if data:
+        fh.write(data)
+        
+      else:
+        break
+        
+    f.close()
+    fh.close()
+    
+    fh = File(open(fp, 'rb'))
+    
+    ti.image.save(fname, fh, save=True)
+    ti.save()
+    fh.close()
+    
+  return request.render_to_response('admin/people/tempimage/picnik.html', {'ti': ti, 'name': name})
   
 @permission_required('people.add_person')
 def edit_person (request, person=None):

@@ -17,7 +17,7 @@ urlpatterns = patterns('',
 
 urlpatterns += patterns('churchsource.people.views',
   url(r'^jpegcam/$', 'jpegcam_admin', name='cs_jpegcam'),
-  url(r'^checkin/reports/group/$', 'reports', name='cs_group_report')
+  url(r'^checkin/reports/group/$', 'reports', name='cs_group_report'),
 )
 
 urlpatterns += patterns('churchsource.check_in.views',
@@ -29,6 +29,8 @@ urlpatterns += patterns('churchsource.check_in.views',
   url(r'^checkin/add_person/(?P<hhold>\d+)/$', 'add_person', name='cs_add_person'),
   url(r'^checkin/edit_person/(?P<person>\d+)/$', 'edit_person', name='cs_edit_person'),
   url(r'^checkin/temp_image/$', 'temp_image', name='cs_temp_image'),
+  url(r'^checkin/picnik/(?P<name>.*)/$', 'picnik', name='cs_picnik'),
+  url(r'^checkin/face_check/$', 'face_check', name='cs_face_check'),
 )
 
 if settings.DEBUG:
@@ -41,3 +43,7 @@ if settings.THUMBNAIL_DUMMY:
     (r'^', include('sorl.thumbnail.urls')),
   )
   
+urlpatterns += patterns('',
+  ('^$', 'django.views.generic.simple.redirect_to', {'url': '/admin/'}),
+)
+

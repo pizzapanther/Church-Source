@@ -1,0 +1,20 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<script language="javascript" type="text/javascript">
+function close() {
+    parent.document.getElementById('id_{{ name }}_temp').value = '{{ ti.id }}';
+    parent.document.getElementById('{{ name }}_img').src = '{{ ti.image.url }}';
+
+    if (parent.frames.length > 0) {
+                setTimeout( "parent.onPicnikClose()", 10 );
+    } else {
+                document.location.replace('/');
+    }
+}
+</script>
+</head>
+<body onload="close()">
+</body>
+</html>
+

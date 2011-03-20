@@ -222,3 +222,12 @@ table.form .group label {
 .new {
   margin-top: 15px;
 }
+
+.tc {
+  text-align: center;
+}
+
+.ac {
+  margin-left: auto;
+  margin-right: auto;
+}

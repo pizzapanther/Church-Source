@@ -4,20 +4,39 @@ from django.template.loader import render_to_string
 from django import forms
 
 class WebcamModal (forms.FileInput):
-	class Media:
-		js = ('js/jquery-1.4.4.min.js', 'js/modal/js/jquery.simplemodal.js')
-		css = {'all': ('js/modal/css/basic.css',)}
-		
-	def render(self, name, value, attrs=None):
-		try:
-			img = getattr(value.instance, 'image')
-			
-		except:
-			img = None
-			
-		c = {'name':name, 'img': img, 'media': settings.MEDIA_URL, 'w': settings.WEBCAM_WIDTH, 'h': settings.WEBCAM_HEIGHT}
-		return mark_safe(render_to_string('admin/widget_webcam_modal.html', c))
-		
+  def __init__ (self, *args, **kw):
+    super(WebcamModal, self).__init__(*args, **kw)
+    self.template = 'admin/widget_webcam_modal.html'
+    
+  class Media:
+    js = ('js/jquery-1.4.4.min.js', 'js/modal/js/jquery.simplemodal.js', 'picnik/picnikbox_2_0.js')
+    css = {'all': ('js/modal/css/basic.css', 'picnik/picnikbox_2_0.css')}
+    
+  def render(self, name, value, attrs=None):
+    try:
+      img = getattr(value.instance, 'image')
+      
+    except:
+      img = None
+      
+    try:
+      household = getattr(value.instance, 'household')
+      
+    except:
+      household = None
+      
+    c = {
+         'name':name,
+         'img': img,
+         'household': household,
+         'media': settings.MEDIA_URL,
+         'w': settings.WEBCAM_WIDTH,
+         'h': settings.WEBCAM_HEIGHT,
+         'picnik': settings.PICNIK_KEY,
+         'http': settings.HTTP_BASE
+        }
+    return mark_safe(render_to_string(self.template, c))
+    
 class Webcam (forms.FileInput):
 	class Media:
 		js = ('jpegcam/webcam.js',)

@@ -1,0 +1,66 @@
+{% extends "master_iframe.html" %}
+{% block header %}
+<script type="text/javascript" src="{{ MEDIA_URL }}jpegcam/webcam.js"></script>
+<script type="text/javascript">
+  webcam.set_api_url('{% url cs_jpegcam %}');
+  webcam.set_quality(95);
+  webcam.set_shutter_sound(true, '{{ MEDIA_URL }}jpegcam/shutter.mp3');
+  webcam.set_swf_url('{{ MEDIA_URL }}jpegcam/webcam.swf');
+</script>
+{% endblock %}
+{% block content %}
+<div class="tc">
+  <h2 id="upload_results">Say Cheese!</h2>
+  <div>
+    <script type="text/javascript">
+      webcam.set_hook( 'onComplete', 'my_completion_handler' );
+      webcam.set_hook( 'onError', 'my_error_handler' );
+      
+      function my_error_handler (err) {
+	alert(err);
+      }
+      
+      function my_completion_handler (msg) {
+	try {
+	  var temp = msg.split(":");
+	  var image_id = temp[1];
+	  var image_url = temp[2];
+	  
+	  document.getElementById('upload_results').innerHTML = 'Searching Face Database ...';
+	  
+	  parent.document.getElementById('id_pic').value = image_id;
+	  parent.document.getElementById('pic_search').submit();
+	  parent.$('.modalCloseImg').css('display', 'none');
+	}
+	
+	catch (e) {
+	  alert("Upload Error");
+	}
+      }
+      
+      function counter () {
+	c = c - 1;
+	document.getElementById('countdown').innerHTML = c;
+	
+	if (c == 0) {
+	  document.getElementById('upload_results').innerHTML = 'Submitting ... ';
+	  webcam.snap();
+	}
+	
+	else {
+	  setTimeout('counter()', 1000)
+	}
+      }
+      
+      document.write( webcam.get_html(320, 240) );
+      
+      var c = 3;
+      $(window).load(function () { setTimeout('counter()', 1000) });
+      
+    </script>
+    <br/><br/>
+    <h2>Taking Picture in:</h2>
+    <h1 style="border: 0px;" id="countdown">3</h1>
+  </div>
+</div>
+{% endblock %}

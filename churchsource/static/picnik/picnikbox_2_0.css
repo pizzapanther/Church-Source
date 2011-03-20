@@ -1,0 +1,57 @@
+/* - - - - - - - - - - - - - - - - - - - - -
+
+Title : picnikbox CSS
+Adapted from lightbox CSS, original author : Kevin Hale
+URL : http://particletree.com/features/lightbox-gone-wild/
+
+Created : January 13, 2006
+Modified : February 1, 2006
+Picniked : Ongoing :)
+
+- - - - - - - - - - - - - - - - - - - - - */
+
+#pbox_overlay {
+	/* Netscape 4, IE 4.x-5.0/Win and other lesser browsers will use this */
+	display:none;
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+}
+
+.pbox_UseOpacityForBackground{
+	background-color:#000;
+	-moz-opacity: 0.7;
+	opacity:.70;
+	filter: alpha(opacity=70);
+}
+
+.pbox_UsePNGForBackground {
+	/* change this path to point to your copy of lightbox_overlay.png */
+	background-image: url(lightbox_overlay.png);
+}
+
+body > div#pbox_overlay {
+  /* used by Opera 5+, Netscape6+/Mozilla, Konqueror, Safari, OmniWeb 4.5+, iCab, ICEbrowser */
+  position: fixed;
+}
+
+#pbox_picnik {
+	display:none;
+	position:absolute;
+	top:0px;
+	left:0px;
+	background:#ccc;
+}
+
+body > div#pbox_picnik {
+  /* used by Opera 5+, Netscape6+/Mozilla, Konqueror, Safari, OmniWeb 4.5+, iCab, ICEbrowser */
+  position: fixed;
+}
+
+#pbox_iframe {
+	width:100%;
+	height:100%;
+	border:none;
+}
