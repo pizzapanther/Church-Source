@@ -58,13 +58,13 @@
 	return decodeURIComponent(results[1].replace(/\+/g, " "));
     }
     
-    document.write( webcam.get_html({{ w }}, {{ h }}) );
+    document.write( webcam.get_html({{ w }}, {{ h }}, {{ w_real }}, {{ h_real }}) );
   </script>
   <br/><br/>
   <input type=button value="Configure..." onclick="webcam.configure()"> &nbsp;&nbsp; 
-  <input type=button value="Freeze" onclick="webcam.freeze()">  &nbsp;&nbsp; 
-  <input type=button value="Reset" onclick="webcam.reset()">  &nbsp;&nbsp; 
-  <input type=button value="Upload" onclick="upload()">
+  <input type=button value="Snap" onclick="webcam.snap()">  &nbsp;&nbsp; 
+  <!--<input type=button value="Reset" onclick="webcam.reset()">  &nbsp;&nbsp; 
+  <input type=button value="Upload" onclick="upload()">-->
 </div>
 <div style="clear:both"></div>
 <style type="text/css">

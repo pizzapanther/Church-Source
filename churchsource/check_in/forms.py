@@ -13,13 +13,11 @@ class PersonForm (forms.ModelForm):
     widgets = {'image_temp': forms.HiddenInput, 'bdate': forms.DateInput(format='%m/%d/%Y')}
     
 class HouseholdForm (forms.ModelForm):
-  barcode = forms.CharField(max_length=255, required=False)
-  
   class Meta:
-    model = model = pmodels.Person
-    fields = ('fname', 'lname', 'email', 'alerts', 'image_temp')
+    model = model = pmodels.Household
+    fields = ('name', 'barcode', 'image_temp')
+    
     widgets = {
-      'alerts': cwidgets.TouchBox(attrs={'tvalue': 'ON', 'label': 'Receive E-Mail Alerts'}),
       'image_temp': forms.HiddenInput,
     }
     

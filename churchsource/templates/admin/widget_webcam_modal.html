@@ -1,7 +1,7 @@
 <div style="float: left; margin: 0px 15px 0px 0px;">{% load thumbnail %}
-  {% thumbnail img "250x250" as thumb %}<img src="{{ thumb.url }}" id="{{ name }}_img" class="personPhoto"/>
+  {% thumbnail img "250x250" as thumb %}<img src="{{ thumb.url }}" id="{{ name }}_img" class="personPhoto" style="width: 250px;"/>
   {% empty %}
-  <img src="{{ media }}img/no_image.png" id="{{ name }}_img" class="personPhoto"/>
+  <img src="{{ media }}img/no_image.png" id="{{ name }}_img" class="personPhoto" style="width: 250px;"/>
   {% endthumbnail %}
 </div>
 <div>

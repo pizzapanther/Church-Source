@@ -32,6 +32,8 @@ class WebcamModal (forms.FileInput):
          'media': settings.MEDIA_URL,
          'w': settings.WEBCAM_WIDTH,
          'h': settings.WEBCAM_HEIGHT,
+	 'w_real': settings.WEBCAM_WIDTH_REAL,
+         'h_real': settings.WEBCAM_HEIGHT_REAL,
          'picnik': settings.PICNIK_KEY,
          'http': settings.HTTP_BASE
         }
@@ -48,5 +50,5 @@ class Webcam (forms.FileInput):
 		except:
 			img = None
 			
-		c = {'name':name, 'img': img, 'media': settings.MEDIA_URL, 'w': settings.WEBCAM_WIDTH, 'h': settings.WEBCAM_HEIGHT}
+		c = {'name':name, 'img': img, 'media': settings.MEDIA_URL, 'w': settings.WEBCAM_WIDTH, 'h': settings.WEBCAM_HEIGHT, 'w_real': settings.WEBCAM_WIDTH_REAL, 'h_real': settings.WEBCAM_HEIGHT_REAL,}
 		return mark_safe(render_to_string('admin/widget_webcam.html', c))

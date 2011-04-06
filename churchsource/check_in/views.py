@@ -285,7 +285,7 @@ def edit_person (request, person=None):
 @permission_required('people.add_household')
 def add_household (request):
   goback = request.REQUEST.get('goback', '')
-  form = cforms.HouseholdForm(initial={'alerts': True})
+  form = cforms.HouseholdForm()
   touch = False
   if re.search('-touch', goback):
     touch = True
@@ -293,15 +293,9 @@ def add_household (request):
   if request.task == 'Next':
     form = cforms.HouseholdForm(request.POST)
     if form.is_valid():
-      p = form.save(commit=False)
-      h = pmodels.Household(name=p.lname, first_visit=datetime.date.today())
-      if form.cleaned_data['barcode']:
-        h.barcode = form.cleaned_data['barcode']
-        
+      h = form.save(commit=False)
+      h.first_visit = datetime.date.today()
       h.save()
-      
-      p.household = h
-      p.save()
       
       url = urlparse.urlparse(goback)
       gourl = url.path + '?task=household&h=%d' % h.id

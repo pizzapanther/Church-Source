@@ -1,4 +1,4 @@
-{% extends "master.html" %}
+{% extends "master.html" %}{% load thumbnail %}
 {% block title %}Add Person{% endblock %}
 {% block header %}
 <link rel="stylesheet" href="{{ MEDIA_URL }}js/modal/css/basic.css" type="text/css" />
@@ -13,31 +13,19 @@
   <table class="form">
     <tr>
       <td>
-        <h3>First Name (Adult Family Member)</h3>
-        {{ form.fname }}
-        {% if form.fname.errors %}<br/><span class="error">{{ form.fname.errors.0 }}</span>{% endif %}
-      </td>
-      <td>
-        <h3>Last Name</h3>
-        {{ form.lname }}
-        {% if form.lname.errors %}<br/><span class="error">{{ form.lname.errors.0 }}</span>{% endif %}
+        <h3>Household Name</h3>
+        {{ form.name }}
+        {% if form.name.errors %}<br/><span class="error">{{ form.name.errors.0 }}</span>{% endif %}
       </td>
     </tr>
     <tr>
       <td colspan="2">
-        <h3>E-Mail</h3>
-        {{ form.email }}{{ form.alerts }}
-        {% if form.email.errors %}<br/><span class="error">{{ form.email.errors.0 }}</span>{% endif %}
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2">
-        <h3>Barcode</h3>
+        <h3>Barcode <em>(optional)</em></h3>
         {{ form.barcode }}
         {% if form.barcode.errors %}<br/><span class="error">{{ form.barcode.errors.0 }}</span>{% endif %}
       </td>
     </tr>
-    <tr>
+    <!--<tr>
       <td colspan="2">
         <hr/>
         <input type="button" name="pic" value="Take Picture" onclick="iframe_pic()"/>
@@ -55,9 +43,11 @@
             );
           }
         </script>
+        <br/><br/>
+        <img src="{% thumbnail form.instance.image "250x250" as thumb %}{{ thumb.url }}{% empty %}{{ MEDIA_URL }}img/no_image.png{% endthumbnail %}" alt="" id="temp640" style="width: 250px;"/>
         <hr/>
       </td>
-    </tr>
+    </tr>-->
     <tr>
       <td>
         <input type="submit" value="Next" name="task"/>

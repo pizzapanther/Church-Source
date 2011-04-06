@@ -121,9 +121,13 @@ class Person (models.Model):
   
   def thumbnail (self):
     if self.image:
-      im = get_thumbnail(self.image, '56x56')
-      return '<img src="%s" alt=""/>' % im.url
-      
+      try:
+        im = get_thumbnail(self.image, '56x56')
+        return '<img src="%s" alt=""/>' % im.url
+        
+      except:
+        pass
+        
     return ''
     
   thumbnail.allow_tags = True
