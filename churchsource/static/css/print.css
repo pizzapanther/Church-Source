@@ -19,6 +19,29 @@ hr {
   page-break-before: always;
 }
 
+table.badge {
+  width: 100%;
+}
+
+td.belowpic {
+  padding-top: 0px;
+}
+
+td.thumbnail {
+  width: 70px;
+  text-align: right;
+}
+
+td.thumbnail img {
+  display: block;
+  border: 0px;
+  padding-left: 10px;
+}
+
+table.badge td {
+  vertical-align: top;
+}
+
 .citag {
   padding: 10px;
 }
@@ -31,8 +54,8 @@ hr {
   font-size: 1.5em;
 }
 
-.citag .clabel span {
-  font-size: 0.5em;
+.citag .groups span {
+  font-size: 0.8em;
 }
 
 .citag .groups {

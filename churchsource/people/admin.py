@@ -81,7 +81,7 @@ class PhoneInline (admin.TabularInline):
   
 class PersonAdmin (admin.ModelAdmin):
   list_select_related = True
-  list_display = ('lname', 'fname', 'email', 'bdate', 'gender', 'role', 'active', 'edit_household')
+  list_display = ('lname', 'fname', 'email', 'bdate', 'gender', 'role', 'active', 'thumbnail', 'edit_household')
   search_fields = ('fname', 'lname', 'email', 'household__name')
   list_filter = ('gender', 'role', 'groups')
   date_hierarchy  = 'bdate'

@@ -8,6 +8,8 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
 
 from face_client import face_client
+from sorl.thumbnail import get_thumbnail
+
 import churchsource.configuration.models as cfmodels
 
 MSTATUSES = (
@@ -116,6 +118,15 @@ class Person (models.Model):
   allergies = models.CharField('Allergies', max_length=255, blank=True, null=True)
   
   groups = models.ManyToManyField('Group', blank=True, null=True)
+  
+  def thumbnail (self):
+    if self.image:
+      im = get_thumbnail(self.image, '56x56')
+      return '<img src="%s" alt=""/>' % im.url
+      
+    return ''
+    
+  thumbnail.allow_tags = True
   
   def phone_string (self):
     ret = u''

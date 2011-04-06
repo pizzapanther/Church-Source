@@ -1,28 +1,42 @@
-<div class="citag{% if code %} code{% endif %}">{% load cstags %}
-  <div class="name">
-    {{ ci.person.fname }} {{ ci.person.lname }}
-  </div>
-  <hr/>
-  {% if ci.code %}
-  <div class="clabel">
-  {{ ci.code }}{% if ci.person.bdate and ci.person.is_minor %}<span>&nbsp; -&nbsp; Birthday: {{ ci.person.bdate|date:"m/d/Y" }}</span>{% endif %}
-  </div>
-  {% else %}
-  {% if ci.is_authorized %}
-  <div class="clabel">
-    Authorized Personnel
-  </div>
-  {% endif %}
-  {% endif %}
-  <div class="groups">{% for evg in ci|get_groups %}{{ evg.group.name }}{% if evg.room %}: {{ evg.room.name }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-  {% if ci.person.allergies %}
-  <div class="alg">
-    Allergies: {{ ci.person.allergies }}
-  </div>
-  {% endif %}
-  {% if ci.pager %}
-  <div class="alg">
-    Pager: {{ ci.pager }}
-  </div>
-  {% endif %}
+<div class="citag{% if code %} code{% endif %}">{% load cstags %}{% load thumbnail %}
+  <table cellpadding="0" cellspacing="0" border="0" class="badge">
+    <tr>
+      <td>
+        <div class="name">
+          {{ ci.person.fname }} {{ ci.person.lname }}
+        </div>
+        <hr/>
+        {% if ci.code %}
+        <div class="clabel">{{ ci.code }}</div>
+        {% else %}
+        {% if ci.is_authorized %}
+        <div class="clabel">
+          Authorized Personnel
+        </div>
+        {% endif %}
+        {% endif %}
+     </td>
+     {% if 'CHECK_IN_PRINT_PIC'|get_config and ci.person.image %}
+     <td class="thumbnail">
+       {% thumbnail ci.person.image "64x64" as thumb %}<img src="{{ thumb.url }}"/>{% endthumbnail %}
+     </td>
+     {% else %}<td></td>{% endif %}
+   </tr>
+   <tr>
+     <td colspan="2" class="belowpic">
+        <div class="groups">{% for evg in ci|get_groups %}{{ evg.group.name }}{% if evg.room %}: {{ evg.room.name }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
+        {% if ci.person.bdate and ci.person.is_minor %}<span> - Birthday: {{ ci.person.bdate|date:"m/d/Y" }}</span>{% endif %}</div>
+        {% if ci.person.allergies %}
+        <div class="alg">
+          Allergies: {{ ci.person.allergies }}
+        </div>
+        {% endif %}
+        {% if ci.pager %}
+        <div class="alg">
+          Pager: {{ ci.pager }}
+        </div>
+        {% endif %}
+      </td>
+    </tr>
+  </table>
 </div>
