@@ -1,7 +1,7 @@
 Version 0.2
 
 Features:
-* 61dd88bf9762b36c3569, 1e5bb6b359f5d940922b, 834c10cdd2cc125e6f14
+* 61dd88bf9762b36c3569, 1e5bb6b359f5d940922b, 834c10cdd2cc125e6f14, 47b47b6d53ea89f2bf50, ef4cfc49efa63c1ff3e3
   Added face recognition
   
 * d397ec3c488a09a37aa0
@@ -27,6 +27,12 @@ Features:
   Checkin Terminal timeouts after 20 hours to /checkin/terminal/.
 
 Fixes:
+* e13bfe7e5e5f1690431a
+  Fixed deleting of groups not shown on check-in terminal
+
+* bab591f191fe53ed7258
+  Fixed scroll bar resize on picture load
+
 * 688ebce8348cf8c1e858
   Fixed clear filter "All".
   
