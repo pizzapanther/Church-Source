@@ -272,8 +272,9 @@ def edit_person (request, person=None):
     if form.is_valid():
       p = form.save(commit=False)
       p.save()
-      p.groups.clear()
-      
+      for g in p.groups.filter(gtype='checkinc'):
+        p.groups.remove(g)
+        
       for g in groups:
         p.groups.add(pmodels.Group.objects.get(id=g))
         
