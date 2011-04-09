@@ -1,5 +1,6 @@
+var win = $(window);
+
 $(function() {
-  var win = $(window);
   // Full body scroll
   var isResizing = false;
   win.bind(
@@ -44,4 +45,8 @@ $(function() {
   if ($('#mainWrapper.touch').width() != win.width()) {
     win.trigger('resize');
   }
+});
+
+$(window).load(function () {
+  win.trigger('resize');
 });

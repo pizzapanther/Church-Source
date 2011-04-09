@@ -76,7 +76,7 @@
           }
         </script>
         <br/><br/>
-        <img src="{% thumbnail form.instance.image "250x250" as thumb %}{{ thumb.url }}{% empty %}{{ MEDIA_URL }}img/no_image.png{% endthumbnail %}" alt="" id="temp640" style="width: 250px;"/>
+        <img src="{% thumbnail form.instance.image "250x250" as thumb %}{{ thumb.url }}{% empty %}{{ MEDIA_URL }}img/no_image.png{% endthumbnail %}" alt="" id="temp640" style="width: 250px;" onload="try { win.trigger('resize'); } catch (e) {}"/>
         <hr/>
       </td>
     </tr>
