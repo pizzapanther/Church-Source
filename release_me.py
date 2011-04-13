@@ -7,7 +7,7 @@ def generate_release ():
   commands = (
     "git tag -a v%(version)s -m 'version %(version)s'",
     "git push --tags",
-    "cd ..; tar cvf Church-Source_v%(version)s.tar Church-Source --exclude Church-Source/.git --exclude Church-Source/.gitignore --exclude Church-Source/release_me.py --exclude Church-Source/playground",
+    "cd ..; tar cvf Church-Source_v%(version)s.tar Church-Source --exclude *.pyc --exclude Church-Source/.git --exclude Church-Source/.gitignore --exclude Church-Source/release_me.py --exclude Church-Source/playground --exclude Church-Source/churchsource/static/uploads --exclude Church-Source/churchsource/static/cache --exclude Church-Source/churchsource/settings_local.py",
     "cd ..; gzip -9 Church-Source_v%(version)s.tar",
   )
   
