@@ -47,11 +47,11 @@ table.badge td {
 }
 
 .citag .name {
-  font-size: 1.6em;
+  font-size: 1.5em;
 }
 
 .citag .clabel {
-  font-size: 1.5em;
+  font-size: 1.4em;
 }
 
 .citag .groups span {
@@ -59,12 +59,12 @@ table.badge td {
 }
 
 .citag .groups {
-  font-size: 1.0em;
+  font-size: 0.9em;
 }
 
 .citag .alg {
   font-size: 0.8em;
-  padding-top: 8px;
+  padding-top: 5px;
 }
 
 .codetag table {
