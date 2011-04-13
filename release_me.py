@@ -30,13 +30,11 @@ def generate_release ():
   v = raw_input("Enter Version Number: ")
   
   if args.g:
-    for c in git_commands:
-      run_commands(v, git_commands)
+    run_commands(v, git_commands)
       
   if args.t:
-    for c in tar_commands:
-      run_commands(v, tar_commands)
-      
+    run_commands(v, tar_commands)
+    
 if __name__ == '__main__':
   generate_release()
   
