@@ -20,7 +20,7 @@
     }
   </script>
   <a href="javascript: void(0);" onclick="iframe_{{ name|cut:"-" }}()">Capture From Webcam</a><br/>
-  {% if household and household.image %}<a class="pbox" href="http://www.picnik.com/service/?_apikey={{ picnik|urlencode }}&_import={{ http|urlencode }}{{ household.image.url|urlencode }}&_close_target={{ http|urlencode }}{{ media }}picnik/picnikbox_close_2_0.html&_export_agent=browser&_export={{ http|urlencode }}{% url cs_picnik name %}&_export_title=Save%20Crop">Crop From Household</a></br>{% endif %}
+  {% if picnik and household and household.image %}<a class="pbox" href="http://www.picnik.com/service/?_apikey={{ picnik|urlencode }}&_import={{ http|urlencode }}{{ household.image.url|urlencode }}&_close_target={{ http|urlencode }}{{ media }}picnik/picnikbox_close_2_0.html&_export_agent=browser&_export={{ http|urlencode }}{% url cs_picnik name %}&_export_title=Save%20Crop">Crop From Household</a></br>{% endif %}
   or&nbsp;&nbsp;  
   <input id="id_{{ name }}" name="{{ name }}" type="file" />
 </div>

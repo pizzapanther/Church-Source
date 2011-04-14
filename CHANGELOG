@@ -1,9 +1,16 @@
+Version 0.4
+Features:
+
+Bugs:
+* fb1e662744b54dc0ff5c
+  Fixed "Edit Household" link in admin Person row
+  
 Version 0.3
+Features:
 * c08a6dfa789ea5dcf09b
   Added CSS Customizations
   
 Version 0.2
-
 Features:
 * 61dd88bf9762b36c3569, 1e5bb6b359f5d940922b, 834c10cdd2cc125e6f14, 47b47b6d53ea89f2bf50, ef4cfc49efa63c1ff3e3
   Added face recognition
