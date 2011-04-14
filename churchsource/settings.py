@@ -122,8 +122,8 @@ INTERNAL_IPS = ('127.0.0.1',)
 TIME_INPUT_FORMATS = ('%I:%M %p', '%H:%M:%S', '%H:%M')
 
 AJAX_LOOKUP_CHANNELS = {
-  'person' : ('people.ajax', 'PersonChannel'),
-  'personbd' : ('people.ajax', 'PersonChannelBdate'),
+  'person' : ('churchsource.people.ajax', 'PersonChannel'),
+  'personbd' : ('churchsource.people.ajax', 'PersonChannelBdate'),
 }
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -147,6 +147,8 @@ HTTP_BASE = FACE_COM_HTTP = ''
 
 PICNIK_KEY = ''
 
+THUMBNAIL_DUMMY = False
+
 try:
   from churchsource.settings_local import *
   
@@ -160,5 +162,6 @@ except:
 if LOAD_FROM_D:
   dpath = os.path.normpath(os.path.join(SPATH, '..', 'dependencies'))
   if dpath not in sys.path:
-    sys.path.insert(0, dpath)
-    
+    if dpath not in sys.path:
+      sys.path.insert(0, dpath)
+      

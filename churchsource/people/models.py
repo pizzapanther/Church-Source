@@ -219,7 +219,7 @@ class Person (models.Model):
   active.allow_tags = True
   
   def edit_household (self):
-    return '<a href="../household/%d/">Edit Household</a>' % self.id
+    return '<a href="../household/%d/">Edit Household</a>' % self.household.id
     
   edit_household.allow_tags = True
   
