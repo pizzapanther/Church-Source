@@ -2,6 +2,9 @@ Version 0.4
 Features:
 
 Bugs:
+* 9a51d1e763cd5047a8cd
+  Hide Picnik link if no Picnik key
+  
 * fb1e662744b54dc0ff5c
   Fixed "Edit Household" link in admin Person row
   

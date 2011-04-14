@@ -5,6 +5,7 @@
 <script type="text/javascript" src="{{ MEDIA_URL }}js/modal/js/jquery.simplemodal.js"></script>
 {% endblock %}
 {% block content %}
-<h1>Add Person - {{ h.name }} Household</h1>
+<h1 class="logo">Add Person - {{ h.name }} Household{% if 'LOGO'|get_config %}<img src="{{ MEDIA_URL }}{{ 'LOGO'|get_config }}" alt=""/>{% endif %}</h1>
+<div class="clear"></div>
 {% include "checkin/person_form.html" %}
 {% endblock %}

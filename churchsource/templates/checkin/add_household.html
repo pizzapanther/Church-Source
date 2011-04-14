@@ -1,11 +1,12 @@
-{% extends "master.html" %}{% load thumbnail %}
+{% extends "master.html" %}{% load thumbnail cstags %}
 {% block title %}Add Person{% endblock %}
 {% block header %}
 <link rel="stylesheet" href="{{ MEDIA_URL }}js/modal/css/basic.css" type="text/css" />
 <script type="text/javascript" src="{{ MEDIA_URL }}js/modal/js/jquery.simplemodal.js"></script>
 {% endblock %}
 {% block content %}
-<h1>Add Household</h1>
+<h1 class="logo">Add Household{% if 'LOGO'|get_config %}<img src="{{ MEDIA_URL }}{{ 'LOGO'|get_config }}" alt=""/>{% endif %}</h1>
+<div class="clear"></div>
 <form action="./" method="post" autocomplete="off">
   {% csrf_token %}
   <input type="hidden" name="goback" value="{{ goback }}"/>

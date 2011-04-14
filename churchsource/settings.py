@@ -159,6 +159,9 @@ except:
   except:
     pass
     
+if SPATH not in sys.path:
+  sys.path.insert(0, SPATH)
+  
 if LOAD_FROM_D:
   dpath = os.path.normpath(os.path.join(SPATH, '..', 'dependencies'))
   if dpath not in sys.path:

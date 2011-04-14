@@ -231,3 +231,7 @@ table.form .group label {
   margin-left: auto;
   margin-right: auto;
 }
+
+h1.logo img {
+  float: right;
+}

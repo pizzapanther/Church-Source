@@ -19,7 +19,8 @@
 </script>
 {% endblock %}
 {% block content %}
-<h1>Check In</h1>
+<h1 class="logo">Check In{% if 'LOGO'|get_config %}<img src="{{ MEDIA_URL }}{{ 'LOGO'|get_config }}" alt=""/>{% endif %}</h1>
+<div class="clear"></div>
 <form action="./" id="submit_on_accept" method="GET" autocomplete="off">
   {% if message %}<div class="message">{{ message|safe }}</div>{% endif %}
   <div class="checkin_search">

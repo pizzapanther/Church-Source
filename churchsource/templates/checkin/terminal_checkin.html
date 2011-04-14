@@ -1,7 +1,8 @@
-{% extends "master.html" %}
+{% extends "master.html" %}{% load cstags %}
 {% block title %}Check In{% endblock %}
 {% block content %}
-<h1>{{ h.name }} Household</h1>
+<h1 class="logo">{{ h.name }} Household{% if 'LOGO'|get_config %}<img src="{{ MEDIA_URL }}{{ 'LOGO'|get_config }}" alt=""/>{% endif %}</h1>
+<div class="clear"></div>
 <form action="./" method="post" autocomplete="off">
   {% csrf_token %}
   {% if events.count > 1 %}
