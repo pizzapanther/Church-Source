@@ -1,6 +1,8 @@
 Version 0.4
 Features:
-
+* 585d50dbc707c3daddb1
+  Added setting to put a logo on the check-in terminal
+  
 Bugs:
 * 9a51d1e763cd5047a8cd
   Hide Picnik link if no Picnik key
