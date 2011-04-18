@@ -3,6 +3,9 @@ Features:
 * 585d50dbc707c3daddb1
   Added setting to put a logo on the check-in terminal
   
+* 4e337e75b24ae3a51d06
+  Changed check-in photo to portrait
+  
 Bugs:
 * 9a51d1e763cd5047a8cd
   Hide Picnik link if no Picnik key
