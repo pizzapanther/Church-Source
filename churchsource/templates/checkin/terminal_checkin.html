@@ -12,7 +12,7 @@
     <input type="checkbox" id="check_e{{ forloop.counter }}"/>
     <input type="hidden" name="events" id="check_e{{ forloop.counter }}_hidden" value="{{ e.id }}"/>
     <label onclick="toggle_check('check_e{{ forloop.counter }}', '{{ e.id }}')" for="check_e{{ forloop.counter }}" id="check_e{{ forloop.counter }}_label">
-      <img src="{{ MEDIA_URL }}img/checked.png" alt=""/> {{ e.name }}
+      <img src="{{ MEDIA_URL }}img/unchecked.png" alt=""/> {{ e.name }}
     </label>
   {% endfor %}
   </div>
