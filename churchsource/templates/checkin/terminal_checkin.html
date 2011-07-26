@@ -3,14 +3,14 @@
 {% block content %}
 <h1 class="logo">{{ h.name }} Household{% if 'LOGO'|get_config %}<img src="{{ MEDIA_URL }}{{ 'LOGO'|get_config }}" alt=""/>{% endif %}</h1>
 <div class="clear"></div>
-<form action="./" method="post" autocomplete="off">
+<form action="./" method="post" autocomplete="off" onsubmit="return check_form()">
   {% csrf_token %}
   {% if events.count > 1 %}
   <h2>Which events are you checking in for?</h2>
   <div class="events_sel">
   {% for e in events %}
     <input type="checkbox" id="check_e{{ forloop.counter }}"/>
-    <input type="hidden" name="events" id="check_e{{ forloop.counter }}_hidden" value="{{ e.id }}"/>
+    <input type="hidden" name="events" id="check_e{{ forloop.counter }}_hidden" value=""/>
     <label onclick="toggle_check('check_e{{ forloop.counter }}', '{{ e.id }}')" for="check_e{{ forloop.counter }}" id="check_e{{ forloop.counter }}_label">
       <img src="{{ MEDIA_URL }}img/unchecked.png" alt=""/> {{ e.name }}
     </label>
@@ -61,6 +61,16 @@
 {% endblock %}
 {% block footer %}
 <script type="text/javascript">
+  function check_form () {
+    $('input[name="events"]').each(function(index) {
+      if (this.value != '') {
+        return true;
+      }
+    });
+    alert('Please check-in for at least one event');
+    return false;  
+  }
+  
   jQuery(document).ready(function () {
     jQuery( ".choose2 input" ).button();
     jQuery( ".events_sel input" ).button();
