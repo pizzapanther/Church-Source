@@ -9,7 +9,7 @@
   <h2>Which events are you checking in for?</h2>
   <div class="events_sel">
   {% for e in events %}
-    <input type="checkbox" id="check_e{{ forloop.counter }}" checked="checked"/>
+    <input type="checkbox" id="check_e{{ forloop.counter }}"/>
     <input type="hidden" name="events" id="check_e{{ forloop.counter }}_hidden" value="{{ e.id }}"/>
     <label onclick="toggle_check('check_e{{ forloop.counter }}', '{{ e.id }}')" for="check_e{{ forloop.counter }}" id="check_e{{ forloop.counter }}_label">
       <img src="{{ MEDIA_URL }}img/checked.png" alt=""/> {{ e.name }}
