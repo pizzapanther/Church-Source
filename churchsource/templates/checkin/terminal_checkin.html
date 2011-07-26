@@ -62,11 +62,17 @@
 {% block footer %}
 <script type="text/javascript">
   function check_form () {
+    var cnt = 0;
     $('input[name="events"]').each(function(index) {
       if (this.value != '') {
-        return true;
+        cnt = cnt + 1;
       }
     });
+    
+    if (cnt > 0) {
+      return true;
+    }
+    
     alert('Please check-in for at least one event');
     return false;  
   }
