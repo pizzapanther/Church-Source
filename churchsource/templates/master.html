@@ -50,6 +50,7 @@
     </div>
   </div>
   <div id="print">{% block print %}{% endblock %}</div>
+  <!--
   <script type="text/javascript">
     $(document).ready(function(){
       {% if touch %}
@@ -73,6 +74,7 @@
   {% if touch and not scroll_off %}
   <script type="text/javascript" src="{{ MEDIA_URL }}js/scrollbar.js"></script>
   {% endif %}
+  -->
   {% block footer %}{% endblock %}
 </body>
 </html>

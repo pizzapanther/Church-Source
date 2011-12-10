@@ -50,6 +50,7 @@ class CheckIn (models.Model):
   cout = models.DateTimeField('Check Out', blank=True, null=True)
   code = models.CharField('Sticker Code', max_length=4, blank=True, null=True)
   pager = models.CharField('Pager', max_length=75, blank=True, null=True)
+  printed = models.BooleanField(default=True)
   
   events = models.ManyToManyField(Event)
   
