@@ -83,6 +83,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'churchsource.middleware.Shortcuts',
     'churchsource.middleware.AdminQuery',
+    'churchsource.middleware.FormFactor',
 )
 
 ROOT_URLCONF = 'churchsource.urls'

@@ -28,6 +28,14 @@ def render_to_response (request, template, dictionary=None, context_instance=Non
     
   return shortcuts.render_to_response(template, dictionary, context_instance, mimetype=mimetype)
   
+class FormFactor:
+  def process_request (self, request):
+    request.formfactor = 'desktop'
+    if re.search('Android', request.META['HTTP_USER_AGENT']):
+      request.formfactor = 'mobile'
+      
+    return None
+    
 class Shortcuts:
   def process_request (self, request):
     request.render_to_response = Command(render_to_response, request)

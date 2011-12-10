@@ -69,6 +69,10 @@ def terminal_checkin (request, events='', touch=None):
   code_tags = []
   real_code_tags = []
   
+  print_tag = True
+  if request.formfactor == 'mobile':
+    print_tag = False
+    
   if request.task == 'Search':
     search = request.REQUEST.get('search', '')
     if re.search('^\s*$', search):
@@ -154,7 +158,7 @@ def terminal_checkin (request, events='', touch=None):
       if p.is_adult():
         mycode = None
         
-      ci = cmodels.CheckIn(person=p, code=mycode, pager=pager)
+      ci = cmodels.CheckIn(person=p, code=mycode, pager=pager, printed=print_tag)
       ci.save()
       
       for e in events:
@@ -171,7 +175,7 @@ def terminal_checkin (request, events='', touch=None):
       for i in range(0, (len(code_tags) + 1)/2):
         real_code_tags.append(code)
         
-  c = {'message': message, 'checkins': checkins, 'code': code, 'code_tags': real_code_tags, 'touch': touch, 'submit_on_accept': True, 'scroll_off': True}
+  c = {'message': message, 'checkins': checkins, 'code': code, 'code_tags': real_code_tags, 'touch': touch, 'submit_on_accept': True, 'scroll_off': True, 'print_tag': print_tag}
   return request.render_to_response('checkin/terminal_search.html', c)
   
 @permission_required('check_in.can_generate_reports')
