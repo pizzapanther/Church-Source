@@ -11,12 +11,50 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import get_object_or_404
 from django.core.files import File
+from django.utils import simplejson
+from django.template.loader import render_to_string
 
 import churchsource.check_in.models as cmodels
 import churchsource.check_in.forms as cforms
 import churchsource.people.models as pmodels
 import churchsource.utils.face as face
+from churchsource.configuration.templatetags.cstags import get_groups
 
+def printjobs (request):
+  data = {}
+  for ci in cmodels.CheckIn.objects.filter(printed=False):
+    key = 'None'
+    groups = []
+    for evg in get_groups(ci):
+      if evg.room:
+        groups.append((evg.group.name, evg.room.name))
+        
+      else:
+        groups.append((evg.group.name, None))
+        
+    d = {
+    	'code': ci.code,
+    	'pager': ci.pager,
+    	'auth': ci.is_authorized(),
+    	'fname': ci.person.fname,
+    	'lname':  ci.person.lname,
+    	'allergies': ci.person.allergies,
+    	'minor': ci.person.is_minor(),
+    	'bdate': '%d/%d/%d' % (ci.person.bdate.month, ci.person.bdate.day, ci.person.bdate.year),
+    	'groups': groups
+    }
+    if ci.code:
+      key = ci.code
+      
+    if not data.has_key(key):
+      data[key] = []
+      
+    data[key].append(d)
+    #ci.printed = True
+    #ci.save()
+    
+  return http.HttpResponse(simplejson.dumps(data), mimetype="application/javascript")
+  
 @permission_required('check_in.add_checkin')
 def face_check (request):
   return request.render_to_response('checkin/face_check.html', {})

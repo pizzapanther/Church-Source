@@ -31,6 +31,7 @@ urlpatterns += patterns('churchsource.check_in.views',
   url(r'^checkin/temp_image/$', 'temp_image', name='cs_temp_image'),
   url(r'^checkin/picnik/(?P<name>.*)/$', 'picnik', name='cs_picnik'),
   url(r'^checkin/face_check/$', 'face_check', name='cs_face_check'),
+  url(r'^checkin/printjobs/$', 'printjobs', name='cs_print_jobs')
 )
 
 if settings.DEBUG:
