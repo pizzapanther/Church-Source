@@ -21,39 +21,27 @@ import churchsource.utils.face as face
 from churchsource.configuration.templatetags.cstags import get_groups
 
 def printjobs (request):
-  data = {}
+  checkin_dict = {}
   for ci in cmodels.CheckIn.objects.filter(printed=False):
-    key = 'None'
-    groups = []
-    for evg in get_groups(ci):
-      if evg.room:
-        groups.append((evg.group.name, evg.room.name))
-        
-      else:
-        groups.append((evg.group.name, None))
-        
-    d = {
-    	'code': ci.code,
-    	'pager': ci.pager,
-    	'auth': ci.is_authorized(),
-    	'fname': ci.person.fname,
-    	'lname':  ci.person.lname,
-    	'allergies': ci.person.allergies,
-    	'minor': ci.person.is_minor(),
-    	'bdate': '%d/%d/%d' % (ci.person.bdate.month, ci.person.bdate.day, ci.person.bdate.year),
-    	'groups': groups
-    }
+    if checkin_dict.has_key(ci.cin):
+      checkin_dict[ci.cin]['checkins'].append(ci)
+      
+    else:
+      checkin_dict[ci.cin] = {}
+      checkin_dict[ci.cin]['checkins'] = [ci]
+      checkin_dict[ci.cin]['code_tags_temp'] = []
+      
     if ci.code:
-      key = ci.code
+      checkin_dict[ci.cin]['code_tags_temp'].append(ci.code)
       
-    if not data.has_key(key):
-      data[key] = []
-      
-    data[key].append(d)
-    #ci.printed = True
-    #ci.save()
+  for key in checkin_dict.keys():
+    code_tags = checkin_dict[key]['code_tags_temp']
+    checkin_dict[key]['code_tags'] = []
     
-  return http.HttpResponse(simplejson.dumps(data), mimetype="application/javascript")
+    for i in range(0, (len(code_tags) + 1)/2):
+      checkin_dict[key]['code_tags'].append(code_tags[0])
+      
+  return request.render_to_response('checkin/remote_print.html', {'checkin_dict': checkin_dict})
   
 @permission_required('check_in.add_checkin')
 def face_check (request):
