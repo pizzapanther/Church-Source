@@ -23,6 +23,9 @@ from churchsource.configuration.templatetags.cstags import get_groups
 def printjobs (request):
   checkin_dict = {}
   for ci in cmodels.CheckIn.objects.filter(printed=False):
+    ci.printed = True
+    ci.save()
+    
     if checkin_dict.has_key(ci.cin):
       checkin_dict[ci.cin]['checkins'].append(ci)
       
