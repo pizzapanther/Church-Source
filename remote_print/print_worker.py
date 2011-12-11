@@ -6,6 +6,7 @@ import SocketServer
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
+
 import time
 
 PORT = 8000
@@ -14,7 +15,7 @@ class Handler (BaseHTTPServer.BaseHTTPRequestHandler):
   def do_GET (self):
     self.send_head()
     if self.path == '/print/':
-      browser = webdriver.Firefox()
+      browser = webdriver.Firefox(firefox_profile='/home/paul/Documents/sel/')
       browser.get("https://churchsource.dominionchurch.org/checkin/printjobs/")
       time.sleep(15)
       browser.close()
@@ -31,3 +32,9 @@ httpd = SocketServer.TCPServer(("", PORT), Handler)
 
 print "serving at port", PORT
 httpd.serve_forever()
+
+#>>> from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
+#>>> p = FirefoxProfile(profile_directory='/home/paul/Documents/sel/')
+#>>> from selenium import webdriver
+#>>> p.set_preference('print.postscript.orientation', 'landscape')
+#>>> browser = webdriver.Firefox(firefox_profile=p)
