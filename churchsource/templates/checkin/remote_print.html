@@ -1,0 +1,41 @@
+{% extends "master.html" %}{% load cstags %}
+{% block title %}Check In{% endblock %}
+{% block header %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}js/modal/css/basic.css" type="text/css" />
+{% endblock %}
+{% block content %}{% endblock %}
+{% block print %}
+
+{% for key, cdict in checkin_dict.items %}
+{% with cdict.checkins as checkins %}{% with cdict.code_tags as code_tags %}
+{% for ci in checkins %}
+{% if not forloop.first %}<div class="break"></div>{% endif %}
+{% include "checkin/checkin_label.html" %}
+{% for temp in ci.extra_labels %}
+<div class="break"></div>
+{% include "checkin/checkin_label.html" %}
+{% endfor %}
+{% endfor %}
+{% for c in code_tags %}
+<div class="break"></div>
+<div class="codetag">
+  <table>
+    <tr>
+      <td class="c"><span>{{ c }}</span></td>
+      <td class="vr"><img src="{{ MEDIA_URL }}img/vr.png" alt=""/></td>
+      <td class="c"><span>{{ c }}</span></td>
+    </tr>
+  </table>
+</div>
+{% endfor %}
+{% endwith %}{% endwith %}
+{% if not forloop.last %}<div class="break"></div>{% endif %}
+{% endfor %}
+
+<script type="text/javascript">
+  jQuery(document).ready(function () {
+    window.print();
+  });
+</script>
+{% endblock %}
+

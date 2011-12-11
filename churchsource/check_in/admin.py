@@ -10,7 +10,7 @@ import churchsource.check_in.models as cmodels
 
 class CheckInAdmin (admin.ModelAdmin):
   raw_id_fields = ('person', )
-  list_display = ('cin', 'cout', 'person', 'code', '_Events')
+  list_display = ('cin', 'cout', 'person', 'code', '_Events', 'printed')
   search_fields = ('person__fname', 'person__lname', 'code')
   list_filter = ('cin', 'cout')
   filter_horizontal = ('events',)
