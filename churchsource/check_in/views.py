@@ -188,6 +188,7 @@ def terminal_checkin (request, events='', touch=None):
         mycode = None
         
       ci = cmodels.CheckIn(person=p, code=mycode, pager=pager, printed=print_tag)
+      ci.extra = int(request.POST.get('%d_extra_labels' % p.id, '0'))
       ci.save()
       
       for e in events:

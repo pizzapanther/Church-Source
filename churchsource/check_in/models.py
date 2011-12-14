@@ -51,6 +51,7 @@ class CheckIn (models.Model):
   code = models.CharField('Sticker Code', max_length=4, blank=True, null=True)
   pager = models.CharField('Pager', max_length=75, blank=True, null=True)
   printed = models.BooleanField(default=True)
+  extra = models.IntegerField(default=0)
   
   events = models.ManyToManyField(Event)
   
