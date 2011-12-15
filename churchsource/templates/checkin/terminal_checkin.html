@@ -20,9 +20,9 @@
   {% else %}
   <input type="hidden" name="events" value="{{ events.0.id }}"/>
   {% endif %}
-  <h2>Pager:</h2>
+  <!--<h2>Pager:</h2>
   <input type="text" name="pager" id="pager" value=""/>
-  <hr/>
+  <hr/>-->
   <div class="floatR">
     <input type="button" name="addperson" id="addperson" value="Add A Person" onclick="location.href = '{% url cs_add_person h.id %}?goback={{ request.build_absolute_uri|urlencode }}'"/>
   </div>

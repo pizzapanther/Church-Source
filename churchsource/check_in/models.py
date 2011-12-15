@@ -55,6 +55,9 @@ class CheckIn (models.Model):
   
   events = models.ManyToManyField(Event)
   
+  def erange (self):
+    return range(0, self.extra)
+    
   def __unicode__ (self):
     return self.cin.strftime('%m/%d/%Y %I:%M %p') + ': %s, %s' % (self.person.lname, self.person.fname)
     

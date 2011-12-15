@@ -11,7 +11,7 @@
 {% for ci in checkins %}
 {% if not forloop.first %}<div class="break"></div>{% endif %}
 {% include "checkin/checkin_label.html" %}
-{% for temp in ci.extra_labels %}
+{% for temp in ci.erange %}
 <div class="break"></div>
 {% include "checkin/checkin_label.html" %}
 {% endfor %}
@@ -32,10 +32,13 @@
 {% if not forloop.last %}<div class="break"></div>{% endif %}
 {% endfor %}
 
+{% if checkin_dict.keys|length == 0 %}
+{% else %}
 <script type="text/javascript">
   jQuery(document).ready(function () {
     window.print();
   });
 </script>
+{% endif %}
 {% endblock %}
 

@@ -26,16 +26,20 @@ def printjobs (request):
     ci.printed = True
     ci.save()
     
-    if checkin_dict.has_key(ci.cin):
-      checkin_dict[ci.cin]['checkins'].append(ci)
+    key = ci.id
+    if ci.code:
+      key = ci.code
+      
+    if checkin_dict.has_key(key):
+      checkin_dict[key]['checkins'].append(ci)
       
     else:
-      checkin_dict[ci.cin] = {}
-      checkin_dict[ci.cin]['checkins'] = [ci]
-      checkin_dict[ci.cin]['code_tags_temp'] = []
+      checkin_dict[key] = {}
+      checkin_dict[key]['checkins'] = [ci]
+      checkin_dict[key]['code_tags_temp'] = []
       
     if ci.code:
-      checkin_dict[ci.cin]['code_tags_temp'].append(ci.code)
+      checkin_dict[key]['code_tags_temp'].append(ci.code)
       
   for key in checkin_dict.keys():
     code_tags = checkin_dict[key]['code_tags_temp']
