@@ -1,6 +1,11 @@
 {% extends "master.html" %}{% load cstags %}
 {% block title %}Check In{% endblock %}
 {% block header %}
+{% if not print_tag %}
+<script type="text/javascript">
+  $.ajax({url: "http://10.74.193.235:8000/print/"});
+</script>
+{% endif %}
 <link rel="stylesheet" href="{{ MEDIA_URL }}js/modal/css/basic.css" type="text/css" />
 <script type="text/javascript" src="{{ MEDIA_URL }}js/modal/js/jquery.simplemodal.js"></script>
 <script type="text/javascript">
@@ -64,11 +69,6 @@
   jQuery(document).ready(function () {
     window.print();
   });
-</script>
-{% endif %}
-{% if not print_tag %}
-<script type="text/javascript">
-  $.ajax({url: "http://10.74.193.235:8000/print/"});
 </script>
 {% endif %}
 {% endblock %}
