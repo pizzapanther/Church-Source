@@ -18,7 +18,7 @@ import churchsource.check_in.models as cmodels
 import churchsource.check_in.forms as cforms
 import churchsource.people.models as pmodels
 import churchsource.utils.face as face
-from churchsource.configuration.templatetags.cstags import get_groups
+from churchsource.configuration.templatetags.cstags import get_groups, get_checkins
 
 def printjobs (request):
   checkin_dict = {}
@@ -219,7 +219,13 @@ def reports (request):
   with_adults = request.REQUEST.get('with_adults', '')
   
   events = cmodels.Event.objects.filter(id__in=eids)
-  total = pmodels.Person.objects.filter(checkin__events__id__in=eids).distinct().order_by('id').count()
+  total = 0
+  for e in events:
+    for evg in e.eventgroup_set.all():
+      if evg.group.gtype == 'checkinc' or with_adults:
+        total += len(get_checkins(e, evg))
+        
+  #total = pmodels.Person.objects.filter(checkin__events__id__in=eids).distinct().order_by('id').count()
   
   return request.render_to_response('checkin/reports.html', {'events': events, 'total': total, 'with_adults': with_adults})
   
