@@ -16,7 +16,7 @@ class Handler (BaseHTTPServer.BaseHTTPRequestHandler):
     self.send_head()
     if self.path == '/print/':
       browser = webdriver.Firefox(firefox_profile='/home/paul/Documents/sel/')
-      browser.get("https://churchsource.dominionchurch.org/checkin/printjobs/")
+      browser.get("http://10.74.193.240/checkin/printjobs/")
       time.sleep(15)
       browser.close()
       
