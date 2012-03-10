@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd /home/webapp/Church-Source/churchsource
+/usr/bin/authbind --deep ./webserver.py start

@@ -150,6 +150,13 @@ PICNIK_KEY = ''
 
 THUMBNAIL_DUMMY = False
 
+WORKING_DIR = os.path.join(os.environ['HOME'], 'churchsource')
+LOG_DIR = os.path.join(WORKING_DIR, 'logs')
+LOGPATH = os.path.join(LOG_DIR, 'cs.log')
+PKLPATH = os.path.join(WORKING_DIR, 'cs.pkl')
+
+HTTP_PORT = 80
+
 try:
   from churchsource.settings_local import *
   
